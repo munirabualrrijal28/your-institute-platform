@@ -1,0 +1,222 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Custom CSS below My Code */
+:root {
+    --main-color: #039e8c;
+    --dark-gray: #424242;
+    --white: var(#ffffff);
+
+    --bs-primary: #039e8c;
+    --bs-secondary: #000000;
+    --bs-success: #28a745;
+    --bs-danger: #dc3545;
+    --bs-warning: #ffc107;
+    --bs-info: #17a2b8;
+    --bs-light: #f8f9fa;
+    --bs-dark: #000000;
+    --bs-green-light: #039e8c;
+    --bs-green-light: #199d8f
+
+    ;
+}
+
+.main-color-back {
+    background-color: var(--main-color);
+
+
+}
+
+.bg-green {
+
+    background-color: var(--bs-green-light);
+}
+
+.dark-gray-back {
+
+    background-color: var(--dark-gray);
+
+}
+
+.white-back {
+
+    background-color: var(--bs-secondary);
+
+}
+
+.search-bar-above {
+
+    z-index: 10;
+}
+
+.text-color {
+    color: var(--white);
+}
+
+
+/*  */
+.login-bt {
+    background-color: black;
+    border: 1px solid var(--main-color);
+    color: white;
+}
+
+
+/* logo image resiaze */
+
+.logo {
+    height: 150px;
+    width: auto;
+
+}
+
+@media (min-width: 768px) {
+    .logo {
+        height: 150px;
+
+    }
+}
+
+
+.reg-logo {
+    height: 100px;
+    width: auto;
+
+}
+
+@media (min-width: 768px) {
+    .reg-logo {
+        height: 120px;
+
+
+    }
+}
+
+/* Main Page */
+/* in Cards Manage for make them flex  row */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 250px;
+}
+
+.sidebar-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sidebar-search {
+
+    width: auto;
+}
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border: 1px solid silver;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.nowrap {
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.wrap {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.wrap li {
+    background: white;
+}
+
+.wrap-reverse {
+    -webkit-flex-wrap: wrap-reverse;
+    flex-wrap: wrap-reverse;
+}
+
+.wrap-reverse li {
+    background: deepskyblue;
+}
+
+.flex-item {
+    background: tomato;
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+
+    line-height: 100px;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+
+/*  */
+
+.delete-float {
+
+    z-index: 200;
+    position: relative;
+    background-color: #000000;
+}
+
+/*  */
+body.sidebar-collapsed #sidebar {
+    margin-left: -250px; /* hide it */
+    transition: margin-left 0.3s ease;
+  }
+
+  #sidebar {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
+/*  */
+.margin-float{
+
+    margin-top:30px;
+}
+/*  */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+/*  */
+@layer utilities {
+    .scrollbar-hide {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;  /* Chrome, Safari, Opera */
+    }
+  }
+/*  */
+/*  */
+/*  */
+

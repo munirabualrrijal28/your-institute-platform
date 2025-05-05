@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Constants;
+
+class UserRole
+{
+    const AdminRole = 0;
+    const InstituteRole = 1;
+    const UserRole = 2;
+
+
+    public static $comments_count = 0;
+
+}
