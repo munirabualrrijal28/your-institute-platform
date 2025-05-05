@@ -136,63 +136,67 @@
 
   <head>
     {{-- <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet"> --}}
+    <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4 mb-4 p-10 px-10">
-    <div class="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.12)] max-w-md w-full px-10 py-2 border border-teal-100">
+<div class="min-h-screen flex items-center justify-center bg-gray-200 px-4 py-8">
 
-        {{-- <div class="w-[200px] h-[500px] bg-red-300 text-white text-center">
-            Tailwind Arbitrary Width Test
-        </div> --}}
-        <!-- Logo -->
-        <div class="flex flex-col items-center mb-0 px-10">
-            <img src="{{ asset('images/home/light/your_ins_logo.png') }}" alt="Logo" class="h-22  px-1">
+    <!-- ✅ Login Card -->
+    <div class="bg-white px-6 py-6 rounded-2xl shadow-xl border border-gray-300 w-[380px] sm:w-[420px] md:w-[460px]">
+
+        <!-- ✅ Logo (Custom Height & Width) -->
+        <div class="flex justify-center mb-2">
+            <img src="{{ asset('images/home/light/your_ins_logo.png') }}"
+            alt="Logo"
+            class="h-[200px] w-auto max-w-full">
         </div>
 
-        <!-- Login Title with Lines -->
-        <div class="flex items-center justify-center mb-4 gap-3">
-            <hr class="flex-grow border-t-2 border-teal-800">
-            <h2 class="text-2xl font-bold text-black font-serif">Log in</h2>
+        <!-- ✅ Title with Borders -->
+        <div class="flex items-center justify-center mb-6 gap-3">
+            <hr class="flex-grow border-t-2 border-teal-700">
+            <h2 class="text-2xl font-bold text-black font-serif">Log In</h2>
             <hr class="flex-grow border-t-2 border-teal-500">
         </div>
 
-        <!-- Login Form -->
-        <form method="POST" action="{{ route('login') }}">
+        <!-- ✅ Login Form -->
+        <form method="POST" action="{{ route('login') }}" class="space-y-5">
             @csrf
 
             <!-- Email -->
-            <div class="mb-5">
-                <label for="email" class="block text-sm font-semibold mb-1">Email</label>
-                <input id="email" type="email" name="email" required autofocus
-                    class="w-full rounded-full border-2 border-teal-200 px-5 py-3 shadow-sm focus:ring-teal-300 focus:border-teal-400 focus:outline-none transition">
+            <div>
+                <label for="email" class="block text-sm font-semibold mb-1 text-left">Email</label>
+                <input id="email" type="email" name="email" autocomplete="off" required autofocus
+                    class="w-full rounded-full border border-teal-300 px-5 py-3 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 text-left">
             </div>
 
             <!-- Password -->
-            <div class="mb-5">
-                <label for="password" class="block text-sm font-semibold mb-1">Password</label>
-                <input id="password" type="password" name="password" required
-                    class="w-full rounded-full border-2 border-teal-200 px-5 py-3 shadow-sm focus:ring-teal-300 focus:border-teal-400 focus:outline-none transition">
+            <div>
+                <label for="password" class="block text-sm font-semibold mb-1 text-left">Password</label>
+                <input id="password" type="password" name="password" autocomplete="off" required
+                    class="w-full rounded-full border border-teal-300 px-5 py-3 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 text-left">
             </div>
 
             <!-- Remember Me -->
-            <div class="mb-4 flex items-center">
+            <div class="flex items-center mb-2">
                 <input type="checkbox" name="remember" id="remember" class="mr-2">
                 <label for="remember" class="text-sm font-medium">Remember me</label>
             </div>
 
             <!-- Submit Button -->
-            <div class="text-center mb-4">
+            <div class="text-center">
                 <button type="submit"
-                    class="bg-teal-600 hover:bg-teal-700 text-white text-lg font-bold font-serif py-2 px-10 rounded-full transition-shadow shadow-md hover:shadow-xl">
-                    Log in
+                        class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-10 rounded-full shadow-lg text-lg">
+                    Log In
                 </button>
             </div>
 
             <!-- Forgot Password -->
             @if (Route::has('password.request'))
-                <div class="text-center">
-                    <a class="text-blue-600 hover:underline text-sm" href="{{ route('password.request') }}">
+                <div class="text-center mt-2">
+                    <a class="text-sm text-blue-600 hover:underline" href="{{ route('password.request') }}">
                         Forgot your password?
                     </a>
                 </div>
@@ -200,3 +204,5 @@
         </form>
     </div>
 </div>
+
+

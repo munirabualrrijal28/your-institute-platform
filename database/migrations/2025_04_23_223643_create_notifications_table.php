@@ -14,16 +14,23 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id_fk');
-            $table->unsignedBigInteger('notifiable_id'); // Polymorphic target
-            $table->string('notifiable_type');
-            $table->string('type'); // e.g. new_follower, course_enrolled
+            $table->unsignedBigInteger('sender_id');
+            $table->string('sender_type');
+            $table->unsignedBigInteger('reciver_id'); // Polymorphic target
+
+            $table->string('reciver_type'); // e.g. new_follower, course_enrolled
+            $table->string('notification_type'); // e.g. new_follower, course_enrolled
             $table->json('data')->nullable(); // Payload (IDs, messages)
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
+
+
+
+
+
             // Composite index for polymorphic relation
-            $table->index(['notifiable_type', 'notifiable_id']);
+            // $table->index(['notifiable_type', 'notifiable_id']);
         });
     }
 

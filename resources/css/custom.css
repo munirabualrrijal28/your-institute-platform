@@ -6,23 +6,23 @@
 
 
 /* Custom CSS below My Code */
-:root {
-    --main-color: #039e8c;
-    --dark-gray: #424242;
-    --white: var(#ffffff);
+@layer base {
+    :root {
+        --main-color: #039e8c;
+        --dark-gray: #424242;
+        --white: var(#ffffff);
 
-    --bs-primary: #039e8c;
-    --bs-secondary: #000000;
-    --bs-success: #28a745;
-    --bs-danger: #dc3545;
-    --bs-warning: #ffc107;
-    --bs-info: #17a2b8;
-    --bs-light: #f8f9fa;
-    --bs-dark: #000000;
-    --bs-green-light: #039e8c;
-    --bs-green-light: #199d8f
-
-    ;
+        --bs-primary: #039e8c;
+        --bs-secondary: #000000;
+        --bs-success: #28a745;
+        --bs-danger: #dc3545;
+        --bs-warning: #ffc107;
+        --bs-info: #17a2b8;
+        --bs-light: #f8f9fa;
+        --bs-dark: #000000;
+        --bs-green-light: #039e8c;
+        --bs-green-light: #27dbc9;
+    }
 }
 
 .main-color-back {
@@ -183,40 +183,50 @@
 
 /*  */
 body.sidebar-collapsed #sidebar {
-    margin-left: -250px; /* hide it */
+    margin-left: -250px;
+    /* hide it */
     transition: margin-left 0.3s ease;
-  }
+}
 
-  #sidebar {
+#sidebar {
     margin-left: 0;
     transition: margin-left 0.3s ease;
-  }
-/*  */
-.margin-float{
-
-    margin-top:30px;
 }
+
+/*  */
+.margin-float {
+
+    margin-top: 30px;
+}
+
 /*  */
 .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
-  }
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
-  }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
 /*  */
 @layer utilities {
     .scrollbar-hide {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;     /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
     }
 
     .scrollbar-hide::-webkit-scrollbar {
-      display: none;  /* Chrome, Safari, Opera */
+        display: none;
+        /* Chrome, Safari, Opera */
     }
-  }
-/*  */
-/*  */
-/*  */
+}
 
+/*  */
+/*  */
+/*  */

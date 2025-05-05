@@ -48,6 +48,6 @@ class Institute extends Model
     {
         return $this->morphMany(Ratings::class, 'rateable');
     }
-
+    public function admin() { return $this->belongsTo(Admin::class, 'admin_id'); }
 
 }

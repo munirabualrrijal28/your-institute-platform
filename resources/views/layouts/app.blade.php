@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {{-- <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"> --}}
     {{-- <meta name="author" content="AdminKit"> --}}
@@ -19,14 +21,16 @@
 
     {{-- <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet"> --}}
     {{-- <link href="{{resources(path: 'resources/css/app.css')}}" rel="stylesheet"> --}}
-
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
     <style>
         .body-pro {
@@ -147,11 +151,22 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 ">
                 <div class="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
 
-                    <!-- Left: Logo only -->
-                    <div class="d-flex align-items-center flex-shrink-0">
-                        <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid"
-                            style="max-height: 170px;">
-                    </div>
+                        <!-- Right: Auth Buttons -->
+                        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                            @if (Route::has('login'))
+                                @auth
+                                    {{-- <a href="{{ route('admin') }}"
+                                        class="btn btn-outline-dark rounded-pill px-4 py-1">Dashboard</a> --}}
+                                @else
+                                    <a href="{{ route('login') }}" class="btn btn-dark rounded-pill px-4 py-1">Log in</a>
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="btn btn-dark rounded-pill px-4 py-1">
+                                            Register
+                                            </a>
+                                    @endif
+                                @endauth
+                            @endif
+                        </div>
 
                     <!-- Center: Search bar -->
                     <div class="flex-grow-1 mx-4">
@@ -166,22 +181,13 @@
                             </div>
                         </form>
                     </div>
+    <!-- Left: Logo only -->
+    <div class="d-flex align-items-center flex-shrink-0">
+        <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid"
+            style="max-height: 170px;">
+    </div>
 
-                    <!-- Right: Auth Buttons -->
-                    <div class="d-flex align-items-center gap-2 flex-shrink-0">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ route('admin') }}"
-                                    class="btn btn-outline-dark rounded-pill px-4 py-1">Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-dark rounded-pill px-4 py-1">Log in</a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="btn btn-dark rounded-pill px-4 py-1">Sign
-                                        Up</a>
-                                @endif
-                            @endauth
-                        @endif
-                    </div>
+
 
                 </div>
             </nav>
@@ -217,7 +223,7 @@
                   <span class="dot bg-gray-300 w-3 h-3 rounded-full"></span>
                 </div>
               </section> --}}
-              <section class="w-full max-w-7xl mx-auto px-4 py-10">
+            <section class="w-full max-w-7xl mx-auto px-4 py-10">
                 <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-lg">
                     <div class="swiper-wrapper">
 
@@ -231,7 +237,8 @@
 
                         <!-- Slide 2 -->
                         <div class="swiper-slide">
-                            <img src="{{ asset('images/home/home2.jpg') }}" alt="Slide 2" class="w-full h-80 object-cover" />
+                            <img src="{{ asset('images/home/home2.jpg') }}" alt="Slide 2"
+                                class="w-full h-80 object-cover" />
                             {{-- <div class="text-white text-center text-sm bg-black/40 py-2 -mt-12 z-10 relative">
                                 من أفضل المعاهد
                             </div> --}}
@@ -239,7 +246,8 @@
 
                         <!-- Slide 3 -->
                         <div class="swiper-slide">
-                            <img src="{{ asset('images/home/home3.jpeg') }}" alt="Slide 3" class="w-full h-80 object-cover" />
+                            <img src="{{ asset('images/home/home3.jpeg') }}" alt="Slide 3"
+                                class="w-full h-80 object-cover" />
 
                             {{-- <div class="text-white text-center text-sm bg-black/40 py-2 -mt-12 z-10 relative">
                                 دورات معتمدة ومجانية
@@ -247,8 +255,10 @@
                         </div>
                         <!-- Slide 4 -->
                         <div class="swiper-slide">
-                            <img src="{{ asset('images/home/home4.png') }}" alt="Slide 3" class="w-full h-80 object-cover" />
-                            <img src="{{ asset('images/home/home1.png') }}" alt="Slide 1" class="w-full h-80 object-cover" />
+                            <img src="{{ asset('images/home/home4.png') }}" alt="Slide 3"
+                                class="w-full h-80 object-cover" />
+                            <img src="{{ asset('images/home/home1.png') }}" alt="Slide 1"
+                                class="w-full h-80 object-cover" />
 
                             {{-- <div class="text-white text-center text-sm bg-black/40 py-2 -mt-12 z-10 relative">
                                 دورات معتمدة ومجانية
@@ -274,7 +284,7 @@
             <!-- ✅ Register Now Section -->
 
             <section class="relative w-full  max-w-7xl mx-auto my-15 px-18 flex justify-center">
-            {{-- <section class="relative w-full max-w-7xl mx-auto px-4 py-10"> --}}
+                {{-- <section class="relative w-full max-w-7xl mx-auto px-4 py-10"> --}}
                 <!-- Image with Overlay Container -->
                 <div class="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
 

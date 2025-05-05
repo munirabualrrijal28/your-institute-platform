@@ -8,7 +8,7 @@
     {{-- <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"> --}}
     {{-- <meta name="author" content="AdminKit"> --}}
     <meta name="keywords"
-        content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+        content=" bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
@@ -26,9 +26,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
 
+    {{--  --}}
+     <!-- Tailwind CDN -->
+     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        .body-pro {
+        /* .body-pro {
 
             font-family: 'Cairo', sans-serif;
         }
@@ -40,7 +43,7 @@
         .profile-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
+        } */
     </style>
 
 
@@ -137,6 +140,12 @@
 
 
 <body class="relative d-flex flex-column min-vh-100" data-bs-scroll="true">
+    <div class="bg-primary   h-20 d-flex align-items-center text-center justify-center ">
+        <h3>
+          Welcome in Your-Institute Platform
+      </h3>
+      </div>
+
     <div class="d-flex flex-grow-1">
 
 
@@ -146,11 +155,6 @@
 
             class="fixed top-0 left-0 w-64 h-screen bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-50 flex flex-col">
 
-            <div class="bg-">
-                <h3>
-                  Welcome in Your-Institute Platform
-              </h3>
-              </div>
 
             <div class="flex justify-end p-4">
                 <button id="closeSidebar" class="text-gray-600 hover:text-red-600">
