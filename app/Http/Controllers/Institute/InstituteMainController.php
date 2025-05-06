@@ -31,9 +31,9 @@ class InstituteMainController extends Controller
            //
            $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
 // ProfileController.php
-$institute = Cache::remember('institute_' . Auth::id(), 3600, function () {
-    return auth()->user()->institute;
-});
+// $institute = Cache::remember('institute_' . Auth::id(), 3600, function () {
+//     return auth()->user()->institute;
+// });
         //    return view('institute.home.home', compact('institute'));
         return view('institute.profile.institute_profile', compact('institute'));
 
