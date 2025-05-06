@@ -203,29 +203,43 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3 py-0">
                 <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 
-                    <!-- Left Section: Drawer + Logo -->
-                    {{-- button to show sidebar --}}
-                    <div class="d-flex align-items-center me-3">
-                        {{-- <a class="sidebar-toggle js-sidebar-toggle me-2">
-                            <i class="hamburger align-self-center"></i>
-                        </a> --}}
-                        <button id="openSidebar" class="text-gray-600 hover:text-teal-600 focus:outline-none">
-                            <i data-feather="menu" class="w-6 h-6"></i>
-                        </button>
-                        <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="logo img-fluid"
-                            style="max-height: 150px;">
-                    </div>
+   <!-- Right Section: Nav Items -->
+   <div class="d-flex align-items-center gap-3">
+
+    <!-- Notifications -->
+    <ul class="navbar-nav navbar-align d-flex align-items-center me-3 mb-0">
+        <li class="nav-item dropdown">
+            <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown"
+                data-bs-toggle="dropdown">
+                <div class="position-relative">
+                    <i class="align-middle" data-feather="bell"></i>
+                    <span class="indicator">4</span>
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                aria-labelledby="alertsDropdown">
+                <div class="dropdown-menu-header">4 New Notifications</div>
+                <div class="list-group">
+                    <!-- ... Your notification items ... -->
+                </div>
+                <div class="dropdown-menu-footer">
+                    <a href="#" class="text-muted">Show all notifications</a>
+                </div>
+            </div>
+        </li>
+    </ul>
 
 
+</div>
                     {{--  --}}
 
                     <!-- Middle Section: Search Bar (responsive) -->
-                    <div class="flex-grow-1 mx-3 my-2 my-lg-0">
+                    <div class="flex-grow-1 mx-3 my-2 my-lg-0 text-left">
                         <form action="{{ route('user_search') }}" method="GET" class="w-100">
                             <div class="input-group shadow-lg rounded-pill overflow-hidden">
                                 <input type="text" name="query" class="form-control form-control-lg border-0"
                                     placeholder="Search...">
-                                <button class="btn btn-outline-secondary" type="submit">
+                                <button class="btn btn-secondary bg-teal-500 " type="submit">
                                     <i data-feather="search"></i>
                                 </button>
                             </div>
@@ -233,34 +247,24 @@
                     </div>
 
 
-                    <!-- Right Section: Nav Items -->
-                    <div class="d-flex align-items-center gap-3">
 
-                        <!-- Notifications -->
-                        <ul class="navbar-nav navbar-align d-flex align-items-center me-3 mb-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown"
-                                    data-bs-toggle="dropdown">
-                                    <div class="position-relative">
-                                        <i class="align-middle" data-feather="bell"></i>
-                                        <span class="indicator">4</span>
-                                    </div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                                    aria-labelledby="alertsDropdown">
-                                    <div class="dropdown-menu-header">4 New Notifications</div>
-                                    <div class="list-group">
-                                        <!-- ... Your notification items ... -->
-                                    </div>
-                                    <div class="dropdown-menu-footer">
-                                        <a href="#" class="text-muted">Show all notifications</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
 
+                    {{--  --}}
+                               <!-- Left Section: Drawer + Logo -->
+                    {{-- button to show sidebar --}}
+                    <div class="d-flex align-items-center me-3">
+                        {{-- <a class="sidebar-toggle js-sidebar-toggle me-2">
+                            <i class="hamburger align-self-center"></i>
+                        </a> --}}
+                        <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid "
+                        style="max-height: 170px; width: 170px;">
+                        <button id="openSidebar" class="text-gray-600 hover:text-teal-600 focus:outline-none">
+                            <i data-feather="menu" class="w-6 h-6"></i>
+                        </button>
 
                     </div>
+
+
                 </div>
             </nav>
 

@@ -96,7 +96,7 @@
     <!-- ✅ Centered "Show All Courses" Button -->
     <div class="text-center mb-6">
         <a href="{{ route('user.ins_profile') }}" target="_blank"
-           class="inline-block bg-teal-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-teal-200 transition">
+           class="inline-block bg-teal-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-teal-600 transition">
             Show All Institutes
         </a>
     </div>
@@ -168,150 +168,49 @@
             <!-- ✅ Testimonials Horizontal Slider -->
 
 
+            <div class="bg-gradient-to-br from-green-50 to-gray-100 py-16 px-4">
+                <div class="flex overflow-x-auto gap-8 snap-x snap-mandatory scroll-smooth hide-scrollbar">
 
-            <div class="flex overflow-x-auto gap-6 snap-x snap-mandatory scroll-smooth hide-scrollbar px-2 pb-4">
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
+                  <!-- Review Card -->
+                  <div
+                    class="min-w-[320px] max-w-sm bg-white rounded-3xl p-6 shadow-lg relative flex-shrink-0 snap-center transform hover:scale-[1.03] transition-all duration-500 group"
+                  >
+                    <!-- Decorative Bubble -->
+                    <div class="absolute -top-4 -left-4 w-16 h-16 bg-teal-100 rounded-full opacity-30 group-hover:opacity-50 transition duration-500"></div>
 
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="" class=" w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">مصطفى المقطري</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
+                    <!-- Top Quote Marks -->
+                    <div class="flex justify-between items-center text-gray-300 text-2xl font-serif mb-4">
+                      <span>❝</span>
+                      <span>❞</span>
                     </div>
 
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
+                    <!-- Review Text -->
+                    <p class="text-center text-gray-700 italic leading-relaxed mb-6">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, accusamus eveniet.
                     </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
 
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">محمد سفيان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
+                    <!-- Rating Stars -->
+                    <div class="flex justify-center mb-6 text-blue-500 text-xl">
+                      ★★★★☆
                     </div>
 
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
+                    <!-- User Info -->
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-3">
+                        <img src="/images/profile/user_ic.svg" alt="Avatar"
+                             class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md" />
                         <div>
-                            <h4 class="font-bold text-gray-800 text-lg">منير نعمان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
+                          <h4 class="font-bold text-gray-800 text-base">Jessica Partices</h4>
+                          <p class="text-blue-500 text-sm">Creative Designer</p>
                         </div>
+                      </div>
+                      <div class="text-gray-400 text-xl">⋮</div>
                     </div>
+                  </div>
 
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
+                  <!-- ✅ Duplicate for more cards -->
                 </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">علي سنان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">المدير عبدالله الحاشدي</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-
-                <!-- البطاقة الثالثة -->
-            </div>
+              </div>
 
 
 

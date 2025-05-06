@@ -196,7 +196,7 @@
             <!-- Forgot Password -->
             @if (Route::has('password.request'))
                 <div class="text-center mt-2">
-                    <a class="text-sm text-blue-600 hover:underline" href="{{ route('password.request') }}">
+                    <a class="text-sm text-blue-600 hover:underline text-left" href="{{ route('password.request') }}">
                         Forgot your password?
                     </a>
                 </div>
