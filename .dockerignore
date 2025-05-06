@@ -1,40 +1,24 @@
-# Use the official PHP 8.2 image
-FROM php:8.2-fpm
+# Node & OS files
+node_modules
+npm-debug.log
+.DS_Store
+Thumbs.db
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    unzip \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    zip \
-    libonig-dev \
-    && docker-php-ext-configure zip \
-    && docker-php-ext-install pdo pdo_mysql zip mbstring exif
+# Laravel-specific
+.env
+.env.*
+vendor/
+storage/*.key
+storage/app/*
+storage/framework/*
+storage/logs/*
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy Laravel files (excluding via .dockerignore)
-COPY . .
-
-# Ensure correct permissions
-RUN chmod -R 775 storage bootstrap/cache
-
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Laravel setup commands
-RUN php artisan config:clear \
- && php artisan key:generate \
- && php artisan migrate --force \
- && php artisan storage:link || true
-
-# Start Laravel dev server
-CMD php artisan serve --host=0.0.0.0 --port=8080
+# Dev and IDE
+.idea/
+.vscode/
+*.log
+*.zip
+*.tar.gz
+*.sql
+*.sqlite
+docker-compose.yml
