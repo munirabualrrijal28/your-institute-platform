@@ -140,8 +140,8 @@
 
 
 <body class="relative d-flex flex-column min-vh-100" data-bs-scroll="true">
-    <div class="bg-primary   h-20 d-flex align-items-center text-center justify-center ">
-        <h3>
+    <div class="bg-teal-600   h-20 d-flex align-items-center text-center justify-center ">
+        <h3 class="text-white font-bold">
           Welcome in Your-Institute Platform
       </h3>
       </div>
@@ -189,6 +189,7 @@
                     </button>
                 </form>
             </nav>
+
         </div>
 
 

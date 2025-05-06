@@ -8,7 +8,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
 
-'./resources/**/*.blade.php',
+        './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
@@ -20,9 +20,9 @@ export default {
             },
             colors: {
                 primary: "var(--main-color)",
-                secondary: "var(--secondary-color)",
-                accent: "var(--accent-color)",
-              },
+                seco: "var(--grli)",
+                gray: "var(--gray)",
+            },
         },
     },
 

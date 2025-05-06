@@ -12,6 +12,9 @@
         --dark-gray: #424242;
         --white: var(#ffffff);
 
+        --grli: #26A69A;
+        --gray: #cccccc;
+
         --bs-primary: #039e8c;
         --bs-secondary: #000000;
         --bs-success: #28a745;
@@ -22,6 +25,7 @@
         --bs-dark: #000000;
         --bs-green-light: #039e8c;
         --bs-green-light: #27dbc9;
+
     }
 }
 

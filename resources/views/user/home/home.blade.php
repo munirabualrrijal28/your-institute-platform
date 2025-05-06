@@ -96,7 +96,7 @@
     <!-- ✅ Centered "Show All Courses" Button -->
     <div class="text-center mb-6">
         <a href="{{ route('user.ins_profile') }}" target="_blank"
-           class="inline-block bg-green-200 text-green-800 font-semibold px-6 py-2 rounded-full shadow hover:bg-green-300 transition">
+           class="inline-block bg-teal-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-teal-200 transition">
             Show All Institutes
         </a>
     </div>
