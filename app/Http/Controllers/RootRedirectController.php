@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Constants\UserRole; // If you use an enum
-
+use App\Models\Institute;
 
 class RootRedirectController extends Controller
 {
@@ -31,6 +31,10 @@ class RootRedirectController extends Controller
         }
 
         // Guest view
-        return view('home');
+
+
+        $institutes = Institute::all();
+
+        return view('layouts.app' , compact('institutes'));
     }
 }

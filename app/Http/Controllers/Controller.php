@@ -14,8 +14,10 @@ abstract class Controller
 
     public function index() {
                 // return view('institute.dashboard');
+             $institutes = Institute::all();
 
-        return view('institute.home.home');
+        return view('/' , compact   ('institutes'));
+        // return view('institute.home.home');
     }
 
 
@@ -28,7 +30,7 @@ abstract class Controller
 
 
 
-    
+
     public static function getUserRole() {
         $authUserRole = Auth::user()->role;
         $userId = Auth::user()->role;

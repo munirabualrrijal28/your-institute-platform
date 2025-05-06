@@ -164,6 +164,11 @@
           </div>
 
           <div>
+            <label class="block text-sm font-semibold text-left mb-1">Upload Institute Logo</label>
+            <input type="file" name="ins_profile_photo" accept="image/*"
+                   class="w-full px-4 py-2 border border-teal-300 rounded-full shadow bg-white focus:outline-none focus:ring-2 focus:ring-teal-400">
+          </div>
+          <div>
             <label class="block text-sm font-semibold text-left mb-1">Upload License Photo</label>
             <input type="file" name="ins_lic_photo" accept="image/*"
                    class="w-full px-4 py-2 border border-teal-300 rounded-full shadow bg-white focus:outline-none focus:ring-2 focus:ring-teal-400">

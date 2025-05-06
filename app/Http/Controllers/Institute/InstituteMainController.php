@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Institute;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 class InstituteMainController extends Controller
 {
     public function index (){
@@ -30,13 +30,17 @@ class InstituteMainController extends Controller
         // return view('institute.home.home');
            //
            $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
-
+// ProfileController.php
+$institute = Cache::remember('institute_' . Auth::id(), 3600, function () {
+    return auth()->user()->institute;
+});
         //    return view('institute.home.home', compact('institute'));
         return view('institute.profile.institute_profile', compact('institute'));
 
 
 
     }
+
     public function institute_settings (){
         return view('institute.institute_settings');
 

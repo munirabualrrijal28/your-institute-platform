@@ -29,6 +29,10 @@
      <!-- Bootstrap CSS -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+     <script src="//unpkg.com/alpinejs" defer></script>
+
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 
      {{-- <script src="https://cdn.tailwindcss.com"></script> --}}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="utf-8">
@@ -46,7 +46,7 @@
         } */
     </style>
 
-
+{{--
     <style>
         .slideshow-container {
             max-width: 100%;
@@ -118,7 +118,7 @@
         .fade {
             animation: fade 1.2s ease-in-out;
         }
-    </style>
+    </style> --}}
 
     {{-- <style>
         #sidebar {
@@ -189,7 +189,6 @@
                     </button>
                 </form>
             </nav>
-
         </div>
 
 

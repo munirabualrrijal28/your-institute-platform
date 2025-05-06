@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\CourseAdv;
+use App\Models\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class MasterCourseAdvController extends Controller
 
 public function store_course_adv(Request $request)
 {
-    // Validate CourseAdv fields
+    // Validate Courses fields
     $validated = $request->validate([
         'course_adv_name' => 'required|string|max:100|unique:course_advs,course_adv_name',
         'course_adv_description' => 'nullable|string',
@@ -29,8 +29,8 @@ public function store_course_adv(Request $request)
 
     $validated['institute_id_fk'] = Auth::user()->institute->id;
 
-    // Create CourseAdv
-    $courseAdv = CourseAdv::create($validated);
+    // Create Courses
+    $courseAdv = Courses::create($validated);
 
     // Create course-specific directory if not exists
     $folderPath = "course_advs/{$courseAdv->id}";
@@ -67,7 +67,7 @@ public function store_course_adv(Request $request)
 }
     public function get_edit_course_adv($id)
     {
-        $course = CourseAdv::findOrFail($id);
+        $course = Courses::findOrFail($id);
         return response()->json($course);
     }
 
@@ -77,9 +77,9 @@ public function store_course_adv(Request $request)
 
 //         // session(['admin.course_adv.manage_course_adv' => url()->previous()]);
 
-//         // $course_advs = CourseAdv::where('institute_id_fk', $ins_id)->get();
+//         // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
 // //
-//         $course_adv_info = CourseAdv::findOrFail($id); // safer
+//         $course_adv_info = Courses::findOrFail($id); // safer
 //         $categories = Category::where('institute_id_fk', $ins_id)->get();
 
 //         return view('institute.course_adv.manage_course_adv', compact('course_adv_info', 'categories'));
@@ -88,7 +88,7 @@ public function store_course_adv(Request $request)
 
     // public function update_course_adv(Request $request , $id){
 
-    //     $course_adv = CourseAdv::findOrFail($id);
+    //     $course_adv = Courses::findOrFail($id);
 
     //     $validate_data = $request->validate([
     //         'course_adv_name' =>'unique:course_advs|max:100|min:1',
@@ -98,7 +98,7 @@ public function store_course_adv(Request $request)
 
     //     $course_adv->update($validate_data);
 
-    //     // $categories = CourseAdv::all();
+    //     // $categories = Courses::all();
     //     // return redirect()->back()->with('message' , 'Category Updated Successfully');
 
     //     return redirect(session('admin.course_adv.manage_course_adv'))->with('message', 'Course Adv updated successfully!');
@@ -109,7 +109,7 @@ public function store_course_adv(Request $request)
 
     public function edit_course_adv($id)
     {
-        $course_adv = CourseAdv::findOrFail($id);
+        $course_adv = Courses::findOrFail($id);
         $existingImage = $course_adv->media()->where('type', 'like', 'image/%')->first();
 
         dd($existingImage->url);
@@ -125,7 +125,7 @@ public function store_course_adv(Request $request)
     {
 
 
-        $course_adv = CourseAdv::findOrFail($id);
+        $course_adv = Courses::findOrFail($id);
 
         // Validation
         $request->validate([
@@ -188,7 +188,7 @@ public function store_course_adv(Request $request)
 
     public function delete_course_adv($id){
 
-        $course_adv = CourseAdv::findOrFail($id)->delete();
+        $course_adv = Courses::findOrFail($id)->delete();
 
 
         return redirect()->back()->with('message' , 'Course Adv Deleted Successfully');

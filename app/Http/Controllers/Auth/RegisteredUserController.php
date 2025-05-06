@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -25,18 +27,18 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
 
-                // dd($request->role);
+        // dd($request->role);
 
- // Convert string role to numeric before validation
- $request->merge([
-    'role' => match ($request->role) {
-        'institute' => UserRole::InstituteRole ,
-        'student' => UserRole::UserRole ,
-    },
-]);
+        // Convert string role to numeric before validation
+        $request->merge([
+            'role' => match ($request->role) {
+                'institute' => UserRole::InstituteRole,
+                'student' => UserRole::UserRole,
+            },
+        ]);
 
 
-// down line code dd function for printing something in the screen and everything will stop there no line after it will run
+        // down line code dd function for printing something in the screen and everything will stop there no line after it will run
         // dd($request->role);
         // Validate shared fields
         $request->validate([
@@ -45,50 +47,73 @@ class RegisteredUserController extends Controller
             'role' => ['required', 'numeric'],
         ]);
 
-
+        $user_id = Auth::id();
 
         // Handle role-specific validation
         switch ($request->role) {
-            case UserRole::InstituteRole :
+            case UserRole::InstituteRole:
                 $request->validate([
                     'ins_name' => ['required', 'string', 'max:255'],
+                    'ins_profile_photo' => ['nullable', 'image', 'max:2048'],
                     'ins_lic_photo' => ['nullable', 'image', 'max:2048'],
                 ]);
+
+                // Create course-specific directory if not exists
+                $folderPath = "ins_logos/{$user_id}/ins_name";
+                if (!Storage::disk('public')->exists($folderPath)) {
+                    Storage::disk('public')->makeDirectory($folderPath);
+                }
+                // Handle course photo (image)
+                if ($request->hasFile('ins_profile_photo')) {
+                    $photo = $request->file('ins_profile_photo');
+                    $profile_photo = Str::random(20) . '.' . $photo->getClientOriginalExtension();
+                    $photo->storeAs($folderPath, $profile_photo, 'public');
+
+                }
+                if ($request->hasFile('ins_lic_photo')) {
+                    $photo = $request->file('ins_lic_photo');
+                    $lic_photo = Str::random(20) . '.' . $photo->getClientOriginalExtension();
+                    $photo->storeAs($folderPath, $lic_photo, 'public');
+
+                }
+
+
+
+
+
                 break;
 
-            case UserRole::UserRole :
+            case UserRole::UserRole:
                 $request->validate([
                     'name' => ['required', 'string', 'max:255'],
                 ]);
                 break;
         }
 
-        // Handle file upload for institute
-        $licensePath = null;
-        if ($request->hasFile('ins_lic_photo')) {
-            $licensePath = $request->file('ins_lic_photo')->store('licenses', 'public');
-        }
+        //
+        //
+
 
         // Create the user
 
 
-    //    if ($request->role === 1) {
-    //         // create institute
-    //         $user = User::create([
-    //             'name' =>  $request->ins_name,
-    //             'email' => $request->email,
-    //             'password' => Hash::make($request->password),
-    //             'role' => UserRole::InstituteRole ,
-    //         ]);
-    //     }  elseif ($request->role === 2) {
-    //         // create student
-    //         $user = User::create([
-    //             'name' =>  $request->name,
-    //             'email' => $request->email,
-    //             'password' => Hash::make($request->password),
-    //             'role' => UserRole::UserRole,
-    //         ]);
-    //     }
+        //    if ($request->role === 1) {
+        //         // create institute
+        //         $user = User::create([
+        //             'name' =>  $request->ins_name,
+        //             'email' => $request->email,
+        //             'password' => Hash::make($request->password),
+        //             'role' => UserRole::InstituteRole ,
+        //         ]);
+        //     }  elseif ($request->role === 2) {
+        //         // create student
+        //         $user = User::create([
+        //             'name' =>  $request->name,
+        //             'email' => $request->email,
+        //             'password' => Hash::make($request->password),
+        //             'role' => UserRole::UserRole,
+        //         ]);
+        //     }
 
         $user = User::create([
             'name' => $request->role === UserRole::InstituteRole ? $request->ins_name : $request->name,
@@ -106,14 +131,24 @@ class RegisteredUserController extends Controller
                 break;
 
             case UserRole::InstituteRole:
-                Institute::create([
+
+
+
+
+            $reg_ins=  Institute::create([
                     'user_id_fk' => $user->id,
                     'ins_name' => $user->name,
-                    'ins_lic_photo' => $licensePath ?? '',
+                    'ins_profile_photo' => $profile_photo ?? '',
+                    'ins_lic_photo' => $lic_photo ?? '',
                     'ins_is_verified' => false, // Default to false
 
                     // 'description' can be updated later
                 ]);
+
+
+
+
+
                 break;
         }
 
@@ -130,24 +165,26 @@ class RegisteredUserController extends Controller
         // } else {
         //     return redirect()->route('user_home');
         // }
-        switch($authUserRole){
-                    case UserRole::AdminRole:
-                        return redirect()->route('admin');
-                    case UserRole::InstituteRole:
-                        // return redirect()->route('institute');
-                        return redirect()->route('institute_home');
-                    case UserRole::UserRole:
-                        // return redirect()->route('user');
-                        return redirect()->route('user_home');
+        switch ($authUserRole) {
+            case UserRole::AdminRole:
+                return redirect()->route('admin');
+            case UserRole::InstituteRole:
+                // return redirect()->route('institute');
 
-                        default:
-                    return  route('/'); // Fallback to login
-               }
+                return redirect()->route('institute_profile' , compact(''));
+            case UserRole::UserRole:
+                // return redirect()->route('user');
+                return redirect()->route('user_home');
+
+            default:
+                return route('/'); // Fallback to login
+        }
 
         // return redirect(AppServiceProvider::home_route());
-                // return redirect(route('welcome', absolute: false));
+        // return redirect(route('welcome', absolute: false));
 
     }
+
 }
 
 
