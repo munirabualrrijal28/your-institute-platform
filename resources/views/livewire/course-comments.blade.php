@@ -1,6 +1,7 @@
 <div style="display: flex; flex-direction: column; height: 100%;">
     <!-- Scrollable Comments List -->
-    💬 Comments: {{ $commentCount }}
+    💬 Comments: {{ $commentCount ?? 0 }}
+
 
     <div style="flex: 1; overflow-y: auto; padding: 1rem;">
         @foreach ($comments ?? [] as $comment)

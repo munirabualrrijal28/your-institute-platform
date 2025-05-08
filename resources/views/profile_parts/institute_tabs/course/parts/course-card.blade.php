@@ -22,6 +22,9 @@
                 <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $course->course_name }}</h3>
                 <p class="text-sm text-gray-500 mb-2">{{ Str::limit($course->course_description, 80) }}</p>
                 <p class="text-xs text-gray-400">📅 {{ $course->created_at->diffForHumans() }}</p>
+
+                     <!-- ✅ ADD THIS inside the course card -->
+            <livewire:course-comments :course="$course" :wire:key="'comments-'.$course->id" />
             </div>
 
             <!-- Actions -->
@@ -144,7 +147,7 @@
 
 {{-- Pagination --}}
 <div class="mt-4 d-flex justify-content-center">
-    {!! $courses->withQueryString()->links() !!}
+    {{-- {!! $courses->withQueryString()->links() !!} --}}
 </div>
 
 @endsection

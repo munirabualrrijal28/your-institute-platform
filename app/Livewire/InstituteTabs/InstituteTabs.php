@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Livewire\InstituteTabs;
 
 use App\Http\Controllers\Controller;

@@ -142,11 +142,24 @@ class CourseComments extends Component
     $this->refreshComments(); // reload from DB just to be safe
 }
     //
+public function getComments()
+{
+    return $this->course->comments()
+        ->with(['user', 'replies.user'])
+        ->whereNull('parent_id')
+        ->latest()
+        ->get();
+}
 
     //
+public function render()
+{
+  $comments = $this->getComments();
 
-    public function render()
-    {
-        return view('livewire.course-comments');
-    }
+    return view('livewire.course-comments', [
+        'comments' => $comments,
+        'commentCount' => $comments->count(),
+    ]);
+}
+
 }

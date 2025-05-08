@@ -43,28 +43,9 @@
 
         </div>
 
-        <!-- Tabs -->
-     {{-- <!-- Tabs -->
-<div x-data="{ tab: 'instructors' }" class="bg-teal-600 text-white px-6 py-2 flex flex-wrap gap-3 justify-center">
 
-    <button @click="tab = 'instructors'"
-        :class="tab === 'instructors' ? 'bg-white text-teal-600' : 'hover:bg-teal-700'"
-        class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200">الكادر</button>
 
-    <button @click="tab = 'courses'"
-        :class="tab === 'courses' ? 'bg-white text-teal-600' : 'hover:bg-teal-700'"
-        class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200">الكورسات</button>
-
-    <button @click="tab = 'categories'"
-        :class="tab === 'departments' ? 'bg-white text-teal-600' : 'hover:bg-teal-700'"
-        class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200">الأقسام</button>
-
-    <button @click="tab = 'Advertisement'"
-        :class="tab === 'ads' ? 'bg-white text-teal-600' : 'hover:bg-teal-700'"
-        class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200">الإعلانات</button>
-</div> --}}
-
-    @livewire('institute_tabs.institute-tabs')
+<livewire:institute-tabs />
 
 @endsection
 

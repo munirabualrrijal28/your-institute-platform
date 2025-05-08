@@ -126,7 +126,7 @@
 
                 <div id="course-cards" class="row g-4 ">
                     {{-- @include('profile_parts.institute_tabs.course.parts.course_cards') --}}
-                    @include('profile_parts.institute_tabs.course.parts.course_cards', [
+                    @include('profile_parts.institute_tabs.course.parts.course-card', [
                         'course' => $courses,
                     ])
 
