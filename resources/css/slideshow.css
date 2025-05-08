@@ -9,7 +9,7 @@
   }
 
   .dot {
-    @apply cursor-pointer h-4 w-4 mx-1 rounded-full bg-gray-300 inline-block transition;
+    @apply cursor-pointer h-4 w-4 mx-1 rounded-full bg-teal-300 inline-block transition;
   }
 
   .dot.active {

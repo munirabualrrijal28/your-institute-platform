@@ -24,7 +24,7 @@
 
         <!-- Name + Verified Icon -->
         <div class="flex items-center gap-2">
-          <h1 class="text-2xl font-bold text-gray-800">User Name</h1>
+          <h1 class="text-2xl font-bold text-gray-800">{{$current_ins->ins_name}}</h1>
           {{-- <img src="{{ asset('/images/icons/verified.svg') }}" alt="Verified" class="w-5 h-5" title="Verified Institute"> --}}
         </div>
 

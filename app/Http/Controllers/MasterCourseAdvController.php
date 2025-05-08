@@ -22,18 +22,18 @@ public function store_course_adv(Request $request)
 {
     // Validate Courses fields
     $validated = $request->validate([
-        'course_adv_name' => 'required|string|max:100|unique:course_advs,course_adv_name',
-        'course_adv_description' => 'nullable|string',
+        'course_name' => 'required|string|max:100|unique:courses,course_name',
+        'course_description' => 'nullable|string',
         'category_id_fk' => 'required|exists:categories,id'
     ]);
 
     $validated['institute_id_fk'] = Auth::user()->institute->id;
 
     // Create Courses
-    $courseAdv = Courses::create($validated);
+    $course = Courses::create($validated);
 
     // Create course-specific directory if not exists
-    $folderPath = "course_advs/{$courseAdv->id}";
+    $folderPath = "course_advs/{$course->id}";
     if (!Storage::disk('public')->exists($folderPath)) {
         Storage::disk('public')->makeDirectory($folderPath);
     }
@@ -44,7 +44,7 @@ public function store_course_adv(Request $request)
         $photoName = Str::random(20) . '.' . $photo->getClientOriginalExtension();
         $photo->storeAs($folderPath, $photoName, 'public');
 
-        $courseAdv->media()->create([
+        $course->media()->create([
             'url' => "{$folderPath}/{$photoName}",
             'type' => $photo->getClientMimeType(),
         ]);
@@ -56,7 +56,7 @@ public function store_course_adv(Request $request)
             $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $file->storeAs($folderPath, $filename, 'public');
 
-            $courseAdv->media()->create([
+            $course->media()->create([
                 'url' => "{$folderPath}/{$filename}",
                 'type' => $file->getClientMimeType(),
             ]);
@@ -75,33 +75,33 @@ public function store_course_adv(Request $request)
 
 //         $ins_id = Controller::getInstituteId();
 
-//         // session(['admin.course_adv.manage_course_adv' => url()->previous()]);
+//         // session(['admin.course.manage_course_adv' => url()->previous()]);
 
 //         // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
 // //
 //         $course_adv_info = Courses::findOrFail($id); // safer
 //         $categories = Category::where('institute_id_fk', $ins_id)->get();
 
-//         return view('institute.course_adv.manage_course_adv', compact('course_adv_info', 'categories'));
+//         return view('institute.course.manage_course_adv', compact('course_adv_info', 'categories'));
 
     }
 
     // public function update_course_adv(Request $request , $id){
 
-    //     $course_adv = Courses::findOrFail($id);
+    //     $course = Courses::findOrFail($id);
 
     //     $validate_data = $request->validate([
-    //         'course_adv_name' =>'unique:course_advs|max:100|min:1',
+    //         'course_name' =>'unique:course_advs|max:100|min:1',
     //         'category_name' =>'unique:categories',
     //         'category_id_fk' => 'required|exists:categories,id'
     //     ]);
 
-    //     $course_adv->update($validate_data);
+    //     $course->update($validate_data);
 
     //     // $categories = Courses::all();
     //     // return redirect()->back()->with('message' , 'Category Updated Successfully');
 
-    //     return redirect(session('admin.course_adv.manage_course_adv'))->with('message', 'Course Adv updated successfully!');
+    //     return redirect(session('admin.course.manage_course_adv'))->with('message', 'Course Adv updated successfully!');
 
 
 
@@ -109,14 +109,14 @@ public function store_course_adv(Request $request)
 
     public function edit_course_adv($id)
     {
-        $course_adv = Courses::findOrFail($id);
-        $existingImage = $course_adv->media()->where('type', 'like', 'image/%')->first();
+        $course = Courses::findOrFail($id);
+        $existingImage = $course->media()->where('type', 'like', 'image/%')->first();
 
         dd($existingImage->url);
 
 
 
-        return response()->json($course_adv);
+        return response()->json($course);
     }
 
 
@@ -125,24 +125,24 @@ public function store_course_adv(Request $request)
     {
 
 
-        $course_adv = Courses::findOrFail($id);
+        $course = Courses::findOrFail($id);
 
         // Validation
         $request->validate([
-            'course_adv_name' => 'required|string|max:100|unique:course_advs,course_adv_name,' . $id,
-            'course_adv_description' => 'nullable|string',
+            'course_name' => 'required|string|max:100|unique:courses,course_name,' . $id,
+            'course_description' => 'nullable|string',
             'category_id_fk' => 'required|exists:categories,id',
         ]);
-        // dd("update fun public/course_adv");
+        // dd("update fun public/course");
 
-        // Update main course_adv fields
-        $course_adv->update([
-            'course_adv_name' => $request->course_adv_name,
-            'course_adv_description' => $request->course_adv_description,
+        // Update main course fields
+        $course->update([
+            'course_name' => $request->course_name ?? '',
+            'course_description' => $request->course_description,
             'category_id_fk' => $request->category_id_fk
         ]);
 
-        $folderPath = "course_advs/{$course_adv->id}";
+        $folderPath = "courses/{$course->id}";
         if (!Storage::disk('public')->exists($folderPath)) {
             Storage::disk('public')->makeDirectory($folderPath);
         }
@@ -150,7 +150,7 @@ public function store_course_adv(Request $request)
         // ✅ Replace Course Photo
         if ($request->hasFile('course_photo')) {
             // Delete existing image
-            $existingImage = $course_adv->media()->where('type', 'like', 'image/%')->first();
+            $existingImage = $course->media()->where('type', 'like', 'image/%')->first();
             if ($existingImage) {
                 Storage::disk('public')->delete($existingImage->url);
                 $existingImage->delete();
@@ -161,7 +161,7 @@ public function store_course_adv(Request $request)
             $photoName = Str::random(20) .'.'. $photo->getClientOriginalExtension();
             $photo->storeAs($folderPath, $photoName, 'public');
             // dd("public/{$folderPath}");
-            $course_adv->media()->create([
+            $course->media()->create([
                 'url' => "{$folderPath}/{$photoName}",
                 'type' => $photo->getClientMimeType(),
             ]);
@@ -173,14 +173,14 @@ public function store_course_adv(Request $request)
                 $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
                 $file->storeAs($folderPath, $filename, 'public');
 
-                $course_adv->media()->create([
+                $course->media()->create([
                     'url' => "{$folderPath}/{$filename}",
                     'type' => $file->getClientMimeType(),
                 ]);
             }
         }
 
-        return redirect()->route('institute.manage_course_adv')->with('message', 'Course updated successfully');
+        return redirect()->route('institute.manage_course')->with('message', 'Course updated successfully');
     }
 
 //
@@ -188,10 +188,10 @@ public function store_course_adv(Request $request)
 
     public function delete_course_adv($id){
 
-        $course_adv = Courses::findOrFail($id)->delete();
+        $course = Courses::findOrFail($id)->delete();
 
 
-        return redirect()->back()->with('message' , 'Course Adv Deleted Successfully');
+        return redirect()->back()->with('message' , 'Course Deleted Successfully');
 
 
     }

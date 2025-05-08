@@ -3,11 +3,11 @@ namespace App\Livewire;
 
 use App\Models\Comments;
 use Livewire\Component;
-use App\Models\CourseAdv;
+use App\Models\Courses;
 
 class CommentCount extends Component
 {
-    public CourseAdv $courseAdv;
+    public Courses $course;
     public Comments $comments;
     public int $count = 0;
 
@@ -20,9 +20,9 @@ class CommentCount extends Component
     ];
 
 
-    public function mount(CourseAdv $courseAdv , Comments $comments)
+    public function mount(Courses $course , Comments $comments)
     {
-        $this->courseAdv = $courseAdv;
+        $this->course = $course;
         $this->updateCount();
     }
 
@@ -34,7 +34,7 @@ class CommentCount extends Component
         }
 
         // Fallback to a full DB recount
-        $this->count = $this->courseAdv->comments()->count();
+        $this->count = $this->course->comments()->count();
 
     }
 

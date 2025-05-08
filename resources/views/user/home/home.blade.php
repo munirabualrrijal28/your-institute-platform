@@ -95,7 +95,7 @@
 <section class="bg-gray py-8 px-6">
     <!-- ✅ Centered "Show All Courses" Button -->
     <div class="text-center mb-6">
-        <a href="{{ route('user.ins_profile') }}" target="_blank"
+        <a href="{{ route('user.all_ins') }}" target="_blank"
            class="inline-block bg-teal-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-teal-600 transition">
             Show All Institutes
         </a>
@@ -114,18 +114,14 @@
     <!-- ✅ Horizontal Scrollable Institute Logos -->
     <div class="flex overflow-x-auto gap-6 scrollbar-hide">
         {{-- <div class="flex overflow-x-auto gap-6 items-center px-2 pb-2 scrollbar-hide"> --}}
-        @foreach ($institutes as $institute)
-            <a href="{{ route('user.ins_profile', ['id' => $institute['id']]) }}" target="_blank"
-               class="flex-shrink-0 flex flex-col items-center bg-white rounded-xl shadow-md p-4 transition hover:shadow-lg">
-                <img src="{{ asset($institute['ins_profile_photo']) }}"
-                @php
-                // dd($institute['ins_photo_profile']);
-                @endphp
-                     class="h-20 w-20 rounded-full object-cover border-2 border-white mb-2"
-                     alt="{{ $institute['ins_name'] }}">
-                <span class="text-sm text-gray-700 font-medium">{{ $institute['ins_name'] }}</span>
-            </a>
-        @endforeach
+       @foreach ($institutes as $institute)
+    <a href="{{ route('user.user_ins_profile', ['id' => $institute->id]) }}" target="_blank" class="flex-shrink-0 flex flex-col items-center bg-white rounded-xl shadow-md p-4 transition hover:shadow-lg">
+        <img src="{{ asset($institute->ins_profile_photo) }}"
+             class="h-20 w-20 rounded-full object-cover border-2 border-white mb-2"
+             alt="{{ $institute->ins_name }}">
+        <span class="text-sm text-gray-700 font-medium">{{ $institute->ins_name }}</span>
+    </a>
+@endforeach
     </div>
 </section>
 

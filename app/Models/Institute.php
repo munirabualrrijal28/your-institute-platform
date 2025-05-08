@@ -24,9 +24,9 @@ class Institute extends Model
         return $this->hasMany(Category::class, 'institute_id_fk');
     }
 
-    public function courseAdvs()
+    public function courses()
     {
-        return $this->hasMany(CourseAdv::class, 'institute_id_fk');
+        return $this->hasMany(Courses::class, 'institute_id_fk');
     }
 
     public function advertisements()

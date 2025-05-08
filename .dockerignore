@@ -1,24 +1,9 @@
-# Node & OS files
 node_modules
 npm-debug.log
-.DS_Store
-Thumbs.db
-
-# Laravel-specific
+docker-compose*
 .env
-.env.*
-vendor/
-storage/*.key
-storage/app/*
-storage/framework/*
-storage/logs/*
-
-# Dev and IDE
-.idea/
-.vscode/
-*.log
-*.zip
-*.tar.gz
-*.sql
-*.sqlite
-docker-compose.yml
+.git
+.gitignore
+tests
+.vscode
+README.md

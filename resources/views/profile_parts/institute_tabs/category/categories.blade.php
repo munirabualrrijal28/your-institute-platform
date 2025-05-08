@@ -1,10 +1,7 @@
-@extends('institute.layouts.layout')
-@section('institute_page_title')
-    Create Category - Institute Panel
-@endsection
-{{-- <h2>Create Category Page</h2> --}}
+@extends('profile_parts.lib')
 
-@section('institute_layout')
+@section('lib_layout')
+
     <div class="container mx-auto">
 
 
@@ -13,7 +10,7 @@
             <div class="col-12">
 
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header rounded-full">
                         <h5 class="card-title mb-0">Create Category</h5>
                     </div>
                     <div class="card-body">
@@ -91,8 +88,8 @@
                     {{-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4"> --}}
 
 
-                        <div id="categoryCards" class="row g-4">
-                            @include('institute.category.parts.category_cards')
+                        <div id="categoryCards" class="row g-4 w-full">
+                            @include('profile_parts.institute_tabs.category.parts.category_cards')
                         </div>
 
 
@@ -196,5 +193,12 @@
         {{--  --}}
 
     </div>
+
+{{--
+    <div class="d-flex justify-content-center mt-4">
+        {{ $categories->links() }}
+    </div>
+    --}}
+
 
 @endsection

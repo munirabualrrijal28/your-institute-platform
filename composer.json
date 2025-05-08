@@ -30,7 +30,7 @@
 
         ,
         "files": [
-            "App/Providers/AppServiceProvider.php"
+            "app/Providers/AppServiceProvider.php"
         ]
 
     },

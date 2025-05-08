@@ -15,6 +15,9 @@ use App\Http\Controllers\Institute\CourseAdvReviewsInstituteController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Http\Controllers\MasterCourseAdvController;
 use App\Http\Controllers\MasterCommentsController;
+
+use App\Http\Controllers\MasterInstructorController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\User\UserMainController;
@@ -67,8 +70,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
         //
         Route::controller(CourseAdvController::class)->group(function () {
 
-            Route::get('/course_adv/create_course_adv', 'index')->name('admin.create_course_adv');
-            Route::get('/course_adv/manage_course_adv', 'manage_course_adv')->name('admin.manage_course_adv');
+            Route::get('/course/create_course_adv', 'index')->name('admin.create_course_adv');
+            Route::get('/course/manage_course_adv', 'manage_course_adv')->name('admin.manage_course_adv');
 
         });
         //
@@ -109,10 +112,10 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
         //
         //
         Route::controller(MasterCourseAdvController::class)->group(function () {
-            Route::post('/store/course_adv', 'store_course_adv')->name('store.course_adv');
-            Route::get('/course_adv/{id}', 'show_course_adv')->name('show.course_adv');
-            Route::put('/course_adv/update/{id}', 'update_course_adv')->name('update.course_adv');
-            Route::delete('/course_adv/delete/{id}', 'delete_course_adv')->name('delete.course_adv');
+            Route::post('/store/course', 'store_course_adv')->name('store.course');
+            Route::get('/course/{id}', 'show_course_adv')->name('show.course');
+            Route::put('/course/update/{id}', 'course_name')->name('update.course');
+            Route::delete('/course/delete/{id}', 'delete_course_adv')->name('delete.course');
 
 
         });
@@ -137,27 +140,12 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 Route::middleware(['auth', 'verified', 'rolemanager:institute'])->group(function () {
     Route::prefix('institute')->group(function () {
 
-        // Route::redirect('/profile', '/', 200)->name('profile');
 
-        // Route::get('/institute', [InstituteMainController::class, 'ins_welcome'])->name('institute_welcome');
         Route::controller(InstituteMainController::class)->group(function () {
-            // Route::get( '/',  'institute_profile')->name('institute_profile');
 
-
-            Route::get('/home', 'institute_profile')->name('institute_profile');
-            // Route::get( '/',  'institute_profile')->name('institute_profile');
-
-
-            //   Route::get('/' , 'ins_welcome')->name('institute_welcome');
 
             Route::get('/institute_settings', 'institute_settings')->name('institute_settings');
             Route::get('/institute_profile', 'institute_profile')->name('institute_profile');
-            // Route::get('/institute_profile', 'institute_profile')->name('institute_profile');
-
-            //
-            // Route::get('/institute_search', 'institute_search')->name('institute_search');
-
-            // Route::get('/institute/course_adv/get/{id}', [InstituteMainController::class, 'get_course_adv'])->name('institute.get.course_adv');
 
 
 
@@ -174,9 +162,9 @@ Route::middleware(['auth', 'verified', 'rolemanager:institute'])->group(function
         //
         Route::controller(CourseAdvInstituteController::class)->group(function () {
 
-            Route::get('/course_adv/manage_course_adv', 'manage_course_adv')->name('institute.manage_course_adv');
+            Route::get('institute_profile/course/manage_courses', 'manage_course')->name('institute.manage_course');
 
-            //   Route::get('/course_adv/manage' , 'manage')->name('institute.manage_course_adv');
+            //   Route::get('/course/manage' , 'manage')->name('institute.manage_course_adv');
 
         });
         //
@@ -202,21 +190,33 @@ Route::middleware(['auth', 'verified', 'rolemanager:institute'])->group(function
         //
 //
         Route::controller(MasterCourseAdvController::class)->group(function () {
-            Route::post('/store/course_adv', 'store_course_adv')->name('institute.store.course_adv');
-            Route::get('/course_adv/{id}', 'show_course_adv')->name('institute.show.course_adv');
-            Route::put('/course_adv/update/{id}', 'update_course_adv')->name('institute.update.course_adv');
-            Route::delete('/course_adv/delete/{id}', 'delete_course_adv')->name('institute.delete.course_adv');
+            Route::post('/store/course', 'store_course_adv')->name('institute.store.course');
+            Route::get('/course/{id}', 'show_course_adv')->name('institute.show.course');
+            Route::put('/course/update/{id}', 'course_name')->name('institute.update.course');
+            Route::delete('/course/delete/{id}', 'delete_course_adv')->name('institute.delete.course');
 
-            Route::get('/course_adv/edit_course_adv/{id}', 'edit_course_adv')->name('institute.edit_course_adv');
-            Route::put('/course_adv/update_course_adv/{id}', 'update_course_adv')->name('institute.update_course_adv');
+            Route::get('/course/edit_course_adv/{id}', 'edit_course_adv')->name('institute.edit_course_adv');
+            Route::put('/course/course_name/{id}', 'course_name')->name('institute.course_name');
 
-            Route::get('/institute/course_adv/get/{id}', 'get_edit_course_adv')->name('institute.get.course_adv');
+            Route::get('/institute/course/get/{id}', 'get_edit_course_adv')->name('institute.get.course');
 
         });
 
         //  institute.comments_store
         Route::controller(MasterCommentsController::class)->group(function () {
             Route::post('/comments', 'store_comment')->name('institute.comments_store');
+
+
+            // Route::post('/store/category', 'store_cat')->name('institute.category.store');
+
+            // Route::get('/category/{id}' , 'show_cat')->name('institute.category.show');
+            // Route::put('/category/update/{id}' , 'update_cat')->name('institute.category.update');
+            // Route::delete('/category/delete/{id}' , 'delete_cat')->name('institute.category.delete');
+
+        });
+        //  institute.Instructors_store
+        Route::controller(MasterInstructorController::class)->group(function () {
+            Route::post('/instructor', 'store_instructor')->name('institute.instructors_store');
 
 
             // Route::post('/store/category', 'store_cat')->name('institute.category.store');
@@ -260,7 +260,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:user'])->group(function () {
 
 
             Route::get('/user_profile', 'user_profile')->name('user_profile');
-            Route::get('/user_ins_profile', 'user_ins_profile')->name('user.ins_profile');
             Route::get('/user_settings', 'user_settings')->name('user_settings');
             // Route::get('/user_course_adv_marked', 'user_course_adv_marked')->name('user_course_adv_marked');
             Route::get('/user_following', 'user_following')->name('user_following');
@@ -270,6 +269,17 @@ Route::middleware(['auth', 'verified', 'rolemanager:user'])->group(function () {
             // Route::get('/user_history', 'user_history')->name('user_history');
 
             Route::get('/user_search', 'user_search')->name('user_search');
+
+            //
+
+            //
+            Route::get('/user_ins_profile/{id}', 'user_ins_profile')->name('user.user_ins_profile');
+            Route::get('/user_all_ins', 'user_all_ins')->name('user.all_ins');
+
+            Route::post('/follow/institute/{id}',  'follow')->name('user.follow_institute');
+
+//
+
 
         });
 
@@ -289,8 +299,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:user'])->group(function () {
 // //
 //    Route::controller(CourseAdvInstituteController::class)->group(function () {
 
-        //       Route::get('/course_adv/create_course_adv' , 'index')->name('create_course_adv');
-//       Route::get('/course_adv/manage' , 'manage')->name('manage_course_adv');
+        //       Route::get('/course/create_course_adv' , 'index')->name('create_course_adv');
+//       Route::get('/course/manage' , 'manage')->name('manage_course_adv');
 
         //   });
 // //

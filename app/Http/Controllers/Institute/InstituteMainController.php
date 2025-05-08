@@ -75,6 +75,19 @@ class InstituteMainController extends Controller
 
     }
 
+    //
+    public function ins_profile($id)
+{
+    $institute = Institute::with('user')->findOrFail($id);
+    $isFollowing = false;
+
+if (Auth::check() && Auth::user()->role === 3) {        // 3 = student
+        $studentId = Auth::user()->student->id;
+        $isFollowing = $institute->followers()->where('student_id_fk', $studentId)->exists();
+    }
+
+    return view('user.pages.institute_profile', compact('institute', 'isFollowing'));
+}
 
 }
 

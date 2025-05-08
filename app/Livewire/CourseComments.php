@@ -1,7 +1,7 @@
 <?php
 namespace App\Livewire;
 
-use App\Models\CourseAdv;
+use App\Models\Courses;
 use App\Models\Comments;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class CourseComments extends Component
 
     public Collection $comments;
 
-    public $courseAdv;
+    public $course;
     public $content = '';
     public $parentId = null;
     public array $loadedReplies = [];
@@ -39,10 +39,10 @@ class CourseComments extends Component
         'comment-posted' => 'refreshComments',
 
     ];
-    public function mount($courseAdv)
+    public function mount($course)
     {
-        $this->courseAdv = $courseAdv;
-        $this->commentCount = $courseAdv->comments()->count();
+        $this->course = $course;
+        $this->commentCount = $course->comments()->count();
         $this->inputKey = uniqid();
         $this->formKey = uniqid();
 
@@ -59,8 +59,8 @@ class CourseComments extends Component
         $comment = Comments::create([
             'content' => $this->content,
             'user_id_fk' => Auth::id(),
-            'commentable_id' => $this->courseAdv->id,
-            'commentable_type' => CourseAdv::class,
+            'commentable_id' => $this->course->id,
+            'commentable_type' => Courses::class,
             'parent_id' => $this->parentId,
         ]);
 
@@ -82,7 +82,7 @@ class CourseComments extends Component
 
     public function refreshComments()
     {
-        $this->comments = $this->courseAdv->comments()
+        $this->comments = $this->course->comments()
             ->with(['user', 'replies.user'])
             ->whereNull('parent_id')
             ->latest()

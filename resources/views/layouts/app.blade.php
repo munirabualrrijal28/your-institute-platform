@@ -1,667 +1,275 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {{-- <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"> --}}
-    {{-- <meta name="author" content="AdminKit"> --}}
-    <meta name="keywords"
-        content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
-
-    {{-- <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" /> --}}
-
-    <title>@yield('user_page_title')</title>
-
-    {{-- <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet"> --}}
-    {{-- <link href="{{resources(path: 'resources/css/app.css')}}" rel="stylesheet"> --}}
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-
-    <style>
-        .body-pro {
-
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .profile-card {
-            transition: all 0.3s ease-in-out;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-    </style>
-
-    {{-- <style>
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .scroll-drag {
-            cursor: grab;
-        }
-
-        .scroll-drag:active {
-            cursor: grabbing;
-        }
-    </style> --}}
-
-    <style>
-        .slideshow-container {
-            max-width: 100%;
-            position: relative;
-            margin: auto;
-        }
-
-        .mySlides {
-            display: none;
-        }
-
-        .dot {
-            height: 16px;
-            width: 16px;
-            margin: 0 4px;
-            background-color: #ccc;
-            border-radius: 9999px;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: #34d399;
-            /* Tailwind's green-400 */
-        }
-
-        .prev,
-        .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            padding: 0.5rem 1rem;
-            /* px-4 py-2 */
-            color: white;
-            font-weight: bold;
-            font-size: 1.25rem;
-            /* text-xl */
-            border-radius: 0.5rem;
-            z-index: 10;
-            user-select: none;
-            transform: translateY(-50%);
-        }
-
-        .prev:hover,
-        .next:hover {
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .prev {
-            left: 0;
-            border-radius: 0 0.5rem 0.5rem 0;
-        }
-
-        .next {
-            right: 0;
-            border-radius: 0.5rem 0 0 0.5rem;
-        }
-
-        @keyframes fade {
-            from {
-                opacity: 0.4
-            }
-
-            to {
-                opacity: 1
-            }
-        }
-
-        .fade {
-            animation: fade 1.2s ease-in-out;
-        }
-    </style>
-
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@yield('user_page_title')</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <style>
+    .hide-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .animated-heading {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+  </style>
 </head>
 
-<body>
-    <div class="wrapper">
-        <div class="main ">
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <!-- Welcome Header -->
+  <header class="bg-gradient-to-r from-teal-600 to-emerald-500 py-6 shadow-lg text-white text-center">
+    <h1 class="text-3xl font-extrabold animated-heading">Welcome to Your-Institute Platform</h1>
+    <p class="text-base mt-1 animate-fadeIn">Empowering education through verified institutions</p>
+  </header>
 
-            <!-- ✅ Navbar Section -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 ">
-                <div class="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+    <div class="space-x-2">
+        @if (Route::has('login'))
+          @auth
+            <a href="{{ route('dashboard') }}"
+              class="px-4 py-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition">Dashboard</a>
+          @else
+            <a href="{{ route('login') }}"
+              class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition">Login</a>
+            @if (Route::has('register'))
+              <a href="{{ route('register') }}"
+                class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 transition">Register</a>
+            @endif
+          @endauth
+        @endif
+      </div>
 
-                        <!-- Right: Auth Buttons -->
-                        <div class="d-flex align-items-center gap-2 flex-shrink-0">
-                            @if (Route::has('login'))
-                                @auth
-                                    {{-- <a href="{{ route('admin') }}"
-                                        class="btn btn-outline-dark rounded-pill px-4 py-1">Dashboard</a> --}}
-                                @else
-                                    <a href="{{ route('login') }}" class="btn btn-dark rounded-pill px-4 py-1">Log in</a>
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="btn btn-dark rounded-pill px-4 py-1">
-                                            Register
-                                            </a>
-                                    @endif
-                                @endauth
-                            @endif
-                        </div>
-
-                    <!-- Center: Search bar -->
-                    <div class="flex-grow-1 mx-4">
-                        <form action="{{ route('user_search') }}" method="GET" class="mb-0">
-                            <div class="input-group border border-teal-500 rounded-pill overflow-hidden"
-                                style="height: 42px;">
-                                <span class="input-group-text bg-white border-0 px-3">
-                                    <i data-feather="search" class="text-muted"></i>
-                                </span>
-                                <input type="text" name="query" class="form-control border-0 py-1"
-                                    placeholder="Search for Anything" style="height: 40px;">
-                            </div>
-                        </form>
-                    </div>
-    <!-- Left: Logo only -->
-    <div class="d-flex align-items-center flex-shrink-0">
-        <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid"
-            style="max-height: 170px;">
-    </div>
+    <form action="{{ route('user_search') }}" method="GET" class="flex-1 mx-6">
+      <input type="text" name="query" placeholder="Search courses or institutes..."
+        class="w-full px-4 py-2 rounded-full border-2 border-teal-500 focus:outline-none">
+    </form>
+    <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="h-[110px]">
 
 
+  </nav>
 
-                </div>
-            </nav>
-
-
-             <!-- ✅ Carousel Section -->
-             <div class="container mx-auto px-4">
-
-
-           <!-- ✅ Responsive Carousel Section -->
-<section class="w-full max-w-7xl mx-auto px-4 py-12">
-    <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-lg">
-        <div class="swiper-wrapper">
-
-            <!-- Slide 1 -->
-            <div class="swiper-slide">
-                <img src="{{ asset('images/home/home2.jpg') }}" alt="Slide 1"
-                     class="w-full h-100 sm:h-72 md:h-80 lg:h-[26rem] xl:h-[30rem] object-cover" />
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="swiper-slide">
-                <img src="{{ asset('images/home/home3.jpeg') }}" alt="Slide 2"
-                     class="w-full h-100 sm:h-72 md:h-80 lg:h-[26rem] xl:h-[30rem] object-cover" />
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="swiper-slide">
-                <img src="{{ asset('images/home/home4.png') }}" alt="Slide 3"
-                     class="w-full h-64 sm:h-72 md:h-80 lg:h-[26rem] xl:h-[30rem] object-cover" />
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="swiper-slide">
-                <img src="{{ asset('images/home/home1.png') }}" alt="Slide 4"
-                     class="w-full h-64 sm:h-72 md:h-80 lg:h-[26rem] xl:h-[30rem] object-cover" />
-            </div>
+  <!-- Hero Carousel -->
+  <section class="max-w-7xl mx-auto mt-10">
+    <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-xl">
+      <div class="swiper-wrapper">
+        @foreach (["home2.jpg", "home3.jpeg", "home4.png", "home1.png"] as $img)
+        <div class="swiper-slide">
+          <img src="{{ asset('images/home/' . $img) }}" class="w-full h-[28rem] object-cover" alt="Slide">
         </div>
-
-        <!-- Dots -->
-        <div class="swiper-pagination"></div>
-
-        <!-- Navigation arrows -->
-        <div class="swiper-button-prev text-white"></div>
-        <div class="swiper-button-next text-white"></div>
-    </div>
-</section>
-
-</div>
-
-            {{--  --}}
-
-
-            <section class="relative w-full  max-w-7xl mx-auto my-15 px-18 flex justify-center">
-                {{-- <section class="relative w-full max-w-7xl mx-auto px-4 py-10"> --}}
-                    <!-- Image with Overlay Container -->
-                    <div class="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
-
-                        <!-- ✅ Floating Box -->
-                        {{-- <div class="absolute top-1/2 left-10 transform -translate-y-1/2 bg-white bg-opacity-90 rounded-2xl shadow-lg px-8 py-6 max-w-sm w-full text-center"> --}}
-                        <div
-                            class="absolute align-self-start top-1/2 left-10 transform -translate-y-1/2 bg-white bg-opacity-90 rounded-2xl shadow-lg p-6 max-w-xs w-30 margin-float mt-6">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Register Now</h2>
-                            <h4 class="text-gray-600 font-bold text-lg">Choose Your Suitable Institute</h4>
-                        </div>
-                        <!-- ✅ Background Image -->
-                        <img src="/images/home/home.jpg" alt="Register Background"
-                            class="w-full h-full object-cover rounded-2xl">
-
-
-                    </div>
-                </section>
-
-
-
-                <!-- ✅ Intro Text -->
-                <section class="bg-gray-50 text-center py-6">
-                    <h2 class="text-xl font-semibold text-gray-800">
-                        With your institute's platform<br />
-                        <span class="text-gray-600">we save you effort, money and time.</span>
-                    </h2>
-                </section>
-
-
-
-            <!-- ✅ Institute Logos Section -->
-<!-- ✅ Institutes Section -->
-<section class="bg-gray py-8 px-6">
-    <!-- ✅ Centered "Show All Courses" Button -->
-    <div class="text-center mb-6">
-        <a href="{{ route('user.ins_profile') }}" target="_blank"
-           class="inline-block bg-teal-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-teal-200 transition">
-            Show All Institutes
-        </a>
-    </div>
-
-
-
-    {{-- ['path' => 'images/inst_profile/jats/jats.png', 'name' => 'JATS'],
-    ['path' => 'images/inst_profile/lbm/lb.jpg', 'name' => 'LBM'],
-    ['path' => 'images/inst_profile/24/24_ins.jpg', 'name' => '24 Academy'],
-    ['path' => 'images/inst_profile/yali/yali.jpg', 'name' => 'Yali'],
-    ['path' => 'images/inst_profile/speak/speak.jpg', 'name' => 'SpeakNow'], --}}
-
-
-
-    <!-- ✅ Horizontal Scrollable Institute Logos -->
-    <div class="flex overflow-x-auto gap-6 scrollbar-hide">
-        {{-- <div class="flex overflow-x-auto gap-6 items-center px-2 pb-2 scrollbar-hide"> --}}
-
-        @foreach ($institutes as $institute)
-            <a href="{{ route('user.ins_profile', ['id' => $institute['id']]) }}" target="_blank"
-               class="flex-shrink-0 flex flex-col items-center bg-white rounded-xl shadow-md p-4 transition hover:shadow-lg">
-                <img src="{{ asset($institute['ins_profile_photo']) }}"
-                @php
-                // dd($institute['ins_photo_profile']);
-                @endphp
-                     class="h-20 w-20 rounded-full object-cover border-2 border-white mb-2"
-                     alt="{{ $institute['ins_name'] }}">
-                <span class="text-sm text-gray-700 font-medium">{{ $institute['ins_name'] }}</span>
-            </a>
         @endforeach
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
-</section>
+  </section>
 
+{{--  --}}
+   <!-- ✅ Register Now Section -->
 
+   <section class="relative top-16 w-full  max-w-7xl mx-auto my-15 px-18 flex justify-center">
+    {{-- <section class="relative w-full max-w-7xl mx-auto px-4 py-10"> --}}
+        <!-- Image with Overlay Container -->
+        <div class="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
 
-
-            <!-- ✅ Trending Section -->
-            <section class="bg-gray-100 py-8 px-4">
-                <h2 class="text-center text-xl font-bold mb-6">Trending Now</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-teal-600 font-bold mb-2">Programming</h3>
-                        <ul class="space-y-1 text-sm">
-                            <li>Python - 2170 learners</li>
-                            <li>Flutter - 2000 learners</li>
-                            <li>C# - 1104 learners</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-teal-600 font-bold mb-2">Design</h3>
-                        <ul class="space-y-1 text-sm">
-                            <li>Photoshop - 5400 learners</li>
-                            <li>Illustrator - 6028 learners</li>
-                            <li>InDesign - 1104 learners</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-teal-600 font-bold mb-2">Computer</h3>
-                        <ul class="space-y-1 text-sm">
-                            <li>ICDL - 5400 learners</li>
-                            <li>IC3 - 6028 learners</li>
-                            <li>Typing - 1104 learners</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ✅ Testimonials Section -->
-            <!-- ✅ Testimonials Horizontal Slider -->
-            <!-- ✅ Testimonials Horizontal Slider -->
-
-
-
-            <div class="flex overflow-x-auto gap-6 snap-x snap-mandatory scroll-smooth hide-scrollbar px-2 pb-4">
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="" class=" w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">مصطفى المقطري</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">محمد سفيان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">منير نعمان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">علي سنان</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-                <!-- البطاقة الأولى -->
-                <div
-                    class="min-w-[350px] max-w-sm bg-gradient-to-tr from-green-50 to-green-100 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 relative flex-shrink-0 snap-center group">
-                    <!-- اقتباس كبير بالخلفية -->
-                    <svg class="absolute top-4 right-4 w-12 h-12 text-green-200 opacity-20" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M7.17 6.17a4 4 0 015.66 0l.17.17.17-.17a4 4 0 015.66 5.66l-5.83 5.83a1 1 0 01-1.41 0l-5.83-5.83a4 4 0 010-5.66z" />
-                    </svg>
-
-                    <!-- معلومات الطالب -->
-                    <div class="flex items-center gap-4 mb-4 z-10 relative">
-                        <div
-                            class="flex items-center justify-center w-16 h-16 rounded-full border-4 border-white shadow-md overflow-hidden">
-                            <img src="/images/profile/user_ic.svg" alt="Student"
-                                class="object-cover w-full h-full" />
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-lg">المدير عبدالله الحاشدي</h4>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
-                    </div>
-
-                    <!-- نص المراجعة -->
-                    <p class="text-sm text-gray-700 leading-relaxed z-10 relative">
-                        تجربة مذهلة! استفدت كثيرًا من الكورسات خصوصًا الإنجليزية، والنظام سهل ويضمن الجودة.
-                    </p>
-                </div>
-
-                <!-- البطاقة الثالثة -->
+            <!-- ✅ Floating Box -->
+            {{-- <div class="absolute top-1/2 left-10 transform -translate-y-1/2 bg-white bg-opacity-90 rounded-2xl shadow-lg px-8 py-6 max-w-sm w-full text-center"> --}}
+            <div
+                class="absolute  align-self-start top-1/2 left-10 transform -translate-y-1/2 bg-white bg-opacity-90 rounded-2xl shadow-lg p-6 max-w-xs w-30 margin-float mt-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Register Now</h2>
+                <h4 class="text-gray-600 font-bold text-lg">Choose Your Suitable Institute</h4>
             </div>
+            <!-- ✅ Background Image -->
+            <img src="/images/home/home.jpg" alt="Register Background"
+                class="w-full h-full object-cover rounded-2xl">
 
-
-
-            {{--  --}}
-
-      {{--  --}}
-      <section class="bg-gray-50 py-10 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-teal-700 font-bold text-lg mb-2">About Us</h3>
-                <p class="text-sm text-gray-600">Your Institute is a modern platform that connects students to
-                    certified educational institutes across the country.</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-teal-700 font-bold text-lg mb-2">Our Services</h3>
-                <ul class="text-sm text-gray-600 space-y-1">
-                    <li>Course Advertisement</li>
-                    <li>Student Registration</li>
-                    <li>Notifications & Comments</li>
-                    <li>Institute Ratings</li>
-                </ul>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-teal-700 font-bold text-lg mb-2">Contact</h3>
-                <p class="text-sm text-gray-600">Email: support@yourinstitute.com</p>
-                <p class="text-sm text-gray-600">Phone: +967 777 123 456</p>
-                <p class="text-sm text-gray-600">Sana'a, Yemen</p>
-            </div>
 
         </div>
     </section>
-    {{--  --}}
 
+{{--  --}}
 
-
-    <!-- ✅ Footer -->
-    <footer class="footer bg-light mt-5">
-        <div class="container-fluid">
-            <div class="row text-muted py-3">
-                <div class="col-6 text-start">
-                    <p class="mb-0">
-                        <a class="text-muted" href="#"><strong>Your Institute</strong></a>
-                    </p>
-                </div>
-                <div class="col-6 text-end">
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
-                        <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a>
-                        </li>
-                        <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
-                        <li class="list-inline-item"><a class="text-muted" href="#">Terms</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-        </div>
+  <!-- Smart Matching Services CTA -->
+  <section class="bg-gradient-to-br from-green-100 to-teal-100 py-14 mt-12">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-4 animate__animated animate__fadeInUp">Discover the Right Course Instantly</h2>
+      <p class="text-gray-600 text-lg mb-6">Let us help match you with the best educational opportunity available near you.</p>
+      <a href="{{ route('register') }}"
+        class="bg-teal-500 hover:bg-teal-600 transition text-white font-semibold px-8 py-3 rounded-full shadow-md">Join Now</a>
     </div>
+  </section>
+
+  <!-- Institutes Scrollable Row -->
+  <section class="bg-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-center text-2xl font-bold mb-6">Top Institutes</h2>
+      <div class="flex overflow-x-auto gap-6 hide-scrollbar py-4">
+        @foreach ($institutes as $institute)
+        <a href="{{ route('user.ins_profile', ['id' => $institute['id']]) }}" target="_blank"
+          class="flex-shrink-0 w-48 bg-white shadow rounded-xl p-4 hover:scale-105 transition">
+          <img src="{{ asset($institute['ins_profile_photo']) }}" class="w-20 h-20 mx-auto rounded-full object-cover mb-3">
+          <p class="text-center text-sm font-semibold text-gray-800">{{ $institute['ins_name'] }}</p>
+        </a>
+        @endforeach
+      </div>
+    </div>
+  </section>
+
+
+  {{--  --}}
+
+
+<!-- Trending Courses Section -->
+<section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center mb-10 text-gray-800">Trending Courses</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-semibold text-teal-600 mb-2">Programming</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>Python - 2170 learners</li>
+            <li>Flutter - 2000 learners</li>
+            <li>C# - 1104 learners</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-semibold text-teal-600 mb-2">Design</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>Photoshop - 5400 learners</li>
+            <li>Illustrator - 6028 learners</li>
+            <li>InDesign - 1104 learners</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-semibold text-teal-600 mb-2">Computer</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>ICDL - 5400 learners</li>
+            <li>IC3 - 6028 learners</li>
+            <li>Typing - 1104 learners</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="bg-white py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">Student Testimonials</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        @foreach ([1, 2, 3] as $i)
+        <div class="bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+          <p class="text-gray-700 italic mb-4">“This platform changed my learning experience completely.”</p>
+          <div class="flex items-center gap-3">
+            <img src="/images/profile/user_ic.svg" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <h4 class="text-sm font-semibold text-gray-900">Student {{ $i }}</h4>
+              <span class="text-xs text-teal-500">Enrolled Learner</span>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Services / Contact Info -->
+  <section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-teal-700 font-bold text-lg mb-3">About Us</h3>
+        <p class="text-sm text-gray-600">Your Institute is a trusted digital platform that connects learners with certified educational institutes across the country.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-teal-700 font-bold text-lg mb-3">Our Services</h3>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>Course Advertisement</li>
+          <li>Student Registration</li>
+          <li>Notifications & Comments</li>
+          <li>Institute Ratings</li>
+        </ul>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-teal-700 font-bold text-lg mb-3">Contact</h3>
+        <p class="text-sm text-gray-600">Email: support@yourinstitute.com</p>
+        <p class="text-sm text-gray-600">Phone: +967 777 123 456</p>
+        <p class="text-sm text-gray-600">Sana'a, Yemen</p>
+      </div>
+    </div>
+  </section>
+  {{--  --}}
 
 
 
 
+  {{-- <!-- Floating Help Button -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <a href="#" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-3 rounded-full shadow-lg flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 14v.01M12 10h.01M16 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Help Center
+    </a>
+  </div> --}}
+
+  {{--  --}}
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 mt-10 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+      <p>&copy; {{ date('Y') }} Your Institute. All rights reserved.</p>
+      <div class="space-x-4 mt-3 md:mt-0">
+        <a href="#" class="hover:text-teal-600">Support</a>
+        <a href="#" class="hover:text-teal-600">Privacy</a>
+        <a href="#" class="hover:text-teal-600">Terms</a>
+      </div>
+    </div>
+  </footer>
 
 
-
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
-
-
-    <script>
-        feather.replace();
-    </script>
-    {{--  --}}
-    <script>
-        function updateActiveDot(container) {
-            const dots = document.querySelectorAll("#testimonialDots span");
-            const cards = container.querySelectorAll("div.snap-center");
-            let index = 0;
-            let minDistance = Infinity;
-
-            cards.forEach((card, i) => {
-                const cardLeft = card.getBoundingClientRect().left;
-                const containerLeft = container.getBoundingClientRect().left;
-                const distance = Math.abs(cardLeft - containerLeft);
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    index = i;
-                }
-            });
-
-            dots.forEach((dot, i) => {
-                dot.classList.toggle("bg-green-400", i === index);
-                dot.classList.toggle("bg-green-200", i !== index);
-            });
-        }
-    </script>
-    <!-- #region -->
-
-
-    {{-- SlideShow Code --}}
-    {{-- <script>
-        const track = document.getElementById('carousel-track');
-        const dots = document.querySelectorAll('.dot');
-        let index = 0;
-        const totalSlides = dots.length;
-
-        function updateSlide() {
-          track.style.transform = `translateX(-${index * 100}%)`;
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('bg-teal-500', i === index);
-            dot.classList.toggle('bg-gray-300', i !== index);
-          });
-        }
-
-        setInterval(() => {
-          index = (index + 1) % totalSlides;
-          updateSlide();
-        }, 5000);
-
-        dots.forEach((dot, i) => {
-          dot.addEventListener('click', () => {
-            index = i;
-            updateSlide();
-          });
-        });
-
-        // Initial render
-        updateSlide();
-      </script> --}}
-    {{--  --}}
-    {{-- SlideShow Code 2 --}}
-    <script>
-        const swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            speed: 800,
-            effect: "slide",
-        });
-    </script>
-
-    {{--  --}}
-    <!-- Swiper JS -->
-
+  {{--  --}}
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => feather.replace());
+  </script>
 </body>
 
 </html>
+
 

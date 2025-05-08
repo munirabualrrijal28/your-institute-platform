@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user_id = Auth::id();
+        // $user_name = Auth::name();
 
         // Handle role-specific validation
         switch ($request->role) {
@@ -59,16 +60,17 @@ class RegisteredUserController extends Controller
                 ]);
 
                 // Create course-specific directory if not exists
-                $folderPath = "ins_logos/{$user_id}/ins_name";
+
+                $folderPath = "ins_profile/{$request->ins_name}/{$user_id}";
                 if (!Storage::disk('public')->exists($folderPath)) {
                     Storage::disk('public')->makeDirectory($folderPath);
                 }
+
                 // Handle course photo (image)
                 if ($request->hasFile('ins_profile_photo')) {
                     $photo = $request->file('ins_profile_photo');
                     $profile_photo = Str::random(20) . '.' . $photo->getClientOriginalExtension();
                     $photo->storeAs($folderPath, $profile_photo, 'public');
-
                 }
                 if ($request->hasFile('ins_lic_photo')) {
                     $photo = $request->file('ins_lic_photo');
@@ -94,26 +96,6 @@ class RegisteredUserController extends Controller
         //
 
 
-        // Create the user
-
-
-        //    if ($request->role === 1) {
-        //         // create institute
-        //         $user = User::create([
-        //             'name' =>  $request->ins_name,
-        //             'email' => $request->email,
-        //             'password' => Hash::make($request->password),
-        //             'role' => UserRole::InstituteRole ,
-        //         ]);
-        //     }  elseif ($request->role === 2) {
-        //         // create student
-        //         $user = User::create([
-        //             'name' =>  $request->name,
-        //             'email' => $request->email,
-        //             'password' => Hash::make($request->password),
-        //             'role' => UserRole::UserRole,
-        //         ]);
-        //     }
 
         $user = User::create([
             'name' => $request->role === UserRole::InstituteRole ? $request->ins_name : $request->name,
@@ -134,12 +116,11 @@ class RegisteredUserController extends Controller
 
 
 
-
-            $reg_ins=  Institute::create([
+                Institute::create([
                     'user_id_fk' => $user->id,
                     'ins_name' => $user->name,
-                    'ins_profile_photo' => $profile_photo ?? '',
-                    'ins_lic_photo' => $lic_photo ?? '',
+                    'ins_profile_photo' => "storage/{$folderPath}/{$profile_photo}" ?? '',
+                    'ins_lic_photo' => "storage/{$folderPath}/{$lic_photo}" ?? '',
                     'ins_is_verified' => false, // Default to false
 
                     // 'description' can be updated later
@@ -171,7 +152,7 @@ class RegisteredUserController extends Controller
             case UserRole::InstituteRole:
                 // return redirect()->route('institute');
 
-                return redirect()->route('institute_profile' , compact(''));
+                return redirect()->route('institute_profile');
             case UserRole::UserRole:
                 // return redirect()->route('user');
                 return redirect()->route('user_home');

@@ -47,9 +47,10 @@
                     {{--  --}}
                     {{--  --}}
                     {{--  --}}
-                    <form action="{{ route('institute.category.update', $category_info->id) }}"
-                        enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('institute.category.update', $category_info->id) }}"
+                       >
                         @csrf
+                        @method('PUT')
                         <label for="category_name" class="fw-bold mb-2">Your Category Name</label>
                         <input type="text" name="category_name" class="form-control"
                             placeholder="Languages | Computer ..." autocomplete="off"

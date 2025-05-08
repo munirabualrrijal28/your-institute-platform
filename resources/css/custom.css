@@ -29,195 +29,184 @@
     }
 }
 
-.main-color-back {
-    background-color: var(--main-color);
+
+@layer utilities {
+
+    .main-color-back {
+        background-color: var(--main-color);
 
 
-}
+    }
 
-.bg-green {
+    .bg-green {
 
-    background-color: var(--bs-green-light);
-}
+        background-color: var(--bs-green-light);
+    }
 
-.dark-gray-back {
+    .dark-gray-back {
 
-    background-color: var(--dark-gray);
+        background-color: var(--dark-gray);
 
-}
+    }
 
-.white-back {
+    .white-back {
 
-    background-color: var(--bs-secondary);
+        background-color: var(--bs-secondary);
 
-}
+    }
 
-.search-bar-above {
+    .search-bar-above {
 
-    z-index: 10;
-}
+        z-index: 10;
+    }
 
-.text-color {
-    color: var(--white);
-}
-
-
-/*  */
-.login-bt {
-    background-color: black;
-    border: 1px solid var(--main-color);
-    color: white;
-}
+    .text-color {
+        color: var(--white);
+    }
 
 
-/* logo image resiaze */
+    /*  */
+    .login-bt {
+        background-color: black;
+        border: 1px solid var(--main-color);
+        color: white;
+    }
 
-.logo {
-    height: 150px;
-    width: auto;
 
-}
+    /* logo image resiaze */
 
-@media (min-width: 768px) {
     .logo {
         height: 150px;
+        width: auto;
 
     }
-}
+
+    @media (min-width: 768px) {
+        .logo {
+            height: 150px;
+
+        }
+    }
 
 
-.reg-logo {
-    height: 100px;
-    width: auto;
-
-}
-
-@media (min-width: 768px) {
     .reg-logo {
-        height: 120px;
-
+        height: 100px;
+        width: auto;
 
     }
-}
 
-/* Main Page */
-/* in Cards Manage for make them flex  row */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+    @media (min-width: 768px) {
+        .reg-logo {
+            height: 120px;
 
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 250px;
-}
 
-.sidebar-content {
-    flex-grow: 1;
-    overflow-y: auto;
-}
+        }
+    }
 
-.sidebar-search {
+    /* Main Page */
+    /* in Cards Manage for make them flex  row */
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
 
-    width: auto;
-}
+    #sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 250px;
+    }
 
-.flex-container {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    border: 1px solid silver;
-    -ms-box-orient: horizontal;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: flex;
-}
+    .sidebar-content {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
 
-.nowrap {
-    -webkit-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-}
+    .sidebar-search {
 
-.wrap {
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
+        width: auto;
+    }
 
-.wrap li {
-    background: white;
-}
+    .flex-container {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        border: 1px solid silver;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+    }
 
-.wrap-reverse {
-    -webkit-flex-wrap: wrap-reverse;
-    flex-wrap: wrap-reverse;
-}
+    .nowrap {
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    }
 
-.wrap-reverse li {
-    background: deepskyblue;
-}
+    .wrap {
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
 
-.flex-item {
-    background: tomato;
-    padding: 5px;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
+    .wrap li {
+        background: white;
+    }
 
-    line-height: 100px;
-    color: white;
-    font-weight: bold;
-    font-size: 2em;
-    text-align: center;
-}
+    .wrap-reverse {
+        -webkit-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+    }
 
-/*  */
+    .wrap-reverse li {
+        background: deepskyblue;
+    }
 
-.delete-float {
+    .flex-item {
+        background: tomato;
+        padding: 5px;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
 
-    z-index: 200;
-    position: relative;
-    background-color: #000000;
-}
+        line-height: 100px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
 
-/*  */
-body.sidebar-collapsed #sidebar {
-    margin-left: -250px;
-    /* hide it */
-    transition: margin-left 0.3s ease;
-}
+    /*  */
 
-#sidebar {
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
-}
+    .delete-float {
 
-/*  */
-.margin-float {
+        z-index: 200;
+        position: relative;
+        background-color: #000000;
+    }
 
-    margin-top: 30px;
-}
+    /*  */
+    body.sidebar-collapsed #sidebar {
+        margin-left: -250px;
+        /* hide it */
+        transition: margin-left 0.3s ease;
+    }
 
-/*  */
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-}
+    #sidebar {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
 
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari, Opera */
-}
+    /*  */
+    .margin-float {
 
-/*  */
-@layer utilities {
+        margin-top: 30px;
+    }
+
+    /*  */
     .scrollbar-hide {
         -ms-overflow-style: none;
         /* IE and Edge */
@@ -229,7 +218,60 @@ body.sidebar-collapsed #sidebar {
         display: none;
         /* Chrome, Safari, Opera */
     }
+
+    /*  */
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
+    }
+
+
+
+    /*  */
+    /*  */
+    /* In your CSS (e.g., app.css or a style block) */
+    /* ✅ Full scrollbar hiding */
+    .hide-scrollbar {
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE/Edge */
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+        /* Chrome/Safari */
+    }
+
+
+
 }
+
+/*  */
+
+/*  */
+/*  */
+/*  */
+
+/*  */
+/*  */
+/*  */
+
+/*  */
+/*  */
+/*  */
+
+/*  */
+/*  */
+/*  */
 
 /*  */
 /*  */

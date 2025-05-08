@@ -140,8 +140,9 @@ class MasterCategoryController extends Controller
 
 
         // return redirect()->back()->with('message' , 'Category Deleted Successfully');
-        return redirect('institute/category/manage_category')->with('message' , 'Category Deleted Successfully');
+        // return redirect('institute/category/manage_category')->with('message' , 'Category Deleted Successfully');
 
+        return redirect('institute/institute_profile')->with('message' , 'Category Deleted Successfully');
 
     }
 

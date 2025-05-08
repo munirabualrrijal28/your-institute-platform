@@ -27,7 +27,7 @@ return new class extends Migration {
 
 
             // Prevent double-rating
-            $table->unique(['user_id_fk', 'rateable_type', 'rateable_id']);
+            $table->unique(['user_id_fk', 'type', 'rated_id']);
 
 
 
