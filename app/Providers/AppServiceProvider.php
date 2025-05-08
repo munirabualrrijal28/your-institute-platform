@@ -7,12 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use App\Constants\UserRole;
+
+use Illuminate\Pagination\Paginator;
+
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      */
+
     public static function  home_route() {
+
         // return Auth::user()->role == 1 ? route('institute.welcome') : route('user.welcome');
 //
         // return Auth::user()->role == 1 ? route('redirectToHome') : route('redirectToHome');
@@ -31,13 +37,14 @@ class AppServiceProvider extends ServiceProvider
 //         return  route('/'); // Fallback to login
 //    }
 
-
     }
 
 
     public function register(): void
     {
+
         //
+
     }
 
     /**
@@ -45,8 +52,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        
         //
             // Force redirect from root to role-based dashboard if authenticated
+
     if (Request::is('/') && Auth::check()) {
         $role = Auth::user()->role;
 
@@ -58,5 +67,11 @@ class AppServiceProvider extends ServiceProvider
             redirect()->route('user_home')->send();
         }
     }
+
+    Paginator::useTailwind();
+
     }
+
+
+
 }
