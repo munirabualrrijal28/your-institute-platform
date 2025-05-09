@@ -1,43 +1,34 @@
-# Use official PHP image with required extensions
-FROM php:8.2-cli
+# Use official PHP image
+FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    unzip \
-    libzip-dev \
-    zip \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+    git curl unzip zip libzip-dev libpng-dev libonig-dev libxml2-dev \
     && docker-php-ext-install pdo_mysql zip
 
-# Install Composer globally
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project files
+# Copy files
 COPY . .
 
-# Set permissions
+# Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Laravel setup
-RUN php artisan config:clear \
-   RUN php artisan config:clear \
-    && php artisan key:generate \
-    && php artisan migrate --force || true \
-    && php artisan config:cache
+# Set Laravel environment
+RUN php artisan config:clear && \
+    php artisan key:generate && \
+    php artisan migrate --force && \
+    php artisan config:cache
 
-
-# Expose the port Render expects
+# Render expects your server to run on port 8080
 EXPOSE 8080
 
-# Start Laravel's built-in server on port 8080
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+# Start Laravel app using PHP's built-in server
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
