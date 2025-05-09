@@ -1,22 +1,37 @@
-FROM php:8.2-fpm
+# Use PHP with Apache
+FROM php:8.2-apache
 
-RUN apt-get update && apt-get install -y \
-    git curl unzip zip libzip-dev libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo_mysql zip
+# Enable Apache rewrite module
+RUN a2enmod rewrite
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
+# Set working directory
 WORKDIR /var/www/html
 
+# Install PHP extensions
+RUN apt-get update && apt-get install -y \
+    libzip-dev zip unzip git curl \
+    && docker-php-ext-install pdo_mysql zip
+
+# Copy Laravel files
 COPY . .
 
+# Set permissions
 RUN chmod -R 775 storage bootstrap/cache
 
+# Install Composer dependencies
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
-EXPOSE 8080
+# Laravel setup
+RUN php artisan key:generate \
+    && php artisan config:cache
 
-CMD php artisan config:clear && \
-    php artisan config:cache && \
-    php artisan migrate --force && \
-    php -S 0.0.0.0:8080 -t public
+# Apache serves from /var/www/html/public
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Update Apache config to serve Laravel public folder
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+EXPOSE 80
+CMD ["apache2-foreground"]
