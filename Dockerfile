@@ -22,9 +22,6 @@ RUN chmod -R 775 storage bootstrap/cache
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Laravel setup
-RUN php artisan key:generate \
-    && php artisan config:cache
 
 # Apache serves from /var/www/html/public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
