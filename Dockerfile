@@ -32,6 +32,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN php artisan config:clear \
     && php artisan key:generate \
     && php artisan migrate --force || true
+	&& php artisan config:cache
 
 # Expose the port Render expects
 EXPOSE 8080
