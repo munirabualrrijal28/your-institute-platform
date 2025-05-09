@@ -1,5 +1,5 @@
 # Use official PHP image with required extensions
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -25,14 +25,16 @@ COPY . .
 # Set permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Install PHP dependencies without dev tools
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Laravel setup commands (you can customize for production)
+# Laravel setup
 RUN php artisan config:clear \
     && php artisan key:generate \
     && php artisan migrate --force || true
 
-# Expose port 9000 and start php-fpm
-EXPOSE 9000
-CMD ["php-fpm"]
+# Expose the port Render expects
+EXPOSE 8080
+
+# Start Laravel's built-in server on port 8080
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
