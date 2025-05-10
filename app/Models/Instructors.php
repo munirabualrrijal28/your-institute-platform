@@ -14,10 +14,10 @@ class Instructors extends Model
 
     //
      protected $fillable = [
-        'institute_id',
+        'institute_id_fk',
         'name',
         'email',
-        'Image_url',
+        'photo',
         'bio',
     ];
 

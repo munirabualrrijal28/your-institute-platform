@@ -1,5 +1,8 @@
 <?php
-namespace App\Livewire;
+
+
+
+namespace App\Livewire\CourseComments;
 
 use App\Models\Comments;
 use Livewire\Component;
@@ -50,3 +53,4 @@ class CommentCount extends Component
         return view('livewire.comment-count');
     }
 }
+

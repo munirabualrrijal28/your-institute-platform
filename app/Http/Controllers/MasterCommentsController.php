@@ -21,9 +21,12 @@ class MasterCommentsController extends Controller
             'parent_id' => 'nullable|integer'
         ]);
 
+
+
         $commentableModel = $request->commentable_type;
         $commentable = $commentableModel::findOrFail($request->commentable_id);
 
+        
         $comment = new Comments();
         $comment->content = $request->content;
         $comment->user_id_fk = Controller::getUserId();

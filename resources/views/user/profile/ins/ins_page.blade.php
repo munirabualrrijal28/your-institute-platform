@@ -29,10 +29,10 @@
                     {{-- <button class="w-full h-full rounded-xl bg-teal-500 hover:bg-teal-600">Follow</button> --}}
                     <form method="POST" action="{{ route('user.follow_institute', $institute->id) }}">
                         @csrf
-                        <button type="submit"
-                            class="{{ $isFollowing ? 'bg-teal-700 text-white' : 'bg-teal-500 text-white hover:bg-teal-600' }} w-full h-full rounded-xl font-semibold">
+                        <a type="submit"
+                            class="{{ $isFollowing ? 'bg-teal-700 text-white bt btn danger' : 'bg-teal-500 text-white hover:bg-teal-600 bt btn danger' }} w-full h-full rounded-xl font-semibold">
                             {{ $isFollowing ? 'Following' : 'Follow' }}
-                        </button>
+                    </a>
                     </form>
                     {{--  --}}
                 </div>

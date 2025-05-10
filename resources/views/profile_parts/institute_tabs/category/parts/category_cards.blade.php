@@ -61,9 +61,9 @@
 </div>
 
 <!-- Tailwind Pagination -->
-<div class="mt-6 flex justify-center">
+{{-- <div class="mt-6 flex justify-center">
     {!! $categories->withQueryString()->links() !!}
-</div>
+</div> --}}
 
 {{-- {{ $categories->appends(['activeTab' => 'courses'])->links('vendor.pagination.tailwind') }} --}}
 

@@ -32,6 +32,8 @@
      <script src="https://cdn.tailwindcss.com"></script>
      <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
      <script src="//unpkg.com/alpinejs" defer></script>
+     <script src="https://unpkg.com/feather-icons"></script>
+
 
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -103,7 +105,7 @@
                      class="block py-2 px-4 rounded hover:bg-teal-100 text-gray-700 font-medium hover:no-underline">
                      <i data-feather="settings" class="inline-block w-4 h-4 mr-2"></i> Settings
                  </a>
-            
+
 
                  <!-- Logout -->
                  <form method="POST" action="{{ route('logout') }}">
@@ -271,6 +273,14 @@
      {{--  --}}
      <script src="{{ asset('assets/js/app.js') }}"></script>
 
+<script>
+    document.addEventListener("livewire:load", () => {
+        // ✅ Re-render icons after every Livewire update
+        Livewire.hook('message.processed', () => {
+            feather.replace();
+        });
+    });
+</script>
      {{-- @livewireScripts --}}
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

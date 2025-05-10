@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CourseComments;
 
 use Livewire\Component;
 use App\Models\Comments;
@@ -106,7 +106,7 @@ class CommentItem extends Component
 
     public function render()
     {
-        return view('livewire.comment-item');
+        return view('livewire.course-comments.comment-item');
     }
 
     //

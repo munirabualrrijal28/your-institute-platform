@@ -6,15 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
+
     /**
      * Run the migrations.
      */
+
+
     public function up(): void
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
 
-            
+
             $table->unsignedBigInteger( 'user_id');
             $table->unsignedBigInteger( 'user_type');
             $table->unsignedBigInteger( 'institute_id_fk');
@@ -28,6 +32,7 @@ return new class extends Migration
             $table->foreign('institute_id_fk')->references('id')->on('institutes')->onDelete('cascade');
 
 
+            $table->index(['user_type', 'user_id']);
 
 
             $table->timestamps();

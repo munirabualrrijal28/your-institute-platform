@@ -9,6 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <style>
     .hide-scrollbar {
@@ -30,6 +32,7 @@
       }
     }
   </style>
+
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -123,7 +126,7 @@
       <h2 class="text-center text-2xl font-bold mb-6">Top Institutes</h2>
       <div class="flex overflow-x-auto gap-6 hide-scrollbar py-4">
         @foreach ($institutes as $institute)
-        <a href="{{ route('user.ins_profile', ['id' => $institute['id']]) }}" target="_blank"
+        <a href="{{ route('login', ['id' => $institute['id']]) }}" target="_blank"
           class="flex-shrink-0 w-48 bg-white shadow rounded-xl p-4 hover:scale-105 transition">
           <img src="{{ asset($institute['ins_profile_photo']) }}" class="w-20 h-20 mx-auto rounded-full object-cover mb-3">
           <p class="text-center text-sm font-semibold text-gray-800">{{ $institute['ins_name'] }}</p>
@@ -268,6 +271,9 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => feather.replace());
   </script>
+
+
+
 </body>
 
 </html>

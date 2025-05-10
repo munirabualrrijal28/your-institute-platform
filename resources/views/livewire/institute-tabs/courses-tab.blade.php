@@ -1,137 +1,243 @@
-@php use Illuminate\Support\Str; @endphp
-@extends('profile_parts.lib')
+<div class="space-y-6 ltr" dir="ltr">
 
-@section('lib_layout')
-
-<div class="space-y-6">
-    <!-- Add New Course Button and Form -->
-    <div class="bg-white p-6 rounded-xl shadow">
-        <div x-data="{ showForm: false }">
-            <button @click="showForm = !showForm"
-                class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-xl transition-all duration-300">
-                + أضف دورة جديدة
-            </button>
-
-            <div x-show="showForm" x-transition class="mt-6">
-                <form action="{{ route('institute.store.course') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="block font-medium mb-1">اسم الدورة</label>
-                        <input type="text" name="course_name" class="w-full border-gray-300 rounded-lg px-3 py-2"
-                            required value="{{ old('course_name') }}" placeholder="Course Name">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="block font-medium mb-1">التصنيف</label>
-                        <select name="category_id_fk" class="w-full border-gray-300 rounded-lg px-3 py-2" required>
-                            <option value="">-- اختر التصنيف --</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ old('category_id_fk') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->category_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="block font-medium mb-1">وصف الدورة</label>
-                        <textarea name="course_description" rows="4"
-                            class="w-full border-gray-300 rounded-lg px-3 py-2 resize-y">{{ old('course_description') }}</textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="block font-medium mb-1">الملفات المتعلقة</label>
-                        <input type="file" name="course_files[]" class="w-full border-gray-300 rounded-lg px-3 py-2"
-                            accept="image/*,video/*,audio/*" multiple>
-                    </div>
-
-                    <div class="text-end">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Course Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        @foreach ($courses as $course)
-            @php
-                $images = $course->media->filter(fn($media) => Str::startsWith($media->type, 'image/'));
-                $imageUrl = $images->isNotEmpty() ? asset('storage/' . $images->first()->url) : asset('images/default-course.jpg');
-            @endphp
-
-            <div x-data="{ showComments: false }" class="bg-white rounded-xl shadow-md p-4 flex flex-col h-full relative">
-                <!-- Course Image -->
-                <img src="{{ $imageUrl }}" alt="Course Image" class="h-40 w-full object-cover rounded-md mb-3">
-
-                <!-- Info -->
-                <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $course->course_name }}</h3>
-                <p class="text-sm text-gray-500 mb-2">{{ Str::limit($course->course_description, 80) }}</p>
-                <p class="text-xs text-gray-400">📅 {{ $course->created_at->diffForHumans() }}</p>
-
-                <!-- 💬 Comments Button -->
-                <button @click="showComments = true" class="text-blue-600 hover:underline text-sm mt-2">
-                    💬 Comments ({{ $course->comments->count() }})
-                </button>
-
-                <!-- Floating Comment Panel -->
-                <div x-show="showComments"
-                    class="fixed inset-0 bg-black bg-opacity-40 z-40"
-                    @click.self="showComments = false"
-                    x-transition>
-                    <div class="absolute right-0 top-0 h-full w-full sm:w-[450px] bg-white shadow-xl p-4 overflow-y-auto z-50">
-                        <div class="flex justify-between items-center border-b pb-2 mb-4">
-                            <h2 class="text-lg font-bold">Comments</h2>
-                            <button @click="showComments = false" class="text-gray-500 hover:text-red-500">✖</button>
-                        </div>
-
-                        <!-- Livewire Comment Section -->
-                        <livewire:course-comments :course="$course" :wire:key="'comments-'.$course->id" />
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex justify-between items-center pt-3 border-t mt-3">
-                    <form action="{{ route('institute.manage_course', ['edit_id' => $course->id, 'tab' => 'courses']) }}" method="GET">
-                        <input type="hidden" name="edit_id" value="{{ $course->id }}">
-                        <button type="submit" class="btn btn-primary">
-                            <i data-feather="edit"></i>
-                        </button>
-                    </form>
-                    <form action="{{ route('institute.delete.course', $course->id) }}" method="POST" class="delete-form">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">
-                            <i data-feather="delete"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
- 
-
-<!-- Delete Confirm -->
-<script>
-    function confirmDelete(button) {
-        const form = button.closest('form');
+    {{--  --}}
+    {{--
+    <div x-data x-init="window.confirmCourseDelete = (id) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Everything related to this course will be deleted too!",
+            title: 'هل أنت متأكد؟',
+            text: 'سيتم حذف هذه الدورة نهائيًا!',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'نعم، احذف',
+            cancelButtonText: 'إلغاء'
         }).then((result) => {
             if (result.isConfirmed) {
-                form.submit();
+                window.Livewire.dispatch('confirmCourseDelete', { id });
             }
         });
-    }
-</script>
+    };"></div> --}}
 
-@endsection
+
+    {{-- <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head> --}}
+    {{--  --}}
+    <div class="bg-white rounded-2xl p-6 shadow-md space-y-4 border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800">
+            {{ $editing ? 'تعديل الدورة' : 'إضافة دورة جديدة' }}
+        </h2>
+        @if (session('message'))
+            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition
+                class="bg-green-100 text-green-800 p-3 rounded-lg shadow">
+                {{ session('message') }}
+            </div>
+        @endif
+        <form wire:submit.prevent="saveCourse" wire:key="form-{{ $formKey }}" class="space-y-4"
+            x-data="{ isUploading: false }" x-on:livewire-upload-start="isUploading = true"
+            x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false">
+
+            {{-- Course Name --}}
+            <div>
+                <label class="block font-medium text-sm mb-1">اسم الدورة</label>
+                <input type="text" wire:model.defer="course_name"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    required />
+                @error('course_name')
+                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {{-- Course Description --}}
+            <div>
+                <label class="block font-medium text-sm mb-1">وصف الدورة</label>
+                <textarea wire:model.defer="course_description"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    required></textarea>
+                @error('course_description')
+                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {{-- Category Dropdown --}}
+            <div>
+                <label class="block font-medium text-sm mb-1">الفئة</label>
+                <select wire:model.defer="category_id"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                    <option value="">اختر فئة</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {{-- Image Upload --}}
+            {{-- Image Upload --}}
+            <div>
+                <label class="block font-medium text-sm mb-1">صور الدورة</label>
+                <input type="file" wire:model="images" multiple class="w-full" />
+
+                {{-- Preview --}}
+                @if ($images)
+                    <div class="flex space-x-2 mt-2">
+                        @foreach ($images as $image)
+                            <img src="{{ $image->temporaryUrl() }}"
+                                class="w-20 h-20 object-cover rounded border shadow" />
+                        @endforeach
+                    </div>
+                @elseif ($existingImage)
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/' . $existingImage) }}"
+                            class="w-20 h-20 object-cover rounded border shadow" />
+                    </div>
+                @endif
+
+                @error('images.*')
+                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            {{-- Submit Buttons --}}
+            <div class="flex justify-end space-x-4">
+                <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold transition-all"
+                    x-bind:disabled="isUploading">
+                    <span x-show="!isUploading">{{ $editing ? 'تحديث' : 'إضافة' }}</span>
+                    <span x-show="isUploading" class="flex items-center">
+                        <svg class="animate-spin h-5 w-5 text-white mr-2" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4" />
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                        </svg>
+                        جاري رفع الصور...
+                    </span>
+                </button>
+
+                @if ($editing)
+                    <button type="button" wire:click="resetForm"
+                        class="bg-gray-400 hover:bg-gray-500 text-white px-5 py-2 rounded-lg font-semibold">
+                        إلغاء
+                    </button>
+                @endif
+            </div>
+
+        </form>
+    </div>
+
+
+    {{--  --}}
+    {{--  --}}
+    {{--  --}}
+    {{--  --}}
+    {{--  --}}
+
+
+
+
+
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+        @foreach ($courses as $course)
+            <div wire:key="course-{{ $course->id }}"
+                class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+
+                {{-- Course Image --}}
+                <div class="h-48 overflow-hidden">
+                    <img src="{{ $course->media->first() ? asset('storage/' . $course->media->first()->url) : asset('/images/default-course.jpg') }}"
+                        alt="{{ $course->course_name }}" class="w-full h-full object-cover" />
+                </div>
+
+                {{-- Course Info --}}
+                <div class="p-4 flex-1 flex flex-col justify-between space-y-2 text-right">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 truncate">{{ $course->course_name }}</h3>
+                        <p class="text-sm text-gray-600 line-clamp-3">{{ $course->course_description }}</p>
+                    </div>
+
+                    {{-- Actions --}}
+                    <div class="flex justify-between items-center pt-2">
+                        {{-- Comment Icon/Button --}}
+                        <button wire:click="$emit('openComments', {{ $course->id }})"
+                            class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
+                            {{-- <x-heroicon-o-chat-alt class="w-5 h-5" /> --}}
+                            <span class="text-sm">تعليقات</span>
+                        </button>
+
+                        {{-- Edit/Delete (optional) --}}
+                        <div class="flex space-x-3">
+                            <button wire:click="editCourse({{ $course->id }})" title="تعديل"
+                                class="text-gray-500 hover:text-blue-600">
+                                <x-heroicon-s-pencil class="w-5 h-5" />
+                            </button>
+
+                            {{--  --}}
+                            {{-- <button onclick="confirmCourseDelete({{ $course->id }})" title="حذف"
+                                class="text-gray-500 hover:text-red-600">
+                            <x-heroicon-s-trash class="w-5 h-5" />
+                        </button> --}}
+                            {{-- <button wire:click="confirmCourseDelete({{ $course->id }})"
+                                class="text-red-600 hover:text-red-800 transition" title="حذف"> --}}
+                            {{-- <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg> --}}
+                            {{-- <x-heroicon-s-trash class="w-5 h-5" />
+                            </button> --}}
+                            {{--  --}}
+
+                            {{-- <button onclick="confirmDelete({{ $course->id }})"
+    class="text-red-600 hover:text-red-800 transition" title="حذف">
+    <x-heroicon-s-trash class="w-5 h-5" />
+</button> --}}
+                            <button wire:click="$dispatch('confirmCourseDelete', {{ $course->id }})"
+                                class="text-red-600 hover:text-red-800 transition" title="حذف">
+                                <x-heroicon-s-trash class="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        @endforeach
+
+    </div>
+
+
+
+    {{--  --}}
+
+
+    {{--  --}}
+
+
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('confirmCourseDelete', courseId => {
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: 'سيتم حذف الدورة نهائيًا!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'نعم، احذف',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('deleteConfirmedCourse', {
+                            id: courseId
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</div>

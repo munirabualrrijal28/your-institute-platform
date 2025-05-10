@@ -11,7 +11,7 @@ class Advertisements extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'content', 'institute_id_fk'];
+    protected $fillable = [ 'content', 'institute_id_fk' , 'user_id' , 'user_type'];
 
     public function institute()
     {
@@ -26,6 +26,10 @@ class Advertisements extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
+    }
+        public function user()
+    {
+        return $this->morphTo(); // handles both Admin or Institute
     }
 }
 

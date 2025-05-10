@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Institute;
 
 use App\Http\Controllers\Controller;
+use App\Models\Followers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Institute;
 use Illuminate\Http\Request;
@@ -29,7 +30,9 @@ class InstituteMainController extends Controller
     public function institute_profile (){
         // return view('institute.home.home');
            //
-           $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
+           $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
+
+        //    $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
 // ProfileController.php
 // $institute = Cache::remember('institute_' . Auth::id(), 3600, function () {
 //     return auth()->user()->institute;
@@ -42,7 +45,11 @@ class InstituteMainController extends Controller
     }
 
     public function institute_settings (){
-        return view('institute.institute_settings');
+
+        $ins = Controller::getInstituteId();
+        $followers = Followers::where('institute_id_fk' , $ins )->paginate(8);;
+
+        return view('institute.settings.institute_settings' , compact('followers'));
 
     }
 

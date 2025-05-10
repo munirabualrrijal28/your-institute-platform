@@ -17,11 +17,10 @@ class Category extends Model
     ];
 
 
-    public function course_advs(){
+    public function courses() {
+    return $this->hasMany(Courses::class, 'category_id_fk');
+}
 
-        return $this->hasMany(CourseAdv::class , 'category_id_fk');
-
-    }
     public function institute()
 {
     return $this->belongsTo(Institute::class , 'institute_id_fk');

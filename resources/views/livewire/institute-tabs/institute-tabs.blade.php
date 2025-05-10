@@ -1,40 +1,27 @@
-<div class="w-full">
-    <!-- Tabs -->
-    <div class="bg-teal-600 text-white px-6 py-2 flex flex-wrap gap-3 justify-center">
-        @foreach([
-            'instructors' => 'الكادر',
-            'courses' => 'الكورسات',
-            'categories' => 'الأقسام',
-            'ads' => 'الإعلانات'
-        ] as $tab => $label)
-            <button wire:click="$set('activeTab', '{{ $tab }}')"
-                class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200
-                {{ $activeTab === $tab ? 'bg-white text-teal-600' : 'hover:bg-teal-700' }}">
-                {{ $label }}
-            </button>
-        @endforeach
-    </div>
-
-    <!-- Tab Content -->
-    <div class="container mx-auto px-6 py-8">
-        @if($activeTab === 'instructors')
-            <livewire:institute-tabs.instructors-tab />
-        @elseif($activeTab === 'courses')
-            <livewire:institute-tabs.courses-tab />
-        @elseif($activeTab === 'categories')
-            <livewire:institute-tabs.categories-tab />
-        @elseif($activeTab === 'ads')
-            <livewire:institute-tabs.ads-tab />
-        @endif
-    </div>
+<div>
+    {{-- Tab Navigation --}}
+  <div class="flex justify-center space-x-4 mb-6 px-4">
+    @foreach (['instructors' => 'المدربين', 'categories' => 'الفئات', 'courses' => 'الدورات', 'advertisements' => 'الإعلانات'] as $tab => $label)
+        <button
+            wire:click="setTab('{{ $tab }}')"
+            class="px-4 py-2 rounded-xl transition font-semibold
+            {{ $activeTab === $tab ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-800' }}">
+            {{ $label }}
+        </button>
+    @endforeach
 </div>
 
-@push('scripts')
-<script>
-    document.addEventListener("livewire:load", () => {
-        Livewire.hook('message.processed', () => {
-            feather.replace();
-        });
-    });
-</script>
-@endpush
+<div class="px-4 mt-4">
+    @if ($activeTab === 'instructors')
+        <livewire:institute-tabs.instructors-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'categories')
+        <livewire:institute-tabs.categories-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'courses')
+        <livewire:institute-tabs.courses-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'advertisements')
+        <livewire:institute-tabs.advertisements-tab :institute-id="$instituteId" />
+    @endif
+</div>
+
+</div>
+

@@ -65,6 +65,14 @@ public function store_course_adv(Request $request)
 
     return redirect()->back()->with('message', 'Course Advertisement Added Successfully');
 }
+
+
+
+
+
+
+
+
     public function get_edit_course_adv($id)
     {
         $course = Courses::findOrFail($id);
