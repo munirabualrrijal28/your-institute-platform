@@ -1,35 +1,40 @@
-# Use PHP with Apache
-FROM php:8.2-apache
+# Use official PHP image
+FROM php:8.2-fpm
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    unzip \
+    zip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql zip
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install PHP extensions
-RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git curl \
-    && docker-php-ext-install pdo_mysql zip
-
-# Copy Laravel files
+# Copy project files
 COPY . .
 
-# Set permissions
+# Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Install Composer dependencies
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Laravel setup
+RUN php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan key:generate
 
-# Apache serves from /var/www/html/public
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+# Expose the port Laravel will run on
+EXPOSE 8080
 
-# Update Apache config to serve Laravel public folder
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-EXPOSE 80
-CMD ["apache2-foreground"]
+# Run Laravel development server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]

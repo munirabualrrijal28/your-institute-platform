@@ -12,104 +12,79 @@ use Illuminate\Support\Collection;
 class CourseComments extends Component
 {
 
-    public $courseId;
-    public $commentText = '';
-    public $replyText = '';
-    public $replyTo = null;
+     public $courseId;
+    public $newComment = '';
+    public $newReply = [];
+    public $editCommentId = null;
+    public $editContent = '';
 
-    public function mount($courseId)
-    {
-        $this->courseId = $courseId;
-    }
+    protected $rules = [
+        'newComment' => 'required|string|max:1000',
+    ];
 
-    public function postComment()
+    public function addComment()
     {
-        $this->validate(['commentText' => 'required|string']);
+        $this->validate();
 
         Comments::create([
             'user_id' => Auth::id(),
             'commentable_id' => $this->courseId,
             'commentable_type' => Courses::class,
-            'body' => $this->commentText,
+            'content' => $this->newComment,
         ]);
 
-        $this->commentText = '';
+        $this->newComment = '';
     }
 
-    public function postReply($parentId)
+    public function addReply($parentId)
     {
-        $this->validate(['replyText' => 'required|string']);
+        if (empty($this->newReply[$parentId])) return;
 
         Comments::create([
             'user_id' => Auth::id(),
             'commentable_id' => $this->courseId,
             'commentable_type' => Courses::class,
+            'content' => $this->newReply[$parentId],
             'parent_id' => $parentId,
-            'body' => $this->replyText,
         ]);
 
-        $this->replyText = '';
-        $this->replyTo = null;
+        $this->newReply[$parentId] = '';
     }
 
-    public function setReplyTo($commentId)
+    public function startEdit($commentId, $content)
     {
-        $this->replyTo = $commentId;
+        $this->editCommentId = $commentId;
+        $this->editContent = $content;
+    }
+
+    public function updateComment()
+    {
+        $this->validate(['editContent' => 'required|string|max:1000']);
+
+        $comment = Comments::findOrFail($this->editCommentId);
+        $comment->update(['content' => $this->editContent]);
+
+        $this->editCommentId = null;
+        $this->editContent = '';
+    }
+
+    public function deleteComment($id)
+    {
+        $comment = Comments::findOrFail($id);
+        $comment->delete();
     }
 
     public function render()
     {
-        $comments = Comments::with('replies', 'user')
-            ->where('commentable_type', Courses::class)
+        $comments = Comments::where('commentable_type', Courses::class)
             ->where('commentable_id', $this->courseId)
             ->whereNull('parent_id')
+            ->with(['replies'])
             ->latest()
             ->get();
 
-        return view('livewire.course-comments.course-comments', [
-            'comments' => $comments,
-        ]);
+        return view('livewire.course-comments.course-comments', compact('comments'));
     }
-
-
-
-public $editCommentId = null;
-public $editedText = '';
-
-public function startEdit($commentId, $currentText)
-{
-    $this->editCommentId = $commentId;
-    $this->editedText = $currentText;
-}
-
-public function updateComment()
-{
-    $this->validate(['editedText' => 'required|string']);
-
-    $comment = Comments::findOrFail($this->editCommentId);
-
-    if ($comment->user_id === Auth::id()) {
-        $comment->update(['body' => $this->editedText]);
-        $this->editCommentId = null;
-        $this->editedText = '';
-    }
-}
-
-public function cancelEdit()
-{
-    $this->editCommentId = null;
-    $this->editedText = '';
-}
-
-public function deleteComment($commentId)
-{
-    $comment = Comments::findOrFail($commentId);
-
-    if ($comment->user_id === Auth::id()) {
-        $comment->replies()->delete(); // optional: delete replies too
-        $comment->delete();
-    }
-}
 
 
 

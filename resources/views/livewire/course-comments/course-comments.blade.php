@@ -39,6 +39,49 @@
         @endif
 
         {{-- replies would go here --}}
+        <div>
+    {{-- New Comment Input --}}
+    <textarea wire:model.defer="newComment" class="w-full rounded border p-2" placeholder="أضف تعليقًا..."></textarea>
+    <button wire:click="addComment" class="mt-2 bg-blue-500 text-white px-4 py-1 rounded">نشر</button>
+
+    <div class="mt-6 space-y-4">
+        @foreach($comments as $comment)
+            <div class="border rounded p-3">
+                @if ($editCommentId === $comment->id)
+                    <textarea wire:model.defer="editContent" class="w-full border p-2 rounded"></textarea>
+                    <div class="flex gap-2 mt-2">
+                        <button wire:click="updateComment" class="bg-green-500 text-white px-3 py-1 rounded">حفظ</button>
+                        <button wire:click="$set('editCommentId', null)" class="text-gray-600">إلغاء</button>
+                    </div>
+                @else
+                    <div class="text-gray-800">{{ $comment->content }}</div>
+                    <div class="text-sm text-gray-500 flex gap-3 mt-2">
+                        <button wire:click="startEdit({{ $comment->id }}, '{{ addslashes($comment->content) }}')">تعديل</button>
+                        <button wire:click="deleteComment({{ $comment->id }})" class="text-red-600">حذف</button>
+                    </div>
+                @endif
+
+                {{-- Replies --}}
+                <div class="ml-6 mt-3 space-y-2">
+                    @foreach ($comment->replies as $reply)
+                        <div class="border rounded p-2 bg-gray-50">
+                            {{ $reply->content }}
+                            <div class="text-sm text-gray-500 mt-1">– {{ $reply->user->name ?? 'مستخدم' }}</div>
+                        </div>
+                    @endforeach
+
+                    <div>
+                        <textarea wire:model.defer="newReply.{{ $comment->id }}" class="w-full border rounded p-2 mt-2"
+                                  placeholder="رد..."></textarea>
+                        <button wire:click="addReply({{ $comment->id }})"
+                                class="mt-1 bg-gray-300 px-3 py-1 rounded">رد</button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
+
     </div>
 @endforeach
 
