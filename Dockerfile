@@ -28,6 +28,8 @@ RUN chmod -R 775 storage bootstrap/cache
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+COPY .env.example .env
+
 # Laravel setup
 RUN php artisan config:clear && \
     php artisan config:cache && \

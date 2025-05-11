@@ -147,7 +147,31 @@
     <div class="mt-6">
         {{ $categories->links('pagination::tailwind') }}
     </div>
+
+      {{-- SweetAlert Delete --}}
     <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('confirmCategoryDelete', courseId => {
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: 'سيتم حذف الدورة نهائيًا!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'نعم، احذف',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('deleteConfirmedCategory', {
+                            id: courseId
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    {{-- <script>
         function confirmCategoryDelete(id) {
             Swal.fire({
                 title: 'هل أنت متأكد؟',
@@ -190,7 +214,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
 
 </div>

@@ -32,7 +32,7 @@ class CoursesTab extends Component
         'confirmDelete' => 'deleteCourse'
 
         ,
-        'confirmDeleteCourse' => 'deleteCourse'
+        'confirmDeleteCourse' => 'deleteConfirmedCourse'
     ];
     protected $rules = [
         'course_name' => 'required|string|max:255',
@@ -49,15 +49,15 @@ class CoursesTab extends Component
 
     public function resetForm()
     {
-      $this->courseId = null;
-    $this->course_name = '';
-    $this->course_description = '';
-    $this->category_id = '';
-    $this->images = [];
-    $this->existingImage = null;
-    $this->editing = false;
-    $this->formKey = uniqid();
-    $this->resetValidation();
+        $this->courseId = null;
+        $this->course_name = '';
+        $this->course_description = '';
+        $this->category_id = '';
+        $this->images = [];
+        $this->existingImage = null;
+        $this->editing = false;
+        $this->formKey = uniqid();
+        $this->resetValidation();
     }
 
     public function saveCourse()
@@ -103,6 +103,7 @@ class CoursesTab extends Component
 
     public function editCourse($id)
     {
+        // dd($id);
         $course = Courses::findOrFail($id);
 
         $this->courseId = $course->id;
@@ -131,8 +132,25 @@ class CoursesTab extends Component
     }
 
 
+    // public function deleteCourse($id)
+    // {
+    //     $course = Courses::findOrFail($id);
+
+    //     // Delete images
+    //     foreach ($course->media as $media) {
+    //         Storage::disk('public')->delete($media->url);
+    //         $media->delete();
+    //     }
+
+    //     $course->delete();
+    //     session()->flash('message', 'تم حذف الدورة بنجاح');
+    // }
+
+
+
     #[On('deleteConfirmedCourse')]
-    public function deleteCourse($id)
+
+    public function deleteConfirmedCourse($id)
     {
         $course = Courses::findOrFail($id);
 
@@ -145,6 +163,7 @@ class CoursesTab extends Component
         $course->delete();
         session()->flash('message', 'تم حذف الدورة بنجاح');
     }
+
 
     public function confirmDelete($courseId)
     {

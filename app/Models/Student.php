@@ -17,10 +17,10 @@ class Student extends Model
         return $this->belongsTo(User::class, 'user_id_fk');
     }
 
-    public function followedInstitutes()
-    {
-        return $this->belongsToMany(Institute::class, 'followers', 'student_id_fk', 'institute_id_fk');
-    }
+   public function followedInstitutes()
+{
+    return $this->belongsToMany(Institute::class, 'followers', 'student_id_fk', 'institute_id_fk');
+}
 
 
     public function media()

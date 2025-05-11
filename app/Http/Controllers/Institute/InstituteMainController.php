@@ -10,15 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 class InstituteMainController extends Controller
 {
-    public function index (){
+    public function index()
+    {
         // return view('institute.dashboard');
         //
         // return view('institute.home.home');
 
         //
-        $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
+   $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
 
-        return view('institute.profile.institute_profile', compact('institute'));
+        $followers_count = $institute->followers()->count();
+
+        return view('institute.profile.institute_profile', compact(['institute', 'followers_count']));
 
     }
     // public function ins_welcome (){
@@ -27,29 +30,28 @@ class InstituteMainController extends Controller
 
     // }
 
-    public function institute_profile (){
+    public function institute_profile()
+    {
         // return view('institute.home.home');
-           //
-           $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
+        //
+        $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
 
-        //    $institute = Institute::where('user_id_fk', $this->get_ins_id())->first();
-// ProfileController.php
-// $institute = Cache::remember('institute_' . Auth::id(), 3600, function () {
-//     return auth()->user()->institute;
-// });
-        //    return view('institute.home.home', compact('institute'));
-        return view('institute.profile.institute_profile', compact('institute'));
+        $followers_count = $institute->followers()->count();
+
+        return view('institute.profile.institute_profile', compact(['institute', 'followers_count']));
 
 
 
     }
 
-    public function institute_settings (){
+    public function institute_settings()
+    {
 
-        $ins = Controller::getInstituteId();
-        $followers = Followers::where('institute_id_fk' , $ins )->paginate(8);;
+        $institute = Controller::getInstituteId();
+        $followers_count = $institute->followers()->count();
+        $followers = $institute->followers();
 
-        return view('institute.settings.institute_settings' , compact('followers'));
+        return view('institute.settings.institute_settings', compact(['followers_count' , 'institute' , 'followers']));
 
     }
 
@@ -60,7 +62,8 @@ class InstituteMainController extends Controller
 
     // }
 
-    public function get_ins_id(){
+    public function get_ins_id()
+    {
         // In your controller or anywhere where you need the user’s institute ID
         $userId = Auth::id();
         // Step 1: Get the current user's ID
@@ -84,17 +87,17 @@ class InstituteMainController extends Controller
 
     //
     public function ins_profile($id)
-{
-    $institute = Institute::with('user')->findOrFail($id);
-    $isFollowing = false;
+    {
+        $institute = Institute::with('user')->findOrFail($id);
+        $isFollowing = false;
 
-if (Auth::check() && Auth::user()->role === 3) {        // 3 = student
-        $studentId = Auth::user()->student->id;
-        $isFollowing = $institute->followers()->where('student_id_fk', $studentId)->exists();
+        if (Auth::check() && Auth::user()->role === 3) {        // 3 = student
+            $studentId = Auth::user()->student->id;
+            $isFollowing = $institute->followers()->where('student_id_fk', $studentId)->exists();
+        }
+
+        return view('user.pages.institute_profile', compact('institute', 'isFollowing'));
     }
-
-    return view('user.pages.institute_profile', compact('institute', 'isFollowing'));
-}
 
 }
 

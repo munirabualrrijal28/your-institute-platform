@@ -13,6 +13,7 @@ use App\Http\Controllers\Institute\CategoryInstituteController;
 use App\Http\Controllers\Institute\InstituteMainController;
 use App\Http\Controllers\Institute\CourseAdvInstituteController;
 use App\Http\Controllers\Institute\CourseAdvReviewsInstituteController;
+use App\Http\Controllers\Institute\NotificationInstituteController;
 use App\Http\Controllers\MasterAdController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Http\Controllers\MasterCourseAdvController;
@@ -151,6 +152,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:institute'])->group(function
 
 
 
+
+
         });
 
         Route::controller(CategoryInstituteController::class)->group(function () {
@@ -176,6 +179,15 @@ Route::middleware(['auth', 'verified', 'rolemanager:institute'])->group(function
             Route::get('institute_profile/ad/manage_ads', 'manage_ad')->name('institute.manage_ad');
 
             //   Route::get('/course/manage' , 'manage')->name('institute.manage_course_adv');
+
+        });
+        Route::controller(NotificationInstituteController::class)->group(function () {
+
+            // ✅ Mark all notifications as read
+            Route::post('/notifications/mark-read', function () {
+                Auth::user()->unreadNotifications->markAsRead();
+                return back();
+            })->name('notifications.markRead');
 
         });
         //
@@ -297,19 +309,20 @@ Route::middleware(['auth', 'verified', 'rolemanager:user'])->group(function () {
             Route::get('/user_search', 'user_search')->name('user_search');
 
             //
+            // Route::get('/institute_profile/ins_page', 'ins_page')->name('user.ins_page');
 
             //
             Route::get('/user_ins_profile/{id}', 'user_ins_profile')->name('user.user_ins_profile');
             Route::get('/user_all_ins', 'user_all_ins')->name('user.all_ins');
 
-            Route::post('/follow/institute/{id}',  'follow')->name('user.follow_institute');
+            Route::post('/follow/institute/{institute}', 'toggleFollow')->name('user.follow_institute');
 
-//
+            //
 
 
         });
 
-           Route::controller(MasterCommentsController::class)->group(function () {
+        Route::controller(MasterCommentsController::class)->group(function () {
             Route::post('/comments', 'store_comment')->name('user.comments_store');
 
 

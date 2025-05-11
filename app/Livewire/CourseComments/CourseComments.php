@@ -18,6 +18,18 @@ class CourseComments extends Component
     public $editCommentId = null;
     public $editContent = '';
 
+
+protected $listeners = [
+    'deleteConfirmedComment' => 'deleteComment',
+    'deleteConfirmedReply' => 'deleteReply',
+];
+
+
+public function mount($courseId)
+{
+    $this->courseId = $courseId;
+}
+
     protected $rules = [
         'newComment' => 'required|string|max:1000',
     ];
@@ -68,11 +80,11 @@ class CourseComments extends Component
         $this->editContent = '';
     }
 
-    public function deleteComment($id)
-    {
-        $comment = Comments::findOrFail($id);
-        $comment->delete();
-    }
+    // public function deleteComment($id)
+    // {
+    //     $comment = Comments::findOrFail($id);
+    //     $comment->delete();
+    // }
 
     public function render()
     {
@@ -91,13 +103,42 @@ class CourseComments extends Component
 
 
 
+public function deleteConfirmedComment($id)
+{
+    $comment = Comments::findOrFail($id);
+    if (Auth::id() === $comment->user_id) {
+        $comment->delete();
+        $this->loadComments(); // Make sure this reloads comments properly
+    }
+}
+
+
+//
+
+public function confirmDeleteComment($commentId)
+{
+    $this->dispatch('confirmCommentDelete', $commentId);
+}
+
+public function deleteComment($commentId)
+{
+    Comments::where('id', $commentId)->orWhere('parent_id', $commentId)->delete();
+}
+
+public function confirmDeleteReply($replyId)
+{
+    $this->dispatch('confirmReplyDelete', $replyId);
+}
+
+public function deleteReply($replyId)
+{
+    Comments::findOrFail($replyId)->delete();
+}
 
 
 
 
-
-
-
+//
 
     // public $comments = [];
     // /** @var Collection $comments */

@@ -13,7 +13,7 @@
       <!-- Right Column: Followers and Posts -->
       <div class="grid grid-cols-2 w-full text-center">
         <div class="flex flex-col items-center justify-center">
-          <p class="text-xl font-bold text-gray-900">{{'0'}}</p>
+          <p class="text-xl font-bold text-gray-900">{{$following->count()}}</p>
           <p id="user_following" class="text-sm text-gray-500">المتابعات</p>
         </div>
 
@@ -24,7 +24,7 @@
 
         <!-- Name + Verified Icon -->
         <div class="flex items-center gap-2">
-          <h1 class="text-2xl font-bold text-gray-800">{{$current_ins->ins_name}}</h1>
+<h1 class="text-2xl font-bold text-gray-800">{{ $current_stu->user->name }}</h1>
           {{-- <img src="{{ asset('/images/icons/verified.svg') }}" alt="Verified" class="w-5 h-5" title="Verified Institute"> --}}
         </div>
 

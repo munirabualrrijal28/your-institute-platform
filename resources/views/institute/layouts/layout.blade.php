@@ -62,11 +62,11 @@
 
  <body class="relative d-flex flex-column min-vh-100" data-bs-scroll="true">
 
-    <div class="bg-teal-600   h-[100px] d-flex align-items-center text-center justify-center ">
-        <h3 class="text-white font-bold">
-            Welcome in Your-Institute Platform
-        </h3>
-    </div>
+     <div class="bg-teal-600   h-[100px] d-flex align-items-center text-center justify-center ">
+         <h3 class="text-white font-bold">
+             Welcome in Your-Institute Platform
+         </h3>
+     </div>
 
 
 
@@ -134,39 +134,53 @@
                      <!-- Right Section: Nav Items -->
                      <div x-data="{ open: false }" class="relative">
 
-                        <!-- 🔔 Notification Bell -->
-                        <button @click="open = !open" class="relative focus:outline-none">
-                            <i data-feather="bell"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                                4
-                            </span>
-                        </button>
+                         <!-- 🔔 Notification Bell -->
+                         <button @click="open = !open" class="relative focus:outline-none">
+                             <i data-feather="bell"></i>
+                             <span
+                                 class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                                 4
+                             </span>
+                         </button>
 
-                        <!-- ⬇️ Dropdown Panel -->
-                        <div x-show="open"
-                             x-transition:enter="transition ease-out duration-200"
+                         <!-- ⬇️ Dropdown Panel -->
+                         <div x-show="open" x-transition:enter="transition ease-out duration-200"
                              x-transition:enter-start="opacity-0 translate-y-2"
                              x-transition:enter-end="opacity-100 translate-y-0"
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 translate-y-0"
-                             x-transition:leave-end="opacity-0 translate-y-2"
-                             @click.outside="open = false"
+                             x-transition:leave-end="opacity-0 translate-y-2" @click.outside="open = false"
                              class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-50 overflow-hidden">
 
-                            <div class="px-4 py-2 border-b font-semibold text-gray-700">4 New Notifications</div>
+                             <div class="px-4 py-2 border-b font-semibold text-gray-700">4 New Notifications</div>
 
-                            <div class="divide-y divide-gray-200">
+                             {{-- <div class="divide-y divide-gray-200">
                                 <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">New comment on your course</div>
                                 <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">New follower</div>
                                 <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">Profile update approved</div>
                                 <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">1 new message</div>
-                            </div>
+                            </div> --}}
+                            {{--  --}}
+                            <form method="POST" action="{{ route('notifications.markRead') }}">
+    @csrf
 
-                            <div class="px-4 py-2 border-t text-sm text-center text-blue-600 hover:underline cursor-pointer">
-                                Show all notifications
-                            </div>
-                        </div>
-                    </div>
+                             @foreach (Auth::user()->unreadNotifications as $notification)
+                                 <div class="bg-white p-4 rounded shadow mb-2">
+                                     <p>{{ $notification->data['message'] }}</p>
+                                     <small
+                                         class="text-gray-500">{{ $notification->created_at->diffForHumans() }}</small>
+                                 </div>
+                             @endforeach
+
+                                <button class="text-sm text-blue-600 hover:underline">تمييز الكل كمقروء</button>
+</form>
+{{--  --}}
+                             <div
+                                 class="px-4 py-2 border-t text-sm text-center text-blue-600 hover:underline cursor-pointer">
+                                 Show all notifications
+                             </div>
+                         </div>
+                     </div>
 
 
                      {{--  --}}
@@ -273,14 +287,14 @@
      {{--  --}}
      <script src="{{ asset('assets/js/app.js') }}"></script>
 
-<script>
-    document.addEventListener("livewire:load", () => {
-        // ✅ Re-render icons after every Livewire update
-        Livewire.hook('message.processed', () => {
-            feather.replace();
-        });
-    });
-</script>
+     <script>
+         document.addEventListener("livewire:load", () => {
+             // ✅ Re-render icons after every Livewire update
+             Livewire.hook('message.processed', () => {
+                 feather.replace();
+             });
+         });
+     </script>
      {{-- @livewireScripts --}}
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
