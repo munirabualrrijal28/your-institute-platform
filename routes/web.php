@@ -50,6 +50,14 @@ use App\Models\User;
 Route::get('/health', function () {
     return response()->json(['status' => 'ok']);
 });
+Route::get('/debug', function () {
+    return [
+        'env' => app()->environment(),
+        'key_set' => config('app.key') !== null,
+        'db' => DB::connection()->getDatabaseName(),
+        'pusher_key' => config('broadcasting.connections.pusher.key'),
+    ];
+});
 
 Route::get('/', RootRedirectController::class)->name('root');
 // guest
