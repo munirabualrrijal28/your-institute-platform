@@ -2,45 +2,57 @@
 
 namespace App\Livewire\StudentTabs;
 
+use App\Models\Advertisements;
+use App\Models\Category;
 use App\Models\Courses;
 use App\Models\Followers;
+use App\Models\Instructors;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class StudentTabs extends Component
 {
 
-      public $activeTab = 'courses';
-    public $studentId;
+    use WithPagination;
+    public $instituteId;
+    public $formKey;
 
-    public function mount()
+    // protected $queryString = ['activeTab']; // 👈 this enables query string sync
+
+    public $activeTab = 'instructors';
+
+    public function mount($instituteId)
     {
-        $this->studentId = Auth::user()->student->id ?? null;
+        $this->instituteId = $instituteId;
+
     }
+
 
     public function setTab($tab)
     {
         $this->activeTab = $tab;
+        // request()->merge(['activeTab' => $tab]); // This is safe during Livewire updates
+
+        // sync to URL using Livewire 3 redirect helper
+        // $this->redirect(request()->url() . '?tab=' . $tab, navigate: true);
     }
+
 
     public function render()
     {
-        $courses = Courses::latest()->paginate(8);
-        $following = Followers::with('institute')->where('student_id_fk', $this->studentId)->get();
-        $notifications = Notifications::where('notifiable_id', Auth::id())
-            ->where('notifiable_type', 'App\Models\User')
-            ->latest()
-            ->get();
 
-        return view('livewire.student-tabs.student-tabs', [
-            'courses' => $courses,
-            'following' => $following,
-            'notifications' => $notifications,
-        ]);
+        $courses = Courses::where('institute_id_fk', $this->instituteId)->latest()->get();
+        $categories = Category::where('institute_id_fk', $this->instituteId)->latest()->get();
+        $ads = Advertisements::where('institute_id_fk', $this->instituteId)->latest()->get();
+        $instructors = Instructors::where('institute_id_fk', $this->instituteId)->latest()->get();
+
+        return view('livewire.student-tabs.student-tabs', compact('courses', 'categories', 'ads', 'instructors'));
+
+
+
     }
-    // public function render()
-    // {
-    //     return view('livewire.student-tabs.student-tabs');
-    // }
+
+
 }

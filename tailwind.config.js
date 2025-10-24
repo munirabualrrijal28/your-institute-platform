@@ -17,18 +17,26 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+
             },
-            colors: {
+             colors: {
                 primary: "var(--main-color)",
                 seco: "var(--grli)",
                 gray: "var(--gray)",
             },
+              keyframes: {
+        shake: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(5deg)' },
+          '75%': { transform: 'rotate(-5deg)' },
         },
+      },
+      animation: {
+        shake: 'shake 0.5s ease-in-out',
+ },
     },
-
-    plugins: [forms
-
-    ]
+  },
+    plugins: [forms]
     ,
 };
 

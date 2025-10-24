@@ -60,14 +60,19 @@
         @endif
       </div>
 
-    <form action="{{ route('user_search') }}" method="GET" class="flex-1 mx-6">
+    {{-- <form action="{{ route('user_search') }}" method="GET" class="flex-1 mx-6">
       <input type="text" name="query" placeholder="Search courses or institutes..."
         class="w-full px-4 py-2 rounded-full border-2 border-teal-500 focus:outline-none">
-    </form>
+    </form> --}}
     <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="h-[110px]">
 
 
   </nav>
+@if (session('success'))
+    <div class="fixed top-6 right-6 bg-green-100 text-green-800 px-6 py-3 rounded shadow z-50">
+        {{ session('success') }}
+    </div>
+@endif
 
   <!-- Hero Carousel -->
   <section class="max-w-7xl mx-auto mt-10">
@@ -120,11 +125,73 @@
     </div>
   </section>
 
+
+
+   {{-- @php
+
+
+            $institutes1 = [
+                    [
+                        'id' => 1,
+                        'ins_name' => 'New Horizons',
+                        'ins_profile_photo' => 'images/inst_profile/new_h/new_h.jpg'
+                    ],
+
+                    [
+                        'id' => 2,
+                        'ins_name' => '24 Academy',
+                        'ins_profile_photo' => 'images/inst_profile/24/24_ins.jpg'
+                    ],
+                    [
+                        'id' => 3,
+                        'ins_name' => 'JATS',
+                        'ins_profile_photo' => 'images/inst_profile/jats/jats.png'
+                    ],
+                    [
+                        'id' => 4,
+                        'ins_name' => 'LBM',
+                        'ins_profile_photo' => 'images/inst_profile/lbm/lb.jpg'
+                    ],
+                    [
+                        'id' => 5,
+                        'ins_name' => 'Speak Now',
+                        'ins_profile_photo' => 'images/inst_profile/speak/speak.jpg'
+                    ]
+                    ,
+                    [
+                        'id' => 6,
+                        'ins_name' => 'Yali',
+                        'ins_profile_photo' => 'images/inst_profile/yali/yali.jpg'
+                    ]
+                    ,
+                    [
+                        'id' => 7,
+                        'ins_name' => 'We Can',
+                        'ins_profile_photo' => 'images/inst_profile/we_can/we.jpg'
+                    ]
+
+                ];
+            @endphp --}}
+
   <!-- Institutes Scrollable Row -->
   <section class="bg-white py-12">
     <div class="max-w-7xl mx-auto px-4">
       <h2 class="text-center text-2xl font-bold mb-6">Top Institutes</h2>
-      <div class="flex overflow-x-auto gap-6 hide-scrollbar py-4">
+      <div class="flex overflow-x-auto gap-6 hide-scrollbar py-6">
+
+        {{-- from array above this code testing --}}
+            {{-- @foreach ($institutes1 as $institute)
+            <a href="{{ route('login', ['id' => $institute['id']]) }}" target="_blank"
+                class="flex-shrink-1 w-48 bg-white shadow rounded-xl p-4 hover:scale-105 transition">
+                <img src="{{asset($institute['ins_profile_photo']) }}" class="w-20 h-20 mx-auto rounded-full object-cover mb-3">
+                {{-- @php
+                dd(asset($institute['ins_profile_photo']) );
+                @endphp --}}
+                {{-- <p class="text-center text-sm font-semibold text-gray-800">{{ $institute['ins_name'] }}</p> --}}
+            {{-- </a> --}}
+            {{-- @endforeach --}}
+
+        {{-- from database   --}}
         @foreach ($institutes as $institute)
         <a href="{{ route('login', ['id' => $institute['id']]) }}" target="_blank"
           class="flex-shrink-0 w-48 bg-white shadow rounded-xl p-4 hover:scale-105 transition">
@@ -132,6 +199,9 @@
           <p class="text-center text-sm font-semibold text-gray-800">{{ $institute['ins_name'] }}</p>
         </a>
         @endforeach
+
+
+
       </div>
     </div>
   </section>
@@ -212,9 +282,9 @@
       </div>
       <div class="bg-white p-6 rounded-lg shadow text-center">
         <h3 class="text-teal-700 font-bold text-lg mb-3">Contact</h3>
-        <p class="text-sm text-gray-600">Email: support@yourinstitute.com</p>
-        <p class="text-sm text-gray-600">Phone: +967 777 123 456</p>
-        <p class="text-sm text-gray-600">Sana'a, Yemen</p>
+        <p class="text-sm text-gray-600">Email: yourinstitute@gmail.com</p>
+        <p class="text-sm text-gray-600">Phone: +967 777 928 412</p>
+        <p class="text-sm text-gray-600">Ibb, Yemen</p>
       </div>
     </div>
   </section>

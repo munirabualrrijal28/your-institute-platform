@@ -32,4 +32,8 @@ class Notifications extends Model
     {
         return $this->morphTo(__FUNCTION__, 'reciver_type', 'reciver_id');
     }
+
+
+
+
 }

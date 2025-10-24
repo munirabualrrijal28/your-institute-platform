@@ -89,6 +89,23 @@ class RegisteredUserController extends Controller
                 $request->validate([
                     'name' => ['required', 'string', 'max:255'],
                 ]);
+
+                // for uploading student profile_photo
+                // $student = Auth::user()->student;
+
+                // if ($request->hasFile('profile_photo')) {
+                //     $file = $request->file('profile_photo');
+                //     $path = $file->store("media/students/{$student->id}", 'public');
+
+                //     // Optional: delete old photo if only one allowed
+                //     $student->media()->where('type', 'profile')->delete();
+
+                //     $student->media()->create([
+                //         'url' => $path,
+                //         'type' => 'profile',
+                //     ]);
+                // }
+
                 break;
         }
 

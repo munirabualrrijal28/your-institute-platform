@@ -1,36 +1,88 @@
-<div>
-<div class="space-y-4">
-    <div class="flex gap-4 text-center">
-        <button wire:click="setTab('courses')" class="{{ $activeTab === 'courses' ? 'font-bold text-teal-600' : '' }}">الدورات</button>
-        <button wire:click="setTab('following')" class="{{ $activeTab === 'following' ? 'font-bold text-teal-600' : '' }}">المعاهد المتابعة</button>
-        <button wire:click="setTab('notifications')" class="{{ $activeTab === 'notifications' ? 'font-bold text-teal-600' : '' }}">الإشعارات</button>
-    </div>
+<div class="px-[70px]">
 
-    @if ($activeTab === 'courses')
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($courses as $course)
-                <div class="bg-white rounded-xl shadow p-4">
-                    <h3 class="font-bold">{{ $course->course_name }}</h3>
-                    <p class="text-sm text-gray-600">{{ $course->course_description }}</p>
-                </div>
-            @endforeach
-        </div>
-        {{ $courses->links() }}
-    @elseif ($activeTab === 'following')
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($following as $f)
-                <div class="bg-white rounded-xl shadow p-4 text-center">
-                    <img src="{{ asset($f->institute->logo ?? '/images/default-institute.png') }}" class="w-16 h-16 mx-auto rounded-full">
-                    <h4 class="mt-2 font-bold">{{ $f->institute->name }}</h4>
-                </div>
-            @endforeach
-        </div>
-    @elseif ($activeTab === 'notifications')
-        <ul class="list-disc space-y-2">
-            @foreach ($notifications as $note)
-                <li>{{ $note->data['message'] ?? $note->content }}</li>
-            @endforeach
-        </ul>
+
+<div class="bg-teal-600 text-white px-4 py-2 flex flex-wrap gap-3 justify-center">
+    @foreach (['instructors' => '👨‍🏫الكادر', 'courses' => '📘الكورسات', 'categories' => '🏷️الأقسام', 'ads' => '📢الإعلانات'] as $tab => $label)
+        <button wire:click="setTab('{{ $tab }}')"
+            class="px-4 py-2 rounded-full font-semibold shadow transition-all duration-200
+                {{ $activeTab === $tab ? 'bg-white text-teal-600' : 'hover:bg-teal-700' }}">
+            {{ $label }}
+        </button>
+    @endforeach
+</div>
+
+<div class="mt-4">
+    @if ($activeTab === 'instructors')
+        <livewire:student-tabs.instructors-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'courses')
+        <livewire:student-tabs.courses-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'categories')
+        <livewire:student-tabs.categories-tab :institute-id="$instituteId" />
+    @elseif ($activeTab === 'ads')
+        <livewire:student-tabs.ads-tab :institute-id="$instituteId" />
     @endif
 </div>
+
+@push('scripts')
+    <script>
+        Livewire.hook('message.processed', () => {
+            if (window.feather) feather.replace();
+        });
+
+        document.addEventListener('livewire:load', () => {
+            if (window.Alpine && Alpine.initTree) Alpine.initTree(document.body);
+        });
+    </script>
+@endpush
+
+
+
+
 </div>
+{{-- ✅ Root closed --}}
+
+{{-- <div class="space-y-8">
+
+    <!-- Tabs Navigation -->
+    <div class="flex justify-center gap-6 text-base font-semibold border-b pb-2">
+        <button wire:click="setTab('courses')"
+            class="{{ $activeTab === 'courses' ? 'text-teal-600 border-b-2 border-teal-500' : 'text-gray-500 hover:text-teal-500' }}">📘
+            الدورات</button>
+        <button wire:click="setTab('categories')"
+            class="{{ $activeTab === 'categories' ? 'text-teal-600 border-b-2 border-teal-500' : 'text-gray-500 hover:text-teal-500' }}">🏷️
+            التصنيفات</button>
+        <button wire:click="setTab('instructors')"
+            class="{{ $activeTab === 'instructors' ? 'text-teal-600 border-b-2 border-teal-500' : 'text-gray-500 hover:text-teal-500' }}">👨‍🏫
+            المدرّبين</button>
+        <button wire:click="setTab('ads')"
+            class="{{ $activeTab === 'ads' ? 'text-teal-600 border-b-2 border-teal-500' : 'text-gray-500 hover:text-teal-500' }}">📢
+            الإعلانات</button>
+    </div>
+
+    <div class="px-4 mt-4">
+
+        <!-- Courses Tab -->
+        @if ($activeTab === 'courses')
+            <livewire:student-tabs.courses-tab :institute-id="$instituteId" />{{--  --}}
+            {{--  --}}
+        {{-- @endif --}}
+
+        <!-- Categories Tab -->
+        {{-- @if ($activeTab === 'categories')
+            <livewire:student-tabs.categories-tab :institute-id="$instituteId" />{{--  --}}
+        {{-- @endif --}}
+
+        <!-- Instructors Tab -->
+        {{-- @if ($activeTab === 'instructors')
+            <livewire:student-tabs.instructors-tab :institute-id="$instituteId" />
+        @endif --}}
+
+        <!-- Advertisements Tab -->
+        {{-- @if ($activeTab === 'ads')
+            <livewire:student-tabs.ads-tab :institute-id="$instituteId" />
+        @endif
+    </div>
+    <script>
+        window.courseMap = @json($courses->keyBy('id'));
+    </script>
+</div> --}}

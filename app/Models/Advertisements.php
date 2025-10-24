@@ -11,8 +11,24 @@ class Advertisements extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'content', 'institute_id_fk' , 'user_id' , 'user_type'];
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id',
+        'user_type',
+        'institute_id_fk',
+    ];
 
+
+    protected static function booted()
+    {
+        static::addGlobalScope('institute_status', function ($query) {
+            $query->whereHas('institute', function ($q) {
+                $q->where('ins_is_verified', true)
+                    ->where('is_restricted', false);
+            });
+        });
+    }
     public function institute()
     {
         return $this->belongsTo(Institute::class, 'institute_id_fk');
@@ -27,7 +43,7 @@ class Advertisements extends Model
     {
         return $this->morphMany(Media::class, 'mediable');
     }
-        public function user()
+    public function user()
     {
         return $this->morphTo(); // handles both Admin or Institute
     }

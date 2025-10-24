@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\AppServiceProvider;
@@ -12,18 +13,22 @@ abstract class Controller
     //
 
 
-    public function index() {
-                // return view('institute.dashboard');
-             $institutes = Institute::all();
+   
 
-        return view('/' , compact   ('institutes'));
+
+    public function index_page (){
+ // return view('institute.dashboard');
+        $institutes = Institute::all();
+
+        return view('/', compact('institutes'));
         // return view('institute.home.home');
+
+
     }
 
 
-
-
-    public function redirectToHome() {
+    public function redirectToHome()
+    {
         return redirect(AppServiceProvider::home_route());
     }
 
@@ -31,39 +36,42 @@ abstract class Controller
 
 
 
-    public static function getUserRole() {
+    public static function getUserRole()
+    {
         $authUserRole = Auth::user()->role;
         $userId = Auth::user()->role;
-        switch($userId){
+        switch ($userId) {
             case UserRole::AdminRole:
-                return UserRole::AdminRole ;
+                return UserRole::AdminRole;
             case UserRole::InstituteRole:
                 // return redirect()->route('institute');
                 return UserRole::InstituteRole;
 
-                default:
+            default:
                 return UserRole::UserRole;
-            }
+        }
 
 
     }
 
-    public static function getUserRoleName() {
+    public static function getUserRoleName()
+    {
 
         $userId = Auth::user()->role;
-        switch($userId){
+        switch ($userId) {
             case UserRole::AdminRole:
-                return 'admin' ;
+                return 'admin';
             case UserRole::InstituteRole:
                 // return redirect()->route('institute');
                 return 'institute';
 
-                default:
+            default:
                 return 'user';
-            }
+        }
 
     }
-    public static function getUserId() {
+    public static function getUserId()
+    {
 
 
         $userId = Auth::user()->id;
@@ -72,7 +80,9 @@ abstract class Controller
 
     }
 
-    public static function getInstituteId(){
+
+    public static function getInstituteId()
+    {
         // In your controller or anywhere where you need the user’s institute ID
         $userId = Auth::id();
         // Step 1: Get the current user's ID
@@ -83,7 +93,7 @@ abstract class Controller
         if ($institute) {
             $instituteId = $institute->id; // The institute_id from the found row
             // Step 3: If the institute exists, get the institute_id
-                    // dd($instituteId);
+            // dd($instituteId);
 
             return $instituteId;
         } else {
@@ -95,4 +105,59 @@ abstract class Controller
         // You can use $instituteId here as needed
 
     }
+
+
+
+
+    //
+    public static function getStudent_sp($id)
+    {
+
+
+        // $student = Student::where('id', $id)->first();
+        $student = Student::where('user_id_fk', $id)->firstOrFail();
+
+        return $student;
+
+
+    }
+    public static function getInstitute_sp($id)
+    {
+
+
+        // $student = Institute::where('student_id_fk', $id)->first();
+        $institute = Institute::where('user_id_fk', $id)->firstOrFail();
+
+        return $institute;
+
+
+    }
+    //
+    //
+       //
+    public static function getCurrentStudent()
+    {
+
+
+        // $student = Student::where('id', $id)->first();
+        $student = Student::where('user_id_fk', Auth::id())->firstOrFail();
+
+        return $student;
+
+
+    }
+
+    public static function getCurrentInstitute()
+    {
+
+
+        // $student = Institute::where('student_id_fk', $id)->first();
+        $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
+
+        return $institute;
+
+
+    }
+
+
 }

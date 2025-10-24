@@ -16,11 +16,22 @@ class Courses extends Model
 
     protected $fillable = [
         'course_name',
-        'course_description' ,
+        'course_description',
 
         'category_id_fk',
         'institute_id_fk'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('institute_status', function ($query) {
+            $query->whereHas('institute', function ($q) {
+                $q->where('ins_is_verified', true)
+                    ->where('is_restricted', false);
+            });
+        });
+    }
+
 
     public function institute()
     {

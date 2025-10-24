@@ -1,4 +1,5 @@
 
+{{--
 @php
     $currentTab = request('tab', 'instructors'); // default to 'instructors'
 @endphp
@@ -37,21 +38,20 @@
     @if ($currentTab === 'instructors')
         @include('profile_parts.institute_tabs.instructor.instructors')
         {{-- @include('profile_parts.institute_tabs.instructors-tab') --}}
-    @elseif ($currentTab === 'courses')
+    {{-- @elseif ($currentTab === 'courses')
 
-        @include('profile_parts.institute_tabs.course.courses')
+        @include('profile_parts.institute_tabs.course.courses') --}}
         {{-- @include('profile_parts.institute_tabs.courses-tab') --}}
-    @elseif ($currentTab === 'categories')
-            @include('profile_parts.institute_tabs.category.categories')
+    {{-- @elseif ($currentTab === 'categories')
+            @include('profile_parts.institute_tabs.category.categories') --}}
 
         {{-- @include('profile_parts.institute_tabs.categories-tab') --}}
-    @elseif ($currentTab === 'ads')
-            @include('profile_parts.institute_tabs.advertisement.ads')
+    {{-- @elseif ($currentTab === 'ads')
+            @include('profile_parts.institute_tabs.advertisement.ads') --}}
 
         {{-- @include('profile_parts.institute_tabs.ads-tab') --}}
-    @endif
-</div>
+    {{-- @endif
+</div> --}}
 
 
 
-</div>

@@ -20,11 +20,16 @@ return new class extends Migration {
 
 
             $table->tinyInteger('rating'); // Constrain 1–5 in application or DB check constraint
-            $table->string('review')->nullable(); // 	Optional user comment
+            $table->text('review')->nullable(); // 	Optional user comment
+            $table->boolean('is_approved')->default(true);
+
+
+
+
+
 
 
             $table->foreign(columns: 'user_id_fk')->references('id')->on('users')->onDelete('cascade');
-
 
             // Prevent double-rating
             $table->unique(['user_id_fk', 'type', 'rated_id']);

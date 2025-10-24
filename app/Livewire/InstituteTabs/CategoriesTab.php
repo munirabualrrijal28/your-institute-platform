@@ -3,10 +3,12 @@
 namespace App\Livewire\InstituteTabs;
 
 use App\Models\Category;
+use App\Models\Institute;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Log;
 
 class CategoriesTab extends Component
 {
@@ -24,7 +26,8 @@ class CategoriesTab extends Component
         'confirmDelete' => 'deleteCategory'
 
         ,
-        'confirmDeleteCategory' => 'deleteCategory'
+        'confirmDeleteCategory' => 'deleteCategory',
+        'deleteConfirmedCategory' => 'deleteCategory',
     ];
     protected $rules = [
         'category_name' => 'required|string|max:255',
@@ -61,6 +64,17 @@ class CategoriesTab extends Component
     }
     public function saveCategory()
     {
+        // dd("save cat");
+        // Log::info('🟢 saveCategory method triggered');
+        $institute = Institute::where('id', $this->instituteId)->firstOrFail();
+
+        if (!$institute || !$institute->ins_is_verified || $institute->is_restricted) {
+            return session()->flash('error', 'You are not allowed to post. Either unverified or restricted.');
+        }
+
+
+
+
 
         $this->validate();
 
@@ -90,6 +104,10 @@ class CategoriesTab extends Component
 
 
             $this->resetPage('categoryPage');// 👈 Force reload to page 1
+                    $this->resetForm();
+
+            // $this->dispatch('stayOnTab', tab: 'categories');
+
 
         }
 
@@ -99,6 +117,16 @@ class CategoriesTab extends Component
 
     public function editCategory($id)
     {
+
+        $institute = Institute::where('id', $this->instituteId)->firstOrFail();
+
+        if (!$institute || !$institute->ins_is_verified || $institute->is_restricted) {
+            return session()->flash('error', 'You are not allowed to post. Either unverified or restricted.');
+        }
+
+
+
+
         $category = Category::findOrFail($id);
 
         $this->categoryId = $category->id;
@@ -113,19 +141,39 @@ class CategoriesTab extends Component
 
     //
 
-    #[On('deleteConfirmedCategory')]
-    public function deleteCategory($id)
+    // #[On('deleteConfirmedCategory')]
+    // public function deleteCategory($id)
+    // {
+    //     Category::findOrFail($id)->delete();
+    //     session()->flash('message', 'تم حذف الفئة بنجاح');
+    // }
+
+
+
+    // public function confirmDelete($courseId)
+    // {
+    //     $this->dispatch('showCategoryDeleteDialog', id: $courseId);
+    // }
+
+
+
+    public $confirmingDelete = false;
+    public $CategoryToDeleteId = null;
+
+    public function confirmDelete($adId)
     {
-        Category::findOrFail($id)->delete();
-        session()->flash('message', 'تم حذف الفئة بنجاح');
+        $this->confirmingDelete = true;
+        $this->CategoryToDeleteId = $adId;
     }
 
-
-
-    public function confirmDelete($courseId)
+    public function deleteCategory()
     {
-        $this->dispatch('showCategoryDeleteDialog', id: $courseId);
+        Category::findOrFail($this->CategoryToDeleteId)->delete();
+        $this->confirmingDelete = false;
+        $this->CategoryToDeleteId = null;
+        session()->flash('message', 'تم حذف الإعلان بنجاح');
     }
+
 
 
 }

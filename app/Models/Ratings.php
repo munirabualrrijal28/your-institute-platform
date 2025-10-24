@@ -11,15 +11,20 @@ class Ratings extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id_fk', 'rateable_id', 'rateable_type', 'rating', 'review'];
+    protected $fillable = ['user_id_fk', 'rated_id', 'type', 'rating', 'review'];
 
-    public function rateable()
-    {
-        return $this->morphTo();
-    }
+    // public function rateable()
+    // {
+    //     return $this->morphTo();
+    // }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id_fk');
     }
+
+    public function rateable()
+{
+    return $this->morphTo(__FUNCTION__, 'type', 'rated_id');
+}
 }

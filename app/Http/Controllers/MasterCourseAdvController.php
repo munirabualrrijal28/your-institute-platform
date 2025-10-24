@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Courses;
+use App\Models\Institute;
+use App\Models\Notifications;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -18,60 +21,86 @@ class MasterCourseAdvController extends Controller
 
 
 
-public function store_course_adv(Request $request)
-{
-    // Validate Courses fields
-    $validated = $request->validate([
-        'course_name' => 'required|string|max:100|unique:courses,course_name',
-        'course_description' => 'nullable|string',
-        'category_id_fk' => 'required|exists:categories,id'
-    ]);
-
-    $validated['institute_id_fk'] = Auth::user()->institute->id;
-
-    // Create Courses
-    $course = Courses::create($validated);
-
-    // Create course-specific directory if not exists
-    $folderPath = "course_advs/{$course->id}";
-    if (!Storage::disk('public')->exists($folderPath)) {
-        Storage::disk('public')->makeDirectory($folderPath);
-    }
-
-    // Handle course photo (image)
-    if ($request->hasFile('course_photo')) {
-        $photo = $request->file('course_photo');
-        $photoName = Str::random(20) . '.' . $photo->getClientOriginalExtension();
-        $photo->storeAs($folderPath, $photoName, 'public');
-
-        $course->media()->create([
-            'url' => "{$folderPath}/{$photoName}",
-            'type' => $photo->getClientMimeType(),
+    public function store_course_adv(Request $request)
+    {
+        // Validate Courses fields
+        $validated = $request->validate([
+            'course_name' => 'required|string|max:100|unique:courses,course_name',
+            'course_description' => 'nullable|string',
+            'category_id_fk' => 'required|exists:categories,id'
         ]);
-    }
 
-    // Handle additional course files
-    if ($request->hasFile('course_files')) {
-        foreach ($request->file('course_files') as $file) {
-            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs($folderPath, $filename, 'public');
+        $validated['institute_id_fk'] = Auth::user()->institute->id;
+
+        // Create Courses
+        $course = Courses::create($validated);
+        $this->notify_student($course, Controller::getCurrentInstitute());
+        // Create course-specific directory if not exists
+        $folderPath = "course_advs/{$course->id}";
+        if (!Storage::disk('public')->exists($folderPath)) {
+            Storage::disk('public')->makeDirectory($folderPath);
+        }
+
+        // Handle course photo (image)
+        if ($request->hasFile('course_photo')) {
+            $photo = $request->file('course_photo');
+            $photoName = Str::random(20) . '.' . $photo->getClientOriginalExtension();
+            $photo->storeAs($folderPath, $photoName, 'public');
 
             $course->media()->create([
-                'url' => "{$folderPath}/{$filename}",
-                'type' => $file->getClientMimeType(),
+                'url' => "{$folderPath}/{$photoName}",
+                'type' => $photo->getClientMimeType(),
             ]);
+        }
+
+        // Handle additional course files
+        if ($request->hasFile('course_files')) {
+            foreach ($request->file('course_files') as $file) {
+                $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
+                $file->storeAs($folderPath, $filename, 'public');
+
+                $course->media()->create([
+                    'url' => "{$folderPath}/{$filename}",
+                    'type' => $file->getClientMimeType(),
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('message', 'Course Advertisement Added Successfully');
+    }
+
+    //
+
+    public function notify_student($course1, $institute)
+    {
+
+        $course = $course1;
+
+        $followers = $institute->followers; // علاقة مع الطلاب
+
+        foreach ($followers as $student) {
+            Notifications::create([
+                'sender_id' => $institute->id,
+                'sender_type' => Institute::class,
+                'reciver_id' => $student->user_id_fk, // نرسل إلى حساب المستخدم
+                'reciver_type' => \App\Models\User::class,
+                'notification_type' => 'new_course',
+                'data' => [
+                    'message' => 'تم نشر دورة جديدة من قبل المعهد: ' . $course->course_name,
+                    'course_id' => $course->id,
+                ],
+                'read_at' => null,
+            ]);
+
         }
     }
 
-    return redirect()->back()->with('message', 'Course Advertisement Added Successfully');
-}
 
 
 
 
 
-
-
+    //
 
     public function get_edit_course_adv($id)
     {
@@ -79,18 +108,19 @@ public function store_course_adv(Request $request)
         return response()->json($course);
     }
 
-    public function show_course_adv($id){
+    public function show_course_adv($id)
+    {
 
-//         $ins_id = Controller::getInstituteId();
+        //         $ins_id = Controller::getInstituteId();
 
-//         // session(['admin.course.manage_course_adv' => url()->previous()]);
+        //         // session(['admin.course.manage_course_adv' => url()->previous()]);
 
-//         // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
+        //         // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
 // //
 //         $course_adv_info = Courses::findOrFail($id); // safer
 //         $categories = Category::where('institute_id_fk', $ins_id)->get();
 
-//         return view('institute.course.manage_course_adv', compact('course_adv_info', 'categories'));
+        //         return view('institute.course.manage_course_adv', compact('course_adv_info', 'categories'));
 
     }
 
@@ -166,7 +196,7 @@ public function store_course_adv(Request $request)
 
             // Save new image
             $photo = $request->file('course_photo');
-            $photoName = Str::random(20) .'.'. $photo->getClientOriginalExtension();
+            $photoName = Str::random(20) . '.' . $photo->getClientOriginalExtension();
             $photo->storeAs($folderPath, $photoName, 'public');
             // dd("public/{$folderPath}");
             $course->media()->create([
@@ -191,15 +221,16 @@ public function store_course_adv(Request $request)
         return redirect()->route('institute.manage_course')->with('message', 'Course updated successfully');
     }
 
-//
+    //
 
 
-    public function delete_course_adv($id){
+    public function delete_course_adv($id)
+    {
 
         $course = Courses::findOrFail($id)->delete();
 
 
-        return redirect()->back()->with('message' , 'Course Deleted Successfully');
+        return redirect()->back()->with('message', 'Course Deleted Successfully');
 
 
     }

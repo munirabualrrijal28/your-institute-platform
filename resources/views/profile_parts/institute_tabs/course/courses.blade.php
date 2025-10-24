@@ -2,17 +2,7 @@
 
 @section('lib_layout')
     <div x-data="{ showAnyComments: false }"> <!-- 👈 Add a wrapper Alpine scope to manage visibility globally -->
-        {{-- @php
-        $isEdit = isset($editCourse);
-    @endphp --}}
-        {{-- <div class="container mx-auto">
-        {{--  --}}
-        {{-- <button @click="showForm = !showForm" --}}
-        {{-- class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-xl transition-all duration-300"> --}}
-        {{-- + Add New Course --}}
-        {{-- </button> --}}
-        {{-- --}}
-
+  
 
         <div class="space-y-6" x-data="coursesPage">
 

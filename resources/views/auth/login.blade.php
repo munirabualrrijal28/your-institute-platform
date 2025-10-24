@@ -228,6 +228,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0);
@@ -240,7 +241,8 @@
     </style>
 </head>
 
-<body class="bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 min-h-screen flex items-center justify-center px-4 py-8">
+<body
+    class="bg-gradient-to-br from-cyan-100 via-blue-100 to-teal-100 min-h-screen flex items-center justify-center px-4 py-8">
     <div class="animate-fade-slide-up bg-white px-6 py-6 rounded-2xl shadow-xl border border-gray-300 w-full max-w-md">
         <!-- Logo -->
         <div class="flex justify-center mb-4">
@@ -255,17 +257,18 @@
         </div>
 
         <!-- Error Messages -->
-        @if(session('status'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        @if (session('status'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                role="alert">
                 {{ session('status') }}
             </div>
         @endif
 
         @if ($errors->has('email') || $errors->has('password'))
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-        <p class="font-semibold">Incorrect email or password. Please check and try again.</p>
-    </div>
-@endif
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <p class="font-semibold">Incorrect email or password. Please check and try again.</p>
+            </div>
+        @endif
 
         <!-- Login Form -->
         <form method="POST" action="{{ route('login') }}" class="space-y-5" dir="ltr">
@@ -274,67 +277,86 @@
             <!-- Email -->
             <div class="relative">
                 <label for="email" class="block text-sm font-semibold mb-1 text-left">Email</label>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                       class="peer w-full rounded-full border border-teal-300 px-5 py-3 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400">
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                    autocomplete="email" autofocus
+                    class="peer w-full rounded-full border border-teal-300 px-5 py-3 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400">
             </div>
 
             <!-- Password -->
-<!-- Password -->
-<div class="relative" x-data="{ show: false }">
-    <label for="password" class="block text-sm font-semibold mb-1 text-left">Password</label>
-    <input :type="show ? 'text' : 'password'" id="password" name="password" value="{{ old('password') }}" required
-           autocomplete="current-password"
-           class="peer w-full rounded-full border border-teal-300 px-5 py-3 pr-12 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400">
+            <!-- Password -->
+            <div class="relative" x-data="{ show: false }">
+                <label for="password" class="block text-sm font-semibold mb-1 text-left">Password</label>
+                <input :type="show ? 'text' : 'password'" id="password" name="password" value="{{ old('password') }}"
+                    required autocomplete="current-password"
+                    class="peer w-full rounded-full border border-teal-300 px-5 py-3 pr-12 shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400">
 
-    <!-- 👁️ Eye Icon Fully Centered -->
-    <div class="absolute right-4 top-4 bottom-0 flex items-center">
-        <button type="button" @click="show = !show" class="text-gray-400 hover:text-teal-600">
-            <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943
+                <!-- 👁️ Eye Icon Fully Centered -->
+                <div class="absolute right-4 top-4 bottom-0 flex items-center">
+                    <button type="button" @click="show = !show" class="text-gray-400 hover:text-teal-600">
+                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943
                       9.542 7-1.274 4.057-5.065 7-9.542 7-4.477
                       0-8.268-2.943-9.542-7z" />
-            </svg>
-            <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7
+                        </svg>
+                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7
                       a10.05 10.05 0 012.013-3.368M15 12a3 3 0
                       00-3-3m0 0a3 3 0 00-3 3m6 0a3 3 0 01-3 3m0
                       0a3 3 0 01-3-3m0 0a3 3 0 013-3" />
-            </svg>
-        </button>
-    </div>
-</div>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
 
             <!-- Remember Me -->
             <div class="flex items-center">
-                <input type="checkbox" name="remember" id="remember" class="mr-2" {{ old('remember') ? 'checked' : '' }}>
+                <input type="checkbox" name="remember" id="remember" class="mr-2"
+                    {{ old('remember') ? 'checked' : '' }}>
                 <label for="remember" class="text-sm font-medium">Remember me</label>
             </div>
 
             <!-- Submit -->
             <div class="text-center">
                 <button type="submit"
-                        class="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-cyan-600 hover:to-teal-600 text-white font-semibold py-2 px-10 rounded-full shadow-lg text-lg transition-all duration-300">
+                    class="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-cyan-600 hover:to-teal-600 text-white font-semibold py-2 px-10 rounded-full shadow-lg text-lg transition-all duration-300">
                     Log In
                 </button>
             </div>
 
             <!-- Forgot Password -->
             @if (Route::has('password.request'))
-                <div class="text-center mt-2">
+                <div class="text-center mt-2 pt-2">
                     <a class="text-sm text-blue-600 hover:underline" href="{{ route('password.request') }}">
                         Forgot your password?
                     </a>
                 </div>
             @endif
         </form>
+
+        {{--  --}}
+
+        <div class="flex justify-between items-center mb-4 max-w-md w-full mx-auto px-2 pt-6">
+            <a href="/" class="text-teal-600 hover:text-teal-800 text-sm flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="h-5 w-5 mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Home
+            </a>
+            <a href="{{ route('register') }}" class="text-sm text-teal-600 hover:text-teal-800">
+                Don't have an account? Create one
+            </a>
+        </div>
+        {{--  --}}
     </div>
+
+
+
 </body>
 
 </html>

@@ -18,71 +18,44 @@ class RoleManager
       //
 
       //
-     public function handle(Request $request, Closure $next , $role): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        // $AdminRole = 0;
-        // $InstituteRole = 1;
-        // $UserRole = 2;
-
-       if(!Auth::check()){
-        return redirect()->route('login');
-       }
-       $authUserRole = Auth::user()->role;
-
-
-switch ($role) {
-    case 'admin':
-        if ($authUserRole == UserRole::AdminRole) {
-            return $next($request); // ✅ ALLOW access
+        // Only apply to users from 'web' guard (students & institutes)
+        if (!Auth::check()) {
+            return redirect()->route('login');
         }
-        break;
 
-    case 'institute':
-        if ($authUserRole == UserRole::InstituteRole) {
-            return $next($request); // ✅ ALLOW access
+        $authUser = Auth::user();
+
+        if (!isset($authUser->role)) {
+            return redirect()->route('login'); // Defensive check
         }
-        break;
 
-    case 'user':
-        if ($authUserRole == UserRole::UserRole) {
-            return $next($request); // ✅ ALLOW access
+        $authUserRole = $authUser->role;
+
+        switch ($role) {
+            case 'institute':
+                if ($authUserRole == UserRole::InstituteRole) {
+                    return $next($request);
+                }
+                break;
+
+            case 'user':
+                if ($authUserRole == UserRole::UserRole) {
+                    return $next($request);
+                }
+                break;
         }
-        break;
-}
 
-//
-//    // Only intercept the root URL
-//    if ($request->is('/')) {
-
-//     if (Auth::check()) {
-//         $role = Auth::user()->role;
-
-//         if ($role === UserRole::AdminRole) {
-//             return redirect()->route('admin');
-//         } elseif ($role === UserRole::InstituteRole) {
-//             return redirect()->route('institute_home');
-//         } elseif ($role === UserRole::UserRole) {
-//             return redirect()->route('user_home');
-//         }
-//     }
-// }
-
-       switch($authUserRole){
-            case UserRole::AdminRole:
-                return redirect()->route('admin');
+        // Redirect mismatched users to their actual home
+        switch ($authUserRole) {
             case UserRole::InstituteRole:
-                // return redirect()->route('institute');
-                return redirect()->route('institute_home');
+                return redirect()->route('institute_profile');
             case UserRole::UserRole:
-                // return redirect()->route('user');
                 return redirect()->route('user_home');
-
-                default:
-            return redirect()->route('/'); // Fallback to login
-       }
-
-
-    //    return redirect()->route('login');
-
+            default:
+                return redirect('/'); // fallback
+        }
     }
 }
+

@@ -2,7 +2,11 @@
 
 namespace App\Livewire\Follow;
 
+use App\Events\NotificationSent;
 use App\Models\Institute;
+use App\Models\Notifications;
+use App\Models\Student;
+use App\Models\User;
 use App\Notifications\NewFollowerNotification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -13,6 +17,11 @@ class FollowButton extends Component
     public $institute;
     public $isFollowing = false;
     public $followerCount = 0;
+
+    protected $listeners = ['toggleFollow' => 'toggleFollow'];
+
+
+
 
     public function mount(Institute $institute)
     {
@@ -45,8 +54,23 @@ class FollowButton extends Component
             $this->isFollowing = true;
             $this->followerCount++;
 
-             // ✅ Notify the institute's user
-    $this->institute->user->notify(new NewFollowerNotification($student));
+            // ✅ Notify the institute's user
+            // ✅ Send notification to the institute's user
+            $notification = Notifications::create([
+                'sender_id' => $student->id,
+                'sender_type' => Student::class,
+                'reciver_id' => $this->institute->user->id,
+                'reciver_type' => User::class,
+                'notification_type' => 'new_follower',
+                'data' => [
+                    'message' => 'قام الطالب ' . $student->user->name . ' بمتابعتك.',
+                ],
+                'read_at' => null,
+            ]);
+
+            event(new NotificationSent($notification));
+
+
         }
     }
 

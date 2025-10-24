@@ -22,10 +22,14 @@ class Student extends Model
     return $this->belongsToMany(Institute::class, 'followers', 'student_id_fk', 'institute_id_fk');
 }
 
-
+public function profilePhoto()
+{
+    return $this->media()->where('type', 'profile')->first();
+}
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
     }
+
 
 }

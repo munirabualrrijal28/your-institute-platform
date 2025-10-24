@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Advertisements;
+use App\Models\Institute;
+use App\Models\Notifications;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,32 +31,32 @@ class MasterAdController extends Controller
         $validated['institute_id_fk'] = Auth::user()->institute->id;
         $validated['user_id'] = Auth::id();
         $validated['user_type'] = Auth::user()->role;
-//
-$userType = Auth::user()->role; // أو $request->user_type
-$userId = Auth::id();
+        //
+        $userType = Auth::user()->role; // أو $request->user_type
+        $userId = Auth::id();
 
-// خريطة الأنواع إلى الكلاسات
-$modelMap = [
-    1 => \App\Models\Admin::class,
-    2 => \App\Models\Student::class,
-    3 => \App\Models\Institute::class,
-];
+        // خريطة الأنواع إلى الكلاسات
+        $modelMap = [
+            1 => Admin::class,
+            2 => Student::class,
+            3 => Institute::class,
+        ];
 
-// تحقق أن النوع موجود
-if (!array_key_exists($userType, $modelMap)) {
-    abort(400, 'Invalid user type');
-}
+        // تحقق أن النوع موجود
+        if (!array_key_exists($userType, $modelMap)) {
+            abort(400, 'Invalid user type');
+        }
 
-$modelClass = $modelMap[$userType];
-$ad_published = $modelClass::findOrFail($userId);
-//
+        $modelClass = $modelMap[$userType];
+        $ad_published = $modelClass::findOrFail($userId);
+        //
         // Create Advertisement
         $ad = Advertisements::create($validated);
-Advertisements::create([
-            'content' => $request->content ,
-            'institute_id_fk' => Controller::getInstituteId() ,
-            'user_id' => $ad_published->id ,
-            'user_type' => $modelClass ,
+        Advertisements::create([
+            'content' => $request->content,
+            'institute_id_fk' => Controller::getInstituteId(),
+            'user_id' => $ad_published->id,
+            'user_type' => $modelClass,
         ]);
         // Create folder if not exists
         $folderPath = "advertisements/{$ad->id}";
@@ -74,6 +79,35 @@ Advertisements::create([
 
         return redirect()->back()->with('message', 'Advertisement published successfully!');
     }
+
+    // Send notification when advertisement created
+    public function notify_student($ad1, $institute)
+    {
+
+        $ad = $ad1;
+
+        $followers = $institute->followers; // علاقة مع الطلاب
+
+        foreach ($followers as $student) {
+            Notifications::create([
+                'sender_id' => $institute->id,
+                'sender_type' => Institute::class,
+                'reciver_id' => $student->user_id_fk, // نرسل إلى حساب المستخدم
+                'reciver_type' => \App\Models\User::class,
+                'notification_type' => 'new_advertisement',
+                'data' => [
+                    'message' => 'تم نشر دورة جديدة من قبل المعهد: ' . $ad->course_name,
+                    'course_id' => $ad->id,
+                ],
+                'read_at' => null,
+            ]);
+
+        }
+    }
+
+
+
+
 
     /**
      * Edit Advertisement - fetch data as JSON

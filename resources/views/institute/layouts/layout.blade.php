@@ -6,68 +6,80 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-     <meta name="author" content="AdminKit">
      <meta name="keywords"
-         content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+         content="bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
      <meta name="csrf-token" content="{{ csrf_token() }}">
+
+     <meta name="user-id" content="{{ Auth::id() }}">
 
      <link rel="preconnect" href="https://fonts.gstatic.com">
      <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
      <title>@yield('institute_page_title')</title>
 
-     {{-- <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet"> --}}
-     {{-- <link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet"> --}}
-     {{-- <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet"> --}}
-     {{-- <link rel="stylesheet" href="profile.css"> --}}
-     {{-- <link href="{{resources(path: 'resources/css/app.css')}}" rel="stylesheet"> --}}
+
 
      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
      <!-- Bootstrap CSS -->
      {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
      <script src="https://cdn.tailwindcss.com"></script>
-     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-     <script src="//unpkg.com/alpinejs" defer></script>
      <script src="https://unpkg.com/feather-icons"></script>
 
 
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+
+
+     <style>
+         .hide-scrollbar {
+             scrollbar-width: none;
+             -ms-overflow-style: none;
+         }
+
+         .hide-scrollbar::-webkit-scrollbar {
+             display: none;
+         }
+
+         .animated-heading {
+             animation: bounce 2s infinite;
+         }
+
+         @keyframes bounce {
+
+             0%,
+             100% {
+                 transform: translateY(0);
+             }
+
+             50% {
+                 transform: translateY(-8px);
+             }
+         }
+     </style>
+
+     {{--  --}}
      @livewireStyles
-     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
-     {{--  --}}
-     {{-- <style>
-         .body-pro {
 
-             font-family: 'Cairo', sans-serif;
-         }
 
-         .profile-card {
-             transition: all 0.3s ease-in-out;
-         }
 
-         .profile-card:hover {
-             transform: translateY(-5px);
-             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-         }
-     </style> --}}
-
-     {{--  --}}
  </head>
 
  <body class="relative d-flex flex-column min-vh-100" data-bs-scroll="true">
 
-     <div class="bg-teal-600   h-[100px] d-flex align-items-center text-center justify-center ">
+     <!-- Old Welcome Header -->
+     {{-- <div class="bg-teal-600   h-[100px] d-flex align-items-center text-center justify-center ">
          <h3 class="text-white font-bold">
              Welcome in Your-Institute Platform
          </h3>
-     </div>
-
+     </div> --}}
+     <!-- Animated Welcome Header -->
+     <header class="bg-gradient-to-r from-teal-600 to-emerald-500 py-6 shadow-lg text-white text-center">
+         <h1 class="text-3xl font-extrabold animated-heading">Welcome in Your-Institute Platform</h1>
+         <p class="text-base mt-1 animate-fadeIn">Empowering education through verified institutions</p>
+     </header>
 
 
      <div class="d-flex flex-grow-1">
@@ -129,127 +141,34 @@
          <div class="main d-flex flex-column w-100">
 
              <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3 py-0">
-                 <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
-
-                     <!-- Right Section: Nav Items -->
-                     <div x-data="{ open: false }" class="relative">
-
-                         <!-- 🔔 Notification Bell -->
-                         <button @click="open = !open" class="relative focus:outline-none">
-                             <i data-feather="bell"></i>
-                             <span
-                                 class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                                 4
-                             </span>
-                         </button>
-
-                         <!-- ⬇️ Dropdown Panel -->
-                         <div x-show="open" x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 translate-y-2"
-                             x-transition:enter-end="opacity-100 translate-y-0"
-                             x-transition:leave="transition ease-in duration-150"
-                             x-transition:leave-start="opacity-100 translate-y-0"
-                             x-transition:leave-end="opacity-0 translate-y-2" @click.outside="open = false"
-                             class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-50 overflow-hidden">
-
-                             <div class="px-4 py-2 border-b font-semibold text-gray-700">4 New Notifications</div>
-
-                             {{-- <div class="divide-y divide-gray-200">
-                                <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">New comment on your course</div>
-                                <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">New follower</div>
-                                <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">Profile update approved</div>
-                                <div class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer">1 new message</div>
-                            </div> --}}
-                            {{--  --}}
-                            <form method="POST" action="{{ route('notifications.markRead') }}">
-    @csrf
-
-                             @foreach (Auth::user()->unreadNotifications as $notification)
-                                 <div class="bg-white p-4 rounded shadow mb-2">
-                                     <p>{{ $notification->data['message'] }}</p>
-                                     <small
-                                         class="text-gray-500">{{ $notification->created_at->diffForHumans() }}</small>
-                                 </div>
-                             @endforeach
-
-                                <button class="text-sm text-blue-600 hover:underline">تمييز الكل كمقروء</button>
-</form>
-{{--  --}}
-                             <div
-                                 class="px-4 py-2 border-t text-sm text-center text-blue-600 hover:underline cursor-pointer">
-                                 Show all notifications
-                             </div>
-                         </div>
-                     </div>
+                 <div class="container-fluid d-flex justify-between align-items-center flex-wrap">
 
 
-                     {{--  --}}
-
-                     <!-- Middle Section: Search Bar (responsive) -->
-                     <div class="flex-grow-1 mx-3 my-2 my-lg-0 text-left">
-                         <form action="{{ route('user_search') }}" method="GET" class="w-100">
-                             <div class="input-group shadow-lg rounded-pill overflow-hidden">
-                                 <input type="text" name="query" class="form-control form-control-lg border-0"
-                                     placeholder="Search...">
-                                 <button class="btn btn-secondary bg-teal-500 " type="submit">
-                                     <i data-feather="search"></i>
-                                 </button>
-                             </div>
-                         </form>
-                     </div>
+                     <livewire:notifications.notify />
 
 
 
-
-                     {{--  --}}
                      <!-- Left Section: Drawer + Logo -->
-                     {{-- button to show sidebar --}}
                      <div class="d-flex align-items-center me-3">
-                         {{-- <a class="sidebar-toggle js-sidebar-toggle me-2">
-                         <i class="hamburger align-self-center"></i>
-                     </a> --}}
-                         <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid "
+                         <img src="/images/home/light/your_ins_logo.png" alt="Logo" class="img-fluid"
                              style="max-height: 170px; width: 170px;">
                          <button id="openSidebar" class="text-gray-600 hover:text-teal-600 focus:outline-none">
                              <i data-feather="menu" class="w-6 h-6"></i>
                          </button>
-
                      </div>
-
-
                  </div>
              </nav>
 
-
-
-
-             {{-- @yield('user_home_tabs') --}}
              <main class="flex-grow-1">
                  <div class="container mx-auto px-4">
-
-
-
                      @yield('institute_layout')
-
-
-                     {{--  --}}
-
-                     {{--  --}}
                  </div>
-
-                 {{--  --}}
-                 {{--  --}}
-                 {{--  --}}
-
-
-                 {{--  --}}
-                 {{--  --}}
-                 {{--  --}}
-
              </main>
-
-
          </div>
+
+
+
+
 
          {{-- End of main --}}
 
@@ -285,8 +204,45 @@
      {{--  --}}
      {{--  --}}
      {{--  --}}
-     <script src="{{ asset('assets/js/app.js') }}"></script>
 
+
+     {{--  --}}
+     {{--  --}}
+
+
+     {{--  --}}
+
+     <script>
+         document.addEventListener("DOMContentLoaded", function() {
+             const userId = @json(Auth::id());
+
+             window.Echo.private('user.' + userId)
+                 .listen('.notification.sent', (e) => {
+                     console.log('🔔 New Notification:', e);
+
+                     // Optional: show a toast popup
+                     const toast = document.createElement('div');
+                     toast.innerHTML = `<div class="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow">
+                    🔔 ${e.message}
+                </div>`;
+                     document.body.appendChild(toast);
+                     setTimeout(() => toast.remove(), 5000);
+
+                     // Refresh the Livewire notification list
+                     Livewire.dispatch('refresh-notifications');
+                 });
+         });
+     </script>
+
+
+
+
+
+     {{--  --}}
+     {{--  --}}
+     {{--  --}}
+     {{--  --}}
+     {{--  --}}
      <script>
          document.addEventListener("livewire:load", () => {
              // ✅ Re-render icons after every Livewire update
@@ -295,10 +251,14 @@
              });
          });
      </script>
-     {{-- @livewireScripts --}}
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-     {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
+
+
+
+
+
+
 
      {{-- ✅ Feather first --}}
      <script>
@@ -410,14 +370,83 @@
 
 
 
-
+     <script>
+         document.addEventListener("livewire:load", () => {
+             Livewire.hook('message.processed', (message, component) => {
+                 if (window.feather) feather.replace();
+                 if (window.Alpine) Alpine.initTree(document.body);
+             });
+         });
+     </script>
      {{--  --}}
 
 
 
+{{--
+     @push('scripts')
+         <script>
+             document.addEventListener("DOMContentLoaded", function() {
+                 const userId = @json(Auth::id());
 
-     @livewireStyles
+                 if (typeof window.Echo === 'undefined') {
+                     console.error("❌ Echo is not defined yet.");
+                     return;
+                 }
 
+                 window.Echo.private(`user.${userId}`)
+                     .listen('.notification.sent', (e) => {
+                         console.log('🔔 Notification received:', e);
+
+                         const notifContainer = document.getElementById('notification-container');
+                         const bellCounter = document.getElementById('notification-count');
+
+                         const html = `
+                    <div id="notif-${e.id}" class="px-4 py-3 rounded shadow bg-blue-100 mb-1 transition-all">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-700">${e.message}</p>
+                            <button onclick="markAsRead(${e.id})"
+                                    class="text-xs text-teal-600 hover:underline">تمييز كمقروء</button>
+                        </div>
+                    </div>
+                `;
+
+                         notifContainer?.insertAdjacentHTML('afterbegin', html);
+
+                         if (bellCounter) {
+                             let count = parseInt(bellCounter.textContent) || 0;
+                             bellCounter.textContent = count + 1;
+                             bellCounter.classList.remove('hidden');
+                         }
+                     });
+
+             });
+              function markAsRead(id) {
+            fetch(`/notifications/${id}/mark-as-read`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                const el = document.getElementById(`notif-${id}`);
+                if (el) {
+                    el.classList.remove('bg-blue-100');
+                    el.classList.add('bg-white');
+                    el.querySelector('button')?.remove();
+                }
+
+                const bellCounter = document.getElementById('notification-count');
+                let count = parseInt(bellCounter.textContent) || 1;
+                count = Math.max(count - 1, 0);
+                bellCounter.textContent = count;
+                if (count === 0) bellCounter.classList.add('hidden');
+            });
+        }
+
+         </script>
+     @endpush --}}
+
+     @livewireScripts
  </body>
 
 

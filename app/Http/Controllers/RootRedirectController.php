@@ -11,13 +11,15 @@ class RootRedirectController extends Controller
 {
     public function __invoke(Request $request)
     {
+
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
         if (Auth::check()) {
             $role = Auth::user()->role;
 
             // If you use enum
             switch ($role) {
-                case UserRole::AdminRole:
-                    return redirect()->route('admin');
 
                 case UserRole::InstituteRole:
                     return redirect()->route('institute_profile');
@@ -35,6 +37,6 @@ class RootRedirectController extends Controller
 
         $institutes = Institute::all();
 
-        return view('layouts.app' , compact('institutes'));
+        return view('layouts.app', compact('institutes'));
     }
 }

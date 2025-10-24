@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comments;
 use App\Models\Courses;
+use App\Models\Institute;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseAdvInstituteController extends Controller
 {
@@ -29,6 +31,8 @@ class CourseAdvInstituteController extends Controller
 
     public function manage_course(Request $request)
     {
+        $institute = Institute::where('user_id_fk', Auth::id())->firstOrFail();
+
         $ins_id = Controller::getInstituteId();
 
         $categories = Category::where('institute_id_fk', $ins_id)->get();
@@ -38,41 +42,42 @@ class CourseAdvInstituteController extends Controller
             'media',
             'comments.user'
         ])
-        ->where('institute_id_fk', $ins_id)
-        ->latest()
-        ->paginate(8);
+            ->where('institute_id_fk', $ins_id)
+            ->latest()
+            ->paginate(8);
 
         $editCourse = null;
         if ($request->has('edit_id')) {
             $editCourseAdv = Courses::find($request->edit_id);
         }
+        $followers = $institute->followers;
 
-        return view('institute.profile.institute_profile', compact('categories', 'courses', 'editCourse'));
+        return view('institute.profile.institute_profile', compact('categories', 'courses', 'editCourse' , 'followers'));
     }
 
 
 
-//
+    //
 
-public function update_edit_course($id)
-{
+    public function update_edit_course($id)
+    {
 
-    $course = Courses::findOrFail($id);
-    return response()->json($course );
+        $course = Courses::findOrFail($id);
+        return response()->json($course);
 
-}
+    }
 
- // public function edit_course_adv ($id){
-        // $ins_id = Controller::getInstituteId();
-
-
-        // // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
-
-        // $course_advs = Courses::findOrFail($id); // safer
-        // $categories = Category::where('institute_id_fk', $ins_id)->get();
+    // public function edit_course_adv ($id){
+    // $ins_id = Controller::getInstituteId();
 
 
-        // return view('institute.course.edit_course_adv', compact('course_advs', 'categories'));
+    // // $course_advs = Courses::where('institute_id_fk', $ins_id)->get();
+
+    // $course_advs = Courses::findOrFail($id); // safer
+    // $categories = Category::where('institute_id_fk', $ins_id)->get();
+
+
+    // return view('institute.course.edit_course_adv', compact('course_advs', 'categories'));
 
 
 

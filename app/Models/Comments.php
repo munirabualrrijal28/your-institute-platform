@@ -12,7 +12,11 @@ class Comments extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'user_id_fk', 'commentable_id', 'commentable_type', 'parent_id'];
+    protected $fillable = ['content',
+    'user_id_fk',
+     'commentable_id',
+      'commentable_type',
+      'parent_id'];
 
     public function commentable()
     {
@@ -35,8 +39,12 @@ class Comments extends Model
         {
             return $this->belongsTo(Comments::class, 'parent_id');
         }
-
+//
+public function reports()
+{
+    return $this->morphMany(Reports::class, 'reportable');
+}
 
         //
-        
+
 }

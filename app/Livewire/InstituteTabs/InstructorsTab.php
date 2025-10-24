@@ -79,9 +79,17 @@ class InstructorsTab extends Component
     public function mount($instituteId)
     {
         $this->instituteId = $instituteId;
-        $this->resetForm(); // initialize clean
-    }
 
+        // $this->resetForm(); // initialize clean
+    }
+   public function setTab($tab)
+    {
+
+        $this->formKey = uniqid(); // forces rerender when needed
+
+
+
+    }
     public function resetForm()
     {
         $this->instructorId = null;

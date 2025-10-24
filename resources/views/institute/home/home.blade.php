@@ -60,28 +60,29 @@
     </div> --}}
     {{-- </div> --}}
     <div class="relative flex overflow-auto ">
-        @php
+        {{-- @php
 $ins_home = collect([
     ['path' => 'images/inst_profile/jats/jats.png', 'name' => 'JATS'],
     ['path' => 'images/inst_profile/lbm/lb.jpg', 'name' => 'LBM'],
     ['path' => 'images/inst_profile/lbm/24_ins.jpg', 'name' => '24 ِAcademy'],
     ['path' => 'images/inst_profile/yali/yali.jpg', 'name' => 'Yali'],
     ['path' => 'images/inst_profile/speak/speak.jpg', 'name' => 'SpeakNow'],
+    ['path' => 'images/inst_profile/we_can/we.jpg', 'name' => 'We Can'],
 
 ]);
-    @endphp
-        @foreach ($ins_home as $item)
+    @endphp --}}
+        {{-- @foreach ($ins_home as $item) --}}
             <!-- Single Category Card -->
-            <div
+            {{-- <div
                 class="bg-white  rounded-2xl shadow hover:shadow-lg transition overflow-hidden cursor-pointer w-60 h-60 m-2 py-8 flex-shrink-0 scrollbar-none">
                 <img src="{{ asset($item['path']) }}" alt="{{$item['name']}}"
                     class="w-full h-full object-cover">
                 <div class="p-2 text-center pt-5">
                     <h3 class="text-sm font-semibold text-gray-700">{{$item['name']}}</h3>
                 </div>
-            </div>
+            </div> --}}
             {{-- End of Single Category Card --}}
-        @endforeach
+        {{-- @endforeach --}}
 
 
 

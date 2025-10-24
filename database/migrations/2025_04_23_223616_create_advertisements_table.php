@@ -18,10 +18,11 @@ return new class extends Migration
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
 
+            $table->string( 'title')->default('')->nullable();
 
             $table->unsignedBigInteger( 'user_id');
-            $table->unsignedBigInteger( 'user_type');
-            $table->unsignedBigInteger( 'institute_id_fk');
+            $table->string( 'user_type');
+            $table->unsignedBigInteger( 'institute_id_fk')->nullable();
             $table->text( 'content')->nullable();
 
 
