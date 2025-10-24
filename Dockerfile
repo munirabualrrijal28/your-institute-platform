@@ -25,16 +25,13 @@ COPY . .
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# COPY .env.example .env
-
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-
-# Laravel setup
-RUN php artisan config:clear && \
-    php artisan config:cache && \
-    php artisan key:generate
+# Remove Laravel setup from build (will run at runtime)
+# RUN php artisan config:clear && \
+#     php artisan config:cache && \
+#     php artisan key:generate
 
 # Expose the port Laravel will run on
 EXPOSE 8080
