@@ -25,7 +25,7 @@ COPY . .
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-COPY .env.example .env
+# COPY .env.example .env
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
