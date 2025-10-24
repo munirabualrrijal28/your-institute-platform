@@ -25,10 +25,11 @@ COPY . .
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
+COPY .env.example .env
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-COPY .env.example .env
 
 # Laravel setup
 RUN php artisan config:clear && \
