@@ -35,9 +35,9 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 \
     /usr/bin/composer install --no-dev --optimize-autoloader --no-scripts
 
 # Remove Laravel setup from build (will run at runtime)
-# RUN php artisan config:clear && \
-#     php artisan config:cache && \
-#     php artisan key:generate
+RUN php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan key:generate
 
 # Expose the port Laravel will run on
 EXPOSE 8080
