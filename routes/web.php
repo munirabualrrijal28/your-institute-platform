@@ -45,6 +45,12 @@ use App\Constants\UserRole;
 use App\Http\Controllers\RootRedirectController;
 use App\Models\User;
 
+
+
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
+
 Route::get('/', RootRedirectController::class)->name('root');
 // guest
 //  user routing
