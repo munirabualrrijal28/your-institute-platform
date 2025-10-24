@@ -26,7 +26,13 @@ COPY . .
 RUN chmod -R 775 storage bootstrap/cache
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Install dependencies without triggering artisan commands
+RUN COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_DISABLE_XDEBUG_WARN=1 \
+    php -d variables_order=EGPCS \
+    -d register_argc_argv=On \
+    -d memory_limit=-1 \
+    /usr/bin/composer install --no-dev --optimize-autoloader --no-scripts
 
 # Remove Laravel setup from build (will run at runtime)
 # RUN php artisan config:clear && \
